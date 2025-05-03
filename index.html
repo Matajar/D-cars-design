@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D Cars - Premium Car Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #111;
+            background-image: linear-gradient(45deg, rgba(25, 25, 25, 0.8) 0%, rgba(15, 15, 15, 0.8) 100%), url('/api/placeholder/480/800');
+            background-size: cover;
+            min-height: 100vh;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .brand {
+            color: #FFBF00;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .skip-button {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .dot.active {
+            background-color: #FFBF00;
+            width: 20px;
+            border-radius: 10px;
+        }
+        
+        .content {
+            padding: 40px 30px;
+            margin-top: 40px;
+        }
+        
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            max-width: 280px;
+        }
+        
+        .car-image {
+            position: absolute;
+            bottom: 120px;
+            right: -40px;
+            width: 95%;
+            transform: rotate(5deg);
+        }
+        
+        .button-container {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            padding: 0 30px;
+        }
+        
+        .get-started-button {
+            background-color: #fff;
+            color: #111;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .get-started-button:hover {
+            background-color: #FFBF00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 191, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand">DRentIt</div>
+            <div class="skip-button">Skip</div>
+        </div>
+        
+        <div class="navigation-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot active"></div>
+            <div class="dot"></div>
+        </div>
+        
+        <div class="content">
+            <h1 class="title">Premium car rental</h1>
+            <p class="subtitle">Rent the car of your dreams with home delivery</p>
+        </div>
+        
+        <img src="/api/placeholder/400/200" alt="Premium yellow sports car" class="car-image">
+        
+        <div class="button-container">
+            <button class="get-started-button" onclick="window.location.href='login.html'">
+                Get started
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D Cars - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 380px;
+            margin: 0 auto;
+            background-color: #000000;
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 50px 25px 30px;
+        }
+        
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+            margin-top: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-d {
+            font-size: 40px;
+            font-weight: bold;
+            color: #FFBF00;
+        }
+        
+        .logo-cars {
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .welcome-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+        }
+        
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 30px;
+        }
+        
+        .input-field {
+            background-color: rgba(40, 45, 60, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 20px;
+            border-radius: 16px;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #FFBF00;
+            box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .forgot-password {
+            text-align: right;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 10px 0 25px;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            color: #FFBF00;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .sign-in-button {
+            background-color: #FFBF00;
+            color: #1a2b50;
+            padding: 18px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sign-in-button:hover {
+            background-color: #e6ac00;
+            transform: translateY(-2px);
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 10px;
+        }
+        
+        .google-button {
+            background-color: #4285F4;
+            color: white;
+        }
+        
+        .google-button:hover {
+            background-color: #357AE8;
+        }
+        
+        .apple-button {
+            background-color: white;
+            color: #000;
+        }
+        
+        .apple-button:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .signup-link {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .signup-text {
+            color: #FFBF00;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+        
+        .bottom-indicator {
+            position: absolute;
+            bottom: 10px;
+            width: 40%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-bar">
+            <div class="time">12:57</div>
+            <div class="indicators">
+                <span>●●●●</span>
+                <span>●●●</span>
+            </div>
+        </div>
+        
+        <div class="logo-container">
+            <div class="logo">
+                <span class="logo-d">D</span><span class="logo-cars">Cars</span>
+            </div>
+        </div>
+        
+        <div class="header">
+            <h1 class="welcome-title">Welcome Back!</h1>
+            <p class="welcome-subtitle">Please sign in to your account</p>
+        </div>
+        
+        <div class="form-container">
+            <input type="email" class="input-field" placeholder="Email">
+            <input type="password" class="input-field" placeholder="Password">
+            <a href="#" class="forgot-password">Forgot Password?</a>
+        </div>
+        
+        <div class="button-container">
+            <button class="sign-in-button" onclick="window.location.href='location.html'">Sign In</button>
+            
+            <button class="social-button google-button">
+                <div class="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#fff" d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/>
+                    </svg>
+                </div>
+                Sign In With Google
+            </button>
+            
+            <button class="social-button apple-button">
+                <div class="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
+                        <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM14.953.3c.818-.987 1.376-2.376 1.221-3.74-1.183.052-2.61.805-3.454 1.792-.753.87-1.415 2.288-1.234 3.625 1.325.104 2.677-.678 3.467-1.677z"/>
+                    </svg>
+                </div>
+                Sign In With Apple
+            </button>
+        </div>
+        
+        <div class="signup-link">
+            Don't Have An Account? <a href="#" class="signup-text">Sign Up</a>
+        </div>
+        
+        <div class="bottom-indicator"></div>
+    </div>
+</body>
+</html>

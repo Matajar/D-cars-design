@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D Cars - Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 380px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            color: #333;
+            font-size: 14px;
+            background-color: #ffffff;
+        }
+        
+        .header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-container {
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 30px;
+            padding: 12px 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-icon {
+            margin-right: 10px;
+            color: #888;
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        .search-input::placeholder {
+            color: #aaa;
+        }
+        
+        .filters-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            margin-left: 10px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            padding: 0 20px;
+            margin-bottom: 15px;
+        }
+        
+        .category-grid {
+            display: flex;
+            padding: 0 10px 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .category-grid::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-item {
+            min-width: 80px;
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .category-item.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .car-brands {
+            padding: 0 20px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .brand-grid {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            gap: 25px;
+            padding-bottom: 10px;
+        }
+        
+        .brand-grid::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .brand-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+        
+        .brand-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        
+        .brand-name {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+        }
+        
+        .fuel-types {
+            padding: 0 20px 20px;
+            margin-bottom: 10px;
+        }
+        
+        .fuel-grid {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            gap: 10px;
+            padding-bottom: 5px;
+        }
+        
+        .fuel-grid::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .fuel-item {
+            min-width: 80px;
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .fuel-item.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 80px;
+        }
+        
+        .car-card {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .car-image {
+            height: 120px;
+            position: relative;
+        }
+        
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .favorite-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .car-info {
+            padding: 12px;
+        }
+        
+        .car-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .car-price {
+            display: flex;
+            color: #555;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .price-value {
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .car-rating {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .rating-star {
+            color: #FFBF00;
+            margin-right: 3px;
+        }
+        
+        .bottom-navigation {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 380px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .nav-item.active {
+            color: #000;
+        }
+        
+        .nav-icon {
+            margin-bottom: 5px;
+        }
+        
+        /* Filters Modal */
+        .filters-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 85%;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+        
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filters-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .reset-button {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .filter-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        
+        
+        .seats-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .seats-option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+        
+        .seats-option.active {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .transmission-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .transmission-option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 14px;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .transmission-option.active {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+    }
