@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D Cars - Lease Cars</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      /* Responsive breakpoints */
+      @media (max-width: 480px) {
+        .container {
+          max-width: 100%;
+          padding-bottom: 90px;
+        }
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: #000000;
+        font-size: clamp(12px, 2.5vw, 14px);
+        background-color: #ffffff;
+      }
+
+      .header {
+        padding: clamp(15px, 4vw, 20px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .back-button {
+        width: clamp(36px, 10vw, 44px);
+        height: clamp(36px, 10vw, 44px);
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-size: clamp(18px, 5vw, 24px);
+        text-decoration: none;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #4caf50;
+        color: #ffffff;
+      }
+
+      .page-title {
+        font-size: clamp(20px, 5.5vw, 24px);
+        font-weight: 700;
+        flex: 1;
+        text-align: center;
+      }
+
+      .filter-icon {
+        width: clamp(36px, 10vw, 44px);
+        height: clamp(36px, 10vw, 44px);
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-size: clamp(18px, 5vw, 24px);
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-icon:hover {
+        background-color: #4caf50;
+        color: #ffffff;
+      }
+
+      .search-container {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #f0f0f0;
+        border-radius: clamp(20px, 6vw, 30px);
+        padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-icon {
+        margin-right: clamp(6px, 2vw, 10px);
+        color: #666;
+        font-size: clamp(14px, 3.5vw, 16px);
+      }
+
+      .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #000000;
+        font-size: clamp(14px, 3.5vw, 16px);
+        width: 100%;
+      }
+
+      .search-input::placeholder {
+        color: #666;
+      }
+
+      .filter-tags {
+        display: flex;
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+        gap: clamp(10px, 2.5vw, 15px);
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .filter-tags::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-tag {
+        padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 15px);
+        background-color: #f0f0f0;
+        border-radius: clamp(15px, 4vw, 20px);
+        white-space: nowrap;
+        color: #666;
+        font-size: clamp(12px, 3vw, 14px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-tag.active {
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      .section-title {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .lease-banner {
+        margin: 0 clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
+        background: linear-gradient(135deg, #009688, #4caf50);
+        border-radius: clamp(15px, 4vw, 20px);
+        padding: clamp(25px, 6vw, 30px);
+        color: #ffffff;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transform: translateZ(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* .lease-banner:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(76, 175, 80, 0.4);
+      } */
+
+      .lease-banner::before,
+      .lease-banner::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        z-index: 1;
+      }
+
+      .lease-banner::before {
+        width: 150px;
+        height: 150px;
+        top: -60px;
+        left: -60px;
+      }
+
+      .lease-banner::after {
+        width: 120px;
+        height: 120px;
+        bottom: -40px;
+        right: -30px;
+      }
+
+      .lease-banner-title {
+        font-size: clamp(22px, 6vw, 28px);
+        font-weight: 800;
+        margin-bottom: clamp(12px, 3vw, 18px);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 2;
+        display: inline-block;
+      }
+
+      .lease-banner-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 2px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.6;
+          width: 40%;
+        }
+        50% {
+          opacity: 1;
+          width: 70%;
+        }
+        100% {
+          opacity: 0.6;
+          width: 40%;
+        }
+      }
+
+      .lease-banner-text {
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+        line-height: 1.5;
+      }
+
+      .lease-features {
+        display: flex;
+        justify-content: center;
+        gap: clamp(10px, 3vw, 20px);
+        position: relative;
+        z-index: 2;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .lease-feature {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .lease-feature {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: clamp(12px, 3vw, 18px);
+        border-radius: clamp(10px, 3vw, 15px);
+        width: clamp(80px, 25%, 100px);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lease-feature::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        opacity: 0;
+        transform: scale(0.5);
+        transition: opacity 0.3s ease, transform 0.5s ease;
+      }
+
+      /* .lease-feature:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      } */
+
+      .lease-feature:hover::before {
+        opacity: 1;
+        transform: scale(1);
+        animation: pulse-light 2s infinite;
+      }
+
+      @keyframes pulse-light {
+        0% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0.7;
+        }
+      }
+
+      .lease-feature-icon {
+        font-size: clamp(24px, 6vw, 30px);
+        margin-bottom: clamp(8px, 2vw, 10px);
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        display: inline-block;
+        transition: transform 0.3s ease;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .lease-feature:nth-child(1) .lease-feature-icon {
+        animation-delay: 0s;
+      }
+
+      .lease-feature:nth-child(2) .lease-feature-icon {
+        animation-delay: 0.5s;
+      }
+
+      .lease-feature:nth-child(3) .lease-feature-icon {
+        animation-delay: 1s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .lease-feature-text {
+        font-size: clamp(11px, 2.8vw, 14px);
+        font-weight: 600;
+        line-height: 1.3;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: clamp(15px, 4vw, 20px);
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .car-card {
+        background-color: #ffffff;
+        border-radius: clamp(15px, 4vw, 20px);
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+/* 
+      .car-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      } */
+
+      .car-image {
+        height: clamp(180px, 50vw, 220px);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .car-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.5) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+      }
+
+      .car-release {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        left: clamp(10px, 3vw, 15px);
+        background-color: #4caf50;
+        color: #ffffff;
+        font-weight: 600;
+        padding: clamp(5px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+        border-radius: clamp(10px, 3vw, 15px);
+        font-size: clamp(10px, 2.5vw, 12px);
+        z-index: 2;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        right: clamp(10px, 3vw, 15px);
+        width: clamp(32px, 8vw, 40px);
+        height: clamp(32px, 8vw, 40px);
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: clamp(16px, 4vw, 20px);
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease;
+        z-index: 2;
+      }
+
+      .favorite-button:hover {
+        transform: scale(1.1);
+      }
+
+      .car-details {
+        padding: clamp(15px, 4vw, 20px);
+      }
+
+      .car-name {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        margin-bottom: clamp(5px, 1.5vw, 8px);
+        color: #000000;
+      }
+
+      .car-type {
+        color: #666;
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: clamp(10px, 2.5vw, 12px);
+      }
+
+      .car-description {
+        color: #444;
+        font-size: clamp(12px, 3vw, 14px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        line-height: 1.5;
+      }
+
+      .car-features {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: clamp(10px, 2.5vw, 15px);
+      }
+
+      .car-feature {
+        display: flex;
+        align-items: center;
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+      }
+
+      .feature-icon {
+        margin-right: clamp(5px, 1.5vw, 8px);
+        color: #4caf50;
+      }
+
+      .lease-terms {
+        margin-top: clamp(15px, 4vw, 20px);
+        background-color: #f5f5f5;
+        padding: clamp(10px, 2.5vw, 15px);
+        border-radius: clamp(10px, 3vw, 15px);
+        font-size: clamp(12px, 3vw, 14px);
+        color: #444;
+      }
+
+      .lease-term {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: clamp(5px, 1.5vw, 8px);
+      }
+
+      .lease-term:last-child {
+        margin-bottom: 0;
+      }
+
+      .price-tag {
+        margin-top: clamp(15px, 4vw, 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .price {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .price-type {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+        font-weight: normal;
+        margin-left: 5px;
+      }
+
+      .view-button {
+        background-color: #4caf50;
+        color: #ffffff;
+        border: none;
+        border-radius: clamp(20px, 5vw, 25px);
+        padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .view-button:hover {
+        background-color: #388e3c;
+      }
+
+      .lease-terms-selector {
+        display: flex;
+        margin-bottom: clamp(20px, 5vw, 25px);
+        background-color: #f0f0f0;
+        border-radius: clamp(10px, 3vw, 15px);
+        overflow: hidden;
+        margin: 0 clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
+      }
+
+      .lease-term-option {
+        flex: 1;
+        padding: clamp(8px, 2vw, 10px);
+        text-align: center;
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #666;
+      }
+
+      .lease-term-option.active {
+        background-color: #4caf50;
+        color: #ffffff;
+      }
+
+      .load-more {
+        display: block;
+        width: calc(100% - clamp(30px, 8vw, 40px));
+        margin: 0 auto clamp(20px, 5vw, 25px);
+        background-color: #f0f0f0;
+        color: #000000;
+        border: 1px solid #e0e0e0;
+        border-radius: clamp(20px, 5vw, 25px);
+        padding: clamp(12px, 3vw, 15px);
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .load-more:hover {
+        background-color: #e0e0e0;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(76, 175, 80, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: clamp(8px, 2vw, 10px) 0;
+        margin-bottom: clamp(15px, 4vw, 20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: clamp(30px, 8vw, 50px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      @media (max-width: 480px) {
+        .bottom-navigation {
+          width: 95%;
+          margin-bottom: 10px;
+        }
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: clamp(10px, 2.5vw, 12px);
+        color: #000000;
+        font-weight: 500;
+        padding: 0 clamp(8px, 2vw, 10px);
+        text-decoration: none;
+        min-width: 0;
+        text-align: center;
+      }
+
+      .nav-item.active {
+        color: #ffffff;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #ffffff;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        margin-bottom: clamp(3px, 1vw, 5px);
+        font-size: clamp(16px, 4vw, 20px);
+      }
+
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <a href="dash.html" class="back-button">←</a>
+        <div class="page-title">Lease Cars</div>
+        <div class="filter-icon">≡</div>
+      </div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-icon">🔍</div>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search lease deals"
+          />
+        </div>
+      </div>
+
+      <div class="lease-banner">
+        <div class="lease-banner-title">Premium Leasing</div>
+        <div class="lease-banner-text">
+          Drive a new car every few years with flexible lease terms.
+        </div>
+        <div class="lease-features">
+          <div class="lease-feature">
+            <div class="lease-feature-icon">🛡️</div>
+            <div class="lease-feature-text">Insurance</div>
+          </div>
+          <div class="lease-feature">
+            <div class="lease-feature-icon">🔄</div>
+            <div class="lease-feature-text">Easy Upgrades</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lease-terms-selector">
+        <div class="lease-term-option active">12 Months</div>
+        <div class="lease-term-option">24 Months</div>
+        <!-- <div class="lease-term-option">48 Months</div> -->
+      </div>
+
+      <div class="filter-tags">
+        <div class="filter-tag active">All</div>
+        <div class="filter-tag">Sedan</div>
+        <div class="filter-tag">SUV</div>
+        <div class="filter-tag">Luxury</div>
+        <div class="filter-tag">Economy</div>
+        <div class="filter-tag">Electric</div>
+      </div>
+
+      <div class="section-title">Available Lease Deals</div>
+
+      <div class="cars-grid">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Mercedes-Benz E-Class" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Featured</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Mercedes-Benz E-Class</div>
+            <div class="car-type">Luxury Sedan</div>
+            <div class="car-description">
+              Experience ultimate luxury with the Mercedes-Benz E-Class,
+              featuring premium interior and cutting-edge technology.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                28 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💫</span>
+                Premium
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
+            </div>
+            <div class="lease-terms">
+              <div class="lease-term">
+                <span>Down Payment:</span>
+                <span>$4,500</span>
+              </div>
+              <div class="lease-term">
+                <span>Monthly Mileage:</span>
+                <span>1,000 miles</span>
+              </div>
+              <div class="lease-term">
+                <span>Residual Value:</span>
+                <span>$25,000</span>
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">
+                $599<span class="price-type">/month</span>
+              </div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Lease Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="BMW X5" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Featured</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">BMW X5</div>
+            <div class="car-type">Luxury SUV</div>
+            <div class="car-description">
+              The BMW X5 combines luxury, technology, and performance in a
+              versatile SUV package with spacious interior.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                23 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💫</span>
+                Premium Plus
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                7 seats
+              </div>
+            </div>
+            <div class="lease-terms">
+              <div class="lease-term">
+                <span>Down Payment:</span>
+                <span>$5,500</span>
+              </div>
+              <div class="lease-term">
+                <span>Monthly Mileage:</span>
+                <span>1,250 miles</span>
+              </div>
+              <div class="lease-term">
+                <span>Residual Value:</span>
+                <span>$32,000</span>
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">
+                $749<span class="price-type">/month</span>
+              </div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Lease Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Tesla Model Y" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Featured</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Tesla Model Y</div>
+            <div class="car-type">Electric SUV</div>
+            <div class="car-description">
+              Tesla's compact SUV with impressive range, dual-motor AWD, and
+              minimalist interior. Perfect for eco-conscious drivers.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⚡</span>
+                330 mi range
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">🔋</span>
+                75 kWh battery
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
+            </div>
+            <div class="lease-terms">
+              <div class="lease-term">
+                <span>Down Payment:</span>
+                <span>$4,000</span>
+              </div>
+              <div class="lease-term">
+                <span>Monthly Mileage:</span>
+                <span>1,000 miles</span>
+              </div>
+              <div class="lease-term">
+                <span>Residual Value:</span>
+                <span>$27,000</span>
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">
+                $499<span class="price-type">/month</span>
+              </div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Lease Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Audi A4" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Featured</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Audi A4</div>
+            <div class="car-type">Luxury Sedan</div>
+            <div class="car-description">
+              The Audi A4 delivers sophisticated design, premium interior, and
+              advanced technology in a compact luxury sedan.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                30 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💫</span>
+                Premium
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
+            </div>
+            <div class="lease-terms">
+              <div class="lease-term">
+                <span>Down Payment:</span>
+                <span>$3,500</span>
+              </div>
+              <div class="lease-term">
+                <span>Monthly Mileage:</span>
+                <span>1,000 miles</span>
+              </div>
+              <div class="lease-term">
+                <span>Residual Value:</span>
+                <span>$22,000</span>
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">
+                $399<span class="price-type">/month</span>
+              </div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Lease Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="load-more">Load More</button>
+
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item">
+          <div class="nav-icon">🏠</div>
+          <span>Home</span>
+        </a>
+        <a href="search.html" class="nav-item">
+          <div class="nav-icon">🔍</div>
+          <span>Search</span>
+        </a>
+        <a href="favorites.html" class="nav-item active">
+          <div class="nav-icon">❤️</div>
+          <span>Favorites</span>
+        </a>
+        <a href="activity.html" class="nav-item">
+          <div class="nav-icon">📑</div>
+          <span>Activity</span>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Lease term option selection
+      const leaseTermOptions = document.querySelectorAll(".lease-term-option");
+
+      leaseTermOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          // Remove active class from all options
+          leaseTermOptions.forEach((o) => o.classList.remove("active"));
+
+          // Add active class to clicked option
+          option.classList.add("active");
+
+          // Update prices based on selected term
+          updatePrices(option.textContent.trim());
+        });
+      });
+
+      function updatePrices(term) {
+        const prices = document.querySelectorAll(".price");
+
+        switch (term) {
+          case "12 Months":
+            prices[0].innerHTML = '$599<span class="price-type">/month</span>';
+            prices[1].innerHTML = '$749<span class="price-type">/month</span>';
+            prices[2].innerHTML = '$499<span class="price-type">/month</span>';
+            prices[3].innerHTML = '$399<span class="price-type">/month</span>';
+            break;
+          case "24 Months":
+            prices[0].innerHTML = '$549<span class="price-type">/month</span>';
+            prices[1].innerHTML = '$699<span class="price-type">/month</span>';
+            prices[2].innerHTML = '$469<span class="price-type">/month</span>';
+            prices[3].innerHTML = '$369<span class="price-type">/month</span>';
+            break;
+        }
+      }
+
+      // Filter functionality
+      const filterTags = document.querySelectorAll(".filter-tag");
+
+      filterTags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+          // Remove active class from all tags
+          filterTags.forEach((t) => t.classList.remove("active"));
+
+          // Add active class to clicked tag
+          tag.classList.add("active");
+
+          // Here you would implement the actual filtering logic
+          console.log("Selected filter:", tag.textContent);
+        });
+      });
+
+      // Load more functionality
+      const loadMoreButton = document.querySelector(".load-more");
+
+      loadMoreButton.addEventListener("click", () => {
+        // Here you would implement the logic to load more cars
+        console.log("Load more clicked");
+      });
+    </script>
+  </body>
+</html>
