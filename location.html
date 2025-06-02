@@ -55,6 +55,7 @@
             padding: 15px 20px 10px;
             color: var(--dark);
             font-size: 14px;
+            z-index: 10;
         }
         
         .header {
@@ -75,6 +76,8 @@
             cursor: pointer;
             margin-right: 15px;
             color: var(--dark);
+            border: none;
+            transition: var(--transition);
         }
         
         .back-button:hover {
@@ -127,6 +130,8 @@
         
         .location-options {
             padding: 0 25px;
+            flex: 1;
+            overflow-y: auto;
         }
         
         .option-group-title {
@@ -202,7 +207,8 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 30px 25px;
+            margin: 30px 25px 50px;
+            width: calc(100% - 50px);
         }
         
         .action-button:hover {
@@ -248,19 +254,103 @@
             font-weight: 600;
             color: var(--dark);
         }
+
+        /* Bottom Sheet Styles */
+        .bottom-sheet-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
         
-        .map-view {
-            margin-top: auto;
-            height: 250px;
-            background: #f5f5f5;
-            position: relative;
-            border-top: 1px solid #eee;
+        .bottom-sheet-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .bottom-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--light);
+            border-radius: 20px 20px 0 0;
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            max-width: 430px;
+            margin: 0 auto;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bottom-sheet.active {
+            transform: translateY(0);
+        }
+        
+        .bottom-sheet-handle {
+            width: 40px;
+            height: 4px;
+            background-color: #ddd;
+            border-radius: 2px;
+            margin: 12px auto 20px;
+            cursor: pointer;
+        }
+        
+        .bottom-sheet-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .bottom-sheet-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .close-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+        
+        .close-button:hover {
+            background-color: #eee;
         }
         
         .map-container {
-            width: 100%;
-            height: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             position: relative;
+            margin: 20px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .map-placeholder {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
         }
         
         .map-pin {
@@ -286,20 +376,12 @@
             }
         }
         
-        .map-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 0) 100%);
-            display: flex;
-            padding: 25px 20px 20px;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
         .location-details {
-            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+            margin: 0 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
         
         .picked-location {
@@ -314,74 +396,107 @@
             font-size: 12px;
         }
         
-        .map-action-button {
-            background-color: var(--primary);
+        .bottom-sheet-actions {
+            padding: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .cancel-button {
+            flex: 1;
+            background-color: #f5f5f5;
             color: var(--dark);
-            padding: 12px 20px;
+            padding: 16px;
             border-radius: 12px;
             text-align: center;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             border: none;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 15px;
+            transition: var(--transition);
         }
         
-        .map-action-button:hover {
+        .cancel-button:hover {
+            background-color: #eee;
+        }
+        
+        .confirm-button {
+            flex: 2;
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .confirm-button:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
         
-        .bottom-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: rgba(255, 191, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        
-        .nav-item {
+        .map-controls {
+            position: absolute;
+            right: 15px;
+            top: 15px;
             display: flex;
             flex-direction: column;
+            gap: 8px;
+        }
+        
+        .map-control-button {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            display: flex;
             align-items: center;
-            font-size: 12px;
-            color: #000000;
-            font-weight: 500;
-            padding: 0 10px;
-            text-decoration: none;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
-        .nav-item.active {
-            color: #ffffff;
-            position: relative;
+        .map-control-button:hover {
+            background-color: white;
+            transform: scale(1.05);
         }
         
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #ffffff;
-            border-radius: 50%;
+        .location-search-in-map {
+            padding: 15px 20px;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .map-search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 10px 14px;
+        }
+        
+        .map-search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--dark);
+            font-size: 14px;
+            width: 100%;
+            margin-left: 8px;
+        }
+        
+        .map-search-input::placeholder {
+            color: #aaa;
         }
     </style>
 </head>
@@ -396,12 +511,12 @@
         </div>
         
         <div class="header">
-            <div class="back-button" onclick="window.location.href='login.html'">
+            <button class="back-button" onclick="window.location.href='login.html'">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 12H5"></path>
                     <path d="M12 19l-7-7 7-7"></path>
                 </svg>
-            </div>
+            </button>
             <div class="page-title">Select Location</div>
         </div>
         
@@ -485,47 +600,207 @@
                     </div>
                 </div>
             </div>
-            
-            <button class="action-button" onclick="document.getElementById('map-picker').style.display='block'">
-                Pick on Map
+        </div>
+        
+        <button class="action-button" onclick="openBottomSheet()">
+            📍 Pick on Map
+        </button>
+    </div>
+
+    <!-- Bottom Sheet Overlay -->
+    <div class="bottom-sheet-overlay" id="bottomSheetOverlay" onclick="closeBottomSheet()"></div>
+    
+    <!-- Bottom Sheet -->
+    <div class="bottom-sheet" id="bottomSheet">
+        <div class="bottom-sheet-handle" onclick="closeBottomSheet()"></div>
+        
+        <div class="bottom-sheet-header">
+            <div class="bottom-sheet-title">Pick Location</div>
+            <button class="close-button" onclick="closeBottomSheet()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
             </button>
         </div>
         
-        <!-- Map Picker (hidden by default) -->
-        <div id="map-picker" class="map-view" style="display: none;">
-            <div class="map-container">
-                <div class="map-pin">📍</div>
+        <div class="location-search-in-map">
+            <div class="map-search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="map-search-input" placeholder="Search location on map...">
             </div>
-            <div class="map-overlay">
-                <div class="location-details">
-                    <div class="picked-location">Dubai Media City</div>
-                    <div class="location-coordinates">25.0991°N, 55.1756°E</div>
-                </div>
-                <button class="map-action-button" onclick="window.location.href='dash.html'">
-                    Confirm
+        </div>
+        
+        <div class="map-container">
+            <div class="map-placeholder">
+                🗺️ Interactive Map<br>
+                <small style="font-size: 14px; opacity: 0.8;">Drag to explore • Tap to select</small>
+            </div>
+            <div class="map-pin">📍</div>
+            
+            <div class="map-controls">
+                <button class="map-control-button" onclick="zoomIn()" title="Zoom In">+</button>
+                <button class="map-control-button" onclick="zoomOut()" title="Zoom Out">−</button>
+                <button class="map-control-button" onclick="getCurrentLocation()" title="My Location">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
                 </button>
             </div>
         </div>
         
-        <!-- Bottom Navigation -->
-        <!-- <div class="bottom-navigation">
-            <a href="dash.html" class="nav-item">
-                <div class="nav-icon">🏠</div>
-                Home
-            </a>
-            <a href="search.html" class="nav-item">
-                <div class="nav-icon">🔍</div>
-                Search
-            </a>
-            <a href="favorites.html" class="nav-item">
-                <div class="nav-icon">❤️</div>
-                Favorites
-            </a>
-            <a href="activity.html" class="nav-item">
-                <div class="nav-icon">📑</div>
-                Activity
-            </a>
-        </div> -->
+        <div class="location-details">
+            <div class="picked-location">Dubai Media City</div>
+            <div class="location-coordinates">25.0991°N, 55.1756°E</div>
+        </div>
+        
+        <div class="bottom-sheet-actions">
+            <button class="cancel-button" onclick="closeBottomSheet()">Cancel</button>
+            <button class="confirm-button" onclick="confirmLocation()">Confirm Location</button>
+        </div>
     </div>
+
+    <script>
+        function openBottomSheet() {
+            const overlay = document.getElementById('bottomSheetOverlay');
+            const bottomSheet = document.getElementById('bottomSheet');
+            
+            overlay.classList.add('active');
+            bottomSheet.classList.add('active');
+            
+            // Prevent body scroll when bottom sheet is open
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeBottomSheet() {
+            const overlay = document.getElementById('bottomSheetOverlay');
+            const bottomSheet = document.getElementById('bottomSheet');
+            
+            overlay.classList.remove('active');
+            bottomSheet.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+        
+        function confirmLocation() {
+            // Show loading state
+            const confirmButton = document.querySelector('.confirm-button');
+            const originalText = confirmButton.textContent;
+            confirmButton.textContent = 'Confirming...';
+            confirmButton.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Location confirmed! Redirecting to dashboard...');
+                window.location.href = 'dash.html';
+            }, 1000);
+        }
+        
+        function zoomIn() {
+            // Simulate zoom in functionality
+            console.log('Zooming in...');
+            // Add visual feedback
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 100);
+            }, 100);
+        }
+        
+        function zoomOut() {
+            // Simulate zoom out functionality
+            console.log('Zooming out...');
+            // Add visual feedback
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 100);
+            }, 100);
+        }
+        
+        function getCurrentLocation() {
+            // Simulate getting current location
+            console.log('Getting current location...');
+            const button = event.target.closest('.map-control-button');
+            const originalContent = button.innerHTML;
+            
+            // Show loading spinner
+            button.innerHTML = '<div style="width: 16px; height: 16px; border: 2px solid #ccc; border-top: 2px solid #333; border-radius: 50%; animation: spin 1s linear infinite;"></div>';
+            
+            // Add spinner animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                // Update location details
+                document.querySelector('.picked-location').textContent = 'Current Location - Dubai Marina';
+                document.querySelector('.location-coordinates').textContent = '25.0756°N, 55.1394°E';
+                document.head.removeChild(style);
+            }, 1500);
+        }
+        
+        // Handle map interaction simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapContainer = document.querySelector('.map-container');
+            const locationDetails = document.querySelector('.location-details');
+            
+            // Simulate map click to change location
+            mapContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('map-control-button') || e.target.closest('.map-control-button')) {
+                    return; // Don't trigger location change for control buttons
+                }
+                
+                // Simulate location change
+                const locations = [
+                    { name: 'Dubai Media City', coords: '25.0991°N, 55.1756°E' },
+                    { name: 'Dubai Marina', coords: '25.0756°N, 55.1394°E' },
+                    { name: 'Jumeirah Beach', coords: '25.2048°N, 55.2708°E' },
+                    { name: 'Business Bay', coords: '25.1929°N, 55.2636°E' },
+                    { name: 'DIFC', coords: '25.2141°N, 55.2841°E' }
+                ];
+                
+                const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+                document.querySelector('.picked-location').textContent = randomLocation.name;
+                document.querySelector('.location-coordinates').textContent = randomLocation.coords;
+                
+                // Add visual feedback
+                const pin = document.querySelector('.map-pin');
+                pin.style.animation = 'none';
+                setTimeout(() => {
+                    pin.style.animation = 'bounce 1.5s infinite';
+                }, 100);
+            });
+        });
+        
+        // Close bottom sheet on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeBottomSheet();
+            }
+        });
+        
+        // Prevent bottom sheet from closing when clicking inside it
+        document.getElementById('bottomSheet').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
 </body>
 </html>
