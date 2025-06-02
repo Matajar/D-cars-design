@@ -325,6 +325,16 @@
             object-fit: cover;
         }
         
+        .car-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+        }
+        
         .favorite-button {
             position: absolute;
             top: clamp(10px, 3vw, 15px);
@@ -650,6 +660,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Hyundai i20">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.5</span>
@@ -667,7 +678,7 @@
                         </div>
                         <div class="price-info">
                             <span class="price-icon">💲</span> 
-                            <span class="price-text">Rs.7.23-10.54L*</span>
+                            <span class="price-text">Rs.7.23L*</span>
                         </div>
                     </div>
                 </div>
@@ -676,6 +687,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Toyota Fortuner">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.3</span>
@@ -702,6 +714,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Tesla Model 3">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.8</span>
@@ -735,6 +748,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Hyundai Creta">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.7</span>
@@ -761,6 +775,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Tata Punch">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.4</span>
@@ -787,6 +802,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="BMW X5">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.9</span>
@@ -820,6 +836,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Ferrari Roma">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.90</span>
@@ -846,6 +863,7 @@
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Audi A8">
+                    <div class="car-overlay"></div>
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.75</span>
@@ -864,6 +882,33 @@
                         <div class="price-info">
                             <span class="price-icon">💲</span> 
                             <span class="price-text">$35.00/hr</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="car-card" onclick="window.location.href='details.html'">
+                <div class="car-image">
+                    <img src="assets/car-img1.png" alt="Mercedes-Benz S-Class">
+                    <div class="car-overlay"></div>
+                    <div class="rating">
+                        <span class="rating-star">★</span>
+                        <span class="rating-value">4.82</span>
+                    </div>
+                    <button class="favorite-button">🤍</button>
+                </div>
+                <div class="car-details">
+                    <div class="car-name">Mercedes-Benz S-Class</div>
+                    <div class="car-availability">Limited Availability</div>
+                    
+                    <div class="car-features">
+                        <div class="seats-info">
+                            <span class="seats-icon">🔒</span> 
+                            <span>4 Seats</span>
+                        </div>
+                        <div class="price-info">
+                            <span class="price-icon">💲</span> 
+                            <span class="price-text">$42.00/hr</span>
                         </div>
                     </div>
                 </div>

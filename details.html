@@ -114,6 +114,32 @@
         object-fit: cover;
       }
 
+      .carousel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .carousel-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .carousel-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .carousel-item.active {
+        opacity: 1;
+      }
+
       .image-indicators {
         position: absolute;
         bottom: 15px;
@@ -121,6 +147,7 @@
         transform: translateX(-50%);
         display: flex;
         gap: 5px;
+        z-index: 5;
       }
 
       .indicator {
@@ -128,6 +155,8 @@
         height: 8px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: all 0.3s ease;
       }
 
       .indicator.active {
@@ -392,7 +421,7 @@
       .similar-car-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
 
       .similar-car-details {
@@ -724,12 +753,27 @@
       </div>
 
       <div class="car-image-container">
-        <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+        <div class="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+            </div>
+            <div class="carousel-item">
+              <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+            </div>
+            <div class="carousel-item">
+              <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+            </div>
+            <div class="carousel-item">
+              <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+            </div>
+          </div>
+        </div>
         <div class="image-indicators">
-          <div class="indicator active"></div>
-          <div class="indicator"></div>
-          <div class="indicator"></div>
-          <div class="indicator"></div>
+          <div class="indicator active" onclick="currentSlide(1)"></div>
+          <div class="indicator" onclick="currentSlide(2)"></div>
+          <div class="indicator" onclick="currentSlide(3)"></div>
+          <div class="indicator" onclick="currentSlide(4)"></div>
         </div>
       </div>
 
@@ -841,36 +885,36 @@
         <div class="similar-cars-section">
           <div class="section-title">Similar Cars</div>
           <div class="cars-scroll">
-            <div class="similar-car-card">
+            <div class="similar-car-card" onclick="window.location.href='details.html'">
               <div class="similar-car-image">
-                <img src="assets/car-img1.png" alt="BMW i4" />
+                <img src="assets/car-3.png" alt="BMW i4" />
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">BMW i4</div>
                 <div class="similar-car-price">$56,000</div>
               </div>
             </div>
-            <div class="similar-car-card">
+            <div class="similar-car-card" onclick="window.location.href='details.html'">
               <div class="similar-car-image">
-                <img src="assets/car-img1.png" alt="Polestar 2" />
+                <img src="assets/car-4.png" alt="Polestar 2" />
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Polestar 2</div>
                 <div class="similar-car-price">$49,000</div>
               </div>
             </div>
-            <div class="similar-car-card">
+            <div class="similar-car-card" onclick="window.location.href='details.html'">
               <div class="similar-car-image">
-                <img src="assets/car-img1.png" alt="Audi e-tron GT" />
+                <img src="assets/car-5.png" alt="Audi e-tron GT" />
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Audi e-tron GT</div>
                 <div class="similar-car-price">$102,000</div>
               </div>
             </div>
-            <div class="similar-car-card">
+            <div class="similar-car-card" onclick="window.location.href='details.html'">
               <div class="similar-car-image">
-                <img src="assets/car-img1.png" alt="Lucid Air" />
+                <img src="assets/car-6.png" alt="Lucid Air" />
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Lucid Air</div>
@@ -1072,10 +1116,42 @@
         localStorage.setItem('bookingDate', bookingDate);
         localStorage.setItem('bookingTime', '10:30 AM - 11:30 AM');
         localStorage.setItem('bookingId', 'DC' + Math.floor(10000 + Math.random() * 90000));
+        
+        // Carousel functionality
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        // Auto cycle through slides
+        setInterval(function() {
+            showSlides(slideIndex += 1);
+        }, 5000);
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-item");
+            let dots = document.getElementsByClassName("indicator");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+        }
     </script>
 
       <!-- Bottom Navigation -->
-      <div class="bottom-navigation">
+      <!-- <div class="bottom-navigation">
             <a href="dash.html" class="nav-item">
                 <div class="nav-icon">🏠</div>
                 Home
@@ -1092,7 +1168,7 @@
                 <div class="nav-icon">📑</div>
                 Activity
             </a>
-        </div>
+        </div> -->
     </div>
   </body>
 </html>
