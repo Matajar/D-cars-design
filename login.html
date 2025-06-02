@@ -12,18 +12,32 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        :root {
+            --primary: #FFBF00;
+            --primary-dark: #E6AC00;
+            --secondary: #FFDA77;
+            --accent: #FFF0C8;
+            --dark: #1A202C;
+            --light: #F6F7F9;
+            --gray: #90A3BF;
+            --background: #FFFFFF;
+            --card-bg: #F6F7F9;
+            --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            background-color: #000000;
-            color: #fff;
+            background-color: var(--dark);
+            color: var(--light);
             line-height: 1.6;
             margin: 0;
             padding: 0;
         }
         
         .container {
-            max-width: 380px;
+            max-width: 390px;
             margin: 0 auto;
-            background-color: #000000;
+            background-color: var(--dark);
             min-height: 100vh;
             position: relative;
             overflow: hidden;
@@ -50,24 +64,24 @@
         }
         
         .bg-circle-1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #FFBF00, #FF8300);
+            width: 320px;
+            height: 320px;
+            background: var(--primary);
             top: -100px;
             right: -150px;
         }
         
         .bg-circle-2 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #FFBF00, #FF8300);
+            width: 240px;
+            height: 240px;
+            background: var(--secondary);
             bottom: 20%;
             left: -100px;
         }
         
         .bg-line {
             position: absolute;
-            background-color: rgba(255, 191, 0, 0.1);
+            background-color: rgba(84, 166, 255, 0.1);
             width: 100%;
             height: 1px;
             top: 25%;
@@ -76,7 +90,7 @@
         
         .bg-line-2 {
             position: absolute;
-            background-color: rgba(255, 191, 0, 0.07);
+            background-color: rgba(84, 166, 255, 0.07);
             width: 100%;
             height: 1px;
             top: 45%;
@@ -87,12 +101,12 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(196, 215, 255, 0.1) 1px, transparent 1px);
             background-size: 20px 20px;
             opacity: 0.3;
         }
         
-        /* Original elements with enhancements */
+        /* Content elements */
         .status-bar {
             position: absolute;
             top: 0;
@@ -101,13 +115,13 @@
             display: flex;
             justify-content: space-between;
             padding: 15px 20px 10px;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--light);
             font-size: 14px;
             z-index: 2;
         }
         
         .logo-container {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             margin-top: 30px;
             position: relative;
             z-index: 2;
@@ -120,15 +134,17 @@
         }
         
         .logo-d {
-            font-size: 40px;
+            font-size: 42px;
             font-weight: bold;
-            color: #FFBF00;
+            color: var(--primary);
+            letter-spacing: -1px;
         }
         
         .logo-cars {
-            font-size: 40px;
+            font-size: 42px;
             font-weight: bold;
-            color: white;
+            color: var(--light);
+            letter-spacing: -1px;
         }
         
         .header {
@@ -142,11 +158,12 @@
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 12px;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.5px;
+            color: var(--light);
         }
         
         .welcome-subtitle {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray);
             font-size: 16px;
         }
         
@@ -155,45 +172,45 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-top: 30px;
+            margin-top: 10px;
             position: relative;
             z-index: 2;
         }
         
         .input-field {
-            background-color: rgba(40, 45, 60, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(26, 32, 44, 0.6);
+            border: 1px solid rgba(144, 163, 191, 0.2);
             padding: 18px 20px;
-            border-radius: 16px;
-            color: white;
+            border-radius: 12px;
+            color: var(--light);
             font-size: 16px;
             width: 100%;
             outline: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            transition: var(--transition);
         }
         
         .input-field:focus {
-            border-color: #FFBF00;
-            box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(84, 166, 255, 0.2);
         }
         
         .input-field::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--gray);
         }
         
         .forgot-password {
             text-align: right;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray);
             margin: 10px 0 25px;
             text-decoration: none;
             position: relative;
             z-index: 2;
+            transition: var(--transition);
         }
         
         .forgot-password:hover {
-            color: #FFBF00;
+            color: var(--secondary);
         }
         
         .button-container {
@@ -201,63 +218,76 @@
             flex-direction: column;
             gap: 16px;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
             position: relative;
             z-index: 2;
         }
         
         .sign-in-button {
-            background-color: #FFBF00;
-            color: #1a2b50;
+            background-color: var(--primary);
+            color: var(--dark);
             padding: 18px;
-            border-radius: 16px;
+            border-radius: 12px;
             text-align: center;
             font-weight: 600;
             font-size: 16px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.3);
         }
         
         .sign-in-button:hover {
-            background-color: #e6ac00;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 191, 0, 0.3);
+            box-shadow: 0 8px 15px rgba(255, 191, 0, 0.4);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--gray);
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: rgba(144, 163, 191, 0.2);
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 15px;
         }
         
         .social-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            border-radius: 16px;
-            font-weight: 600;
-            font-size: 16px;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            gap: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            flex: 1;
+            border: 1px solid rgba(144, 163, 191, 0.2);
+            background-color: rgba(26, 32, 44, 0.6);
         }
         
-        .google-button {
-            background-color: #4285F4;
-            color: white;
-        }
-        
-        .google-button:hover {
-            background-color: #357AE8;
-            transform: translateY(-1px);
-        }
-        
-        .apple-button {
-            background-color: white;
-            color: #000;
-        }
-        
-        .apple-button:hover {
-            background-color: #f1f1f1;
-            transform: translateY(-1px);
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .social-icon {
@@ -272,25 +302,30 @@
             margin-top: 40px;
             text-align: center;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray);
             position: relative;
             z-index: 2;
         }
         
         .signup-text {
-            color: #FFBF00;
+            color: var(--primary);
             font-weight: 600;
             text-decoration: none;
             margin-left: 5px;
+            transition: var(--transition);
+        }
+        
+        .signup-text:hover {
+            color: var(--secondary);
         }
         
         .bottom-indicator {
             position: absolute;
-            bottom: 10px;
-            width: 40%;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
+            bottom: 20px;
+            width: 35%;
+            height: 4px;
+            background-color: rgba(144, 163, 191, 0.2);
+            border-radius: 2px;
             z-index: 2;
         }
     </style>
@@ -307,7 +342,7 @@
         </div>
         
         <div class="status-bar">
-            <div class="time">12:57</div>
+            <div class="time">9:41</div>
             <div class="indicators">
                 <span>●●●●</span>
                 <span>●●●</span>
@@ -321,12 +356,12 @@
         </div>
         
         <div class="header">
-            <h1 class="welcome-title">Welcome Back!</h1>
-            <p class="welcome-subtitle">Please sign in to your account</p>
+            <h1 class="welcome-title">Welcome Back</h1>
+            <p class="welcome-subtitle">Sign in to access your account</p>
         </div>
         
         <div class="form-container">
-            <input type="email" class="input-field" placeholder="Email">
+            <input type="email" class="input-field" placeholder="Email or username">
             <input type="password" class="input-field" placeholder="Password">
             <a href="#" class="forgot-password">Forgot Password?</a>
         </div>
@@ -334,27 +369,43 @@
         <div class="button-container">
             <button class="sign-in-button" onclick="window.location.href='location.html'">Sign In</button>
             
-            <button class="social-button google-button">
-                <div class="social-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="#fff" d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/>
-                    </svg>
-                </div>
-                Sign In With Google
-            </button>
+            <div class="divider">
+                <span class="divider-text">or continue with</span>
+            </div>
             
-            <button class="social-button apple-button">
-                <div class="social-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
-                        <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM14.953.3c.818-.987 1.376-2.376 1.221-3.74-1.183.052-2.61.805-3.454 1.792-.753.87-1.415 2.288-1.234 3.625 1.325.104 2.677-.678 3.467-1.677z"/>
-                    </svg>
-                </div>
-                Sign In With Apple
-            </button>
+            <div class="social-buttons">
+                <button class="social-button">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.8055 10.0415H21V10H12V14H17.6515C16.827 16.3285 14.6115 18 12 18C8.6865 18 6 15.3135 6 12C6 8.6865 8.6865 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C6.4775 2 2 6.4775 2 12C2 17.5225 6.4775 22 12 22C17.5225 22 22 17.5225 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#FFC107"/>
+                            <path d="M3.15295 7.3455L6.43845 9.755C7.32745 7.554 9.48045 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C8.15895 2 4.82795 4.1685 3.15295 7.3455Z" fill="#FF3D00"/>
+                            <path d="M12 22C14.583 22 16.93 21.0115 18.7045 19.404L15.6095 16.785C14.5718 17.5742 13.3038 18.001 12 18C9.39903 18 7.19053 16.3415 6.35853 14.027L3.09753 16.5395C4.75253 19.778 8.11353 22 12 22Z" fill="#4CAF50"/>
+                            <path d="M21.8055 10.0415H21V10H12V14H17.6515C17.2571 15.1082 16.5467 16.0766 15.608 16.7855L15.6095 16.7845L18.7045 19.4035C18.4855 19.6025 22 17 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#1976D2"/>
+                        </svg>
+                    </div>
+                </button>
+                
+                <button class="social-button">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF">
+                            <path d="M16.7 0H7.3C3.3 0 0 3.3 0 7.3v9.3C0 20.7 3.3 24 7.3 24h9.3c4.1 0 7.3-3.3 7.3-7.3V7.3C24 3.3 20.7 0 16.7 0zM12 18.9c-3.8 0-6.9-3.1-6.9-6.9s3.1-6.9 6.9-6.9 6.9 3.1 6.9 6.9-3.1 6.9-6.9 6.9zm7.5-12.3c-1.1 0-1.9-0.9-1.9-1.9s0.9-1.9 1.9-1.9 1.9 0.9 1.9 1.9-0.9 1.9-1.9 1.9z"/>
+                            <path d="M12 7.1C9.3 7.1 7 9.3 7 12s2.3 4.9 5 4.9 5-2.2 5-4.9-2.3-4.9-5-4.9z"/>
+                        </svg>
+                    </div>
+                </button>
+                
+                <button class="social-button">
+                    <div class="social-icon">
+                        <svg width="18" height="22" viewBox="0 0 24 24" fill="#FFFFFF">
+                            <path d="M17.0425 21.9975C15.6225 22.0575 14.5325 21.1575 13.2425 20.2875C12.0625 19.4875 11.0525 19.8075 9.75248 20.4375C8.40248 21.0975 7.50248 20.8875 6.65248 19.9775C3.50248 16.4875 4.20248 11.1675 6.60248 8.75754C8.25248 7.10754 9.60248 7.50754 11.7025 8.87754C12.9625 9.68754 13.8925 9.65754 15.1525 8.85754C16.3225 8.10754 17.4525 7.93754 18.6025 9.07754C19.4525 9.91754 19.9525 10.9775 19.9925 12.3175C20.1025 15.3175 18.0725 18.3775 15.8225 19.7675C15.7326 19.8185 15.6397 19.8633 15.5425 19.9075C17.1125 17.9075 17.1025 14.5175 15.8025 12.6975C14.7725 11.2575 12.7325 11.4075 11.4025 12.8975C10.1325 14.3275 10.1325 16.5475 11.3725 17.9175C11.9125 18.5075 12.5825 18.9075 13.3325 18.9975L13.0925 19.1175C11.6525 19.8775 10.0825 19.3275 9.26248 18.0775C7.99248 16.1975 8.18248 13.3075 9.67248 11.5675C11.2425 9.73754 14.1125 9.38754 16.2525 10.7975C18.2825 12.1375 19.1525 15.1975 17.9025 17.6975C17.6525 18.1275 17.3525 18.5375 17.0425 18.9175V21.9975ZM12.0025 7.49754C12.0025 5.96754 12.3025 4.48754 13.3325 3.28754C14.0525 2.44754 14.9925 1.92754 16.0725 1.65754C16.0725 3.20754 15.8025 4.66754 14.9425 5.97754C14.2225 7.06754 13.0825 7.82754 12.0025 7.49754Z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
         </div>
         
         <div class="signup-link">
-            Don't Have An Account? <a href="#" class="signup-text">Sign Up</a>
+            Don't have an account? <a href="#" class="signup-text">Sign Up</a>
         </div>
         
         <div class="bottom-indicator"></div>

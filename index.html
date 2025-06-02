@@ -12,49 +12,69 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        :root {
+            --primary: #FFBF00;
+            --primary-dark: #E6AC00;
+            --secondary: #FFDA77;
+            --accent: #FFF0C8;
+            --dark: #1A202C;
+            --light: #F6F7F9;
+            --gray: #90A3BF;
+            --background: #FFFFFF;
+            --card-bg: #F6F7F9;
+            --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            background-color: #0a0a0a;
-            color: #fff;
+            background-color: var(--background);
+            color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
             max-width: 480px;
             margin: 0 auto;
-            background: #111;
-            background-image: linear-gradient(45deg, rgba(25, 25, 25, 0.8) 0%, rgba(15, 15, 15, 0.8) 100%), url('/api/placeholder/480/800');
+            background: var(--dark);
+            background-image: linear-gradient(45deg, rgba(26, 32, 44, 0.9) 0%, rgba(20, 26, 38, 0.95) 100%);
             background-size: cover;
             min-height: 100vh;
             position: relative;
-            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
         
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 24px 20px;
         }
         
         .brand {
-            color: #FFBF00;
-            font-weight: bold;
-            font-size: 18px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.5px;
         }
         
         .skip-button {
-            color: #fff;
+            color: var(--light);
             font-size: 16px;
             cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .skip-button:hover {
+            opacity: 1;
         }
         
         .navigation-dots {
             display: flex;
             justify-content: center;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         
         .dot {
@@ -62,39 +82,68 @@
             height: 8px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
         }
         
         .dot.active {
-            background-color: #FFBF00;
-            width: 20px;
+            background-color: var(--primary);
+            width: 24px;
             border-radius: 10px;
         }
         
         .content {
             padding: 40px 30px;
-            margin-top: 40px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 1;
         }
         
         .title {
-            font-size: 38px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
             line-height: 1.2;
+            color: var(--light);
+            letter-spacing: -0.5px;
         }
         
         .subtitle {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             max-width: 280px;
+            line-height: 1.5;
+        }
+        
+        .car-image-container {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
         }
         
         .car-image {
+            position: relative;
+            width: 100%;
+            height: auto;
+            z-index: 2;
+            filter: drop-shadow(0 20px 25px rgba(53, 99, 233, 0.25));
+            transform: scale(1.1);
+        }
+        
+        .circle-bg {
             position: absolute;
-            bottom: 100px;
-            right: 0;
-            width: 95%;
-            /* transform: rotate(5deg); */
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary) 0%, rgba(255, 191, 0, 0) 70%);
+            opacity: 0.2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
         }
         
         .button-container {
@@ -103,11 +152,12 @@
             left: 0;
             right: 0;
             padding: 0 30px;
+            z-index: 5;
         }
         
         .get-started-button {
-            background-color: #fff;
-            color: #111;
+            background-color: var(--primary);
+            color: var(--dark);
             padding: 18px;
             border-radius: 12px;
             text-align: center;
@@ -117,20 +167,57 @@
             width: 100%;
             cursor: pointer;
             border: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            box-shadow: 0 8px 16px rgba(255, 191, 0, 0.2);
         }
         
         .get-started-button:hover {
-            background-color: #FFBF00;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 191, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 191, 0, 0.3);
+        }
+        
+        .bg-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.1;
+        }
+        
+        .bg-circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+        }
+        
+        .bg-circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="bg-decoration">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+        </div>
+        
         <div class="header">
-            <div class="brand">DRentIt</div>
+            <div class="brand">DCars</div>
             <div class="skip-button">Skip</div>
         </div>
         
@@ -142,11 +229,14 @@
         </div>
         
         <div class="content">
-            <h1 class="title">Premium car rental</h1>
-            <p class="subtitle">Rent the car of your dreams with home delivery</p>
+            <h1 class="title">Premium car services</h1>
+            <p class="subtitle">Rent, lease or buy the car of your dreams with home delivery</p>
+            
+            <div class="car-image-container">
+                <div class="circle-bg"></div>
+                <img src="assets/car-img1.png" alt="Premium sports car" class="car-image">
+            </div>
         </div>
-        
-        <img src="assets/car-img1.png" alt="Premium yellow sports car" class="car-image">
         
         <div class="button-container">
             <button class="get-started-button" onclick="window.location.href='login.html'">

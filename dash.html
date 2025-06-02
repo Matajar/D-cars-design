@@ -167,8 +167,9 @@
             position: absolute;
             right: -20px;
             bottom: -10px;
-            width: 140px;
+            width: 170px;
             height: auto;
+            transform: scaleX(-1);
         }
         
         .section-header {
@@ -425,6 +426,7 @@
             color: #000000;
             font-weight: 500;
             padding: 0 10px;
+            text-decoration: none;
         }
         
         .nav-item.active {
@@ -488,7 +490,7 @@
                 <div class="banner-subtitle">Cars with Pride</div>
                 <button class="banner-button">Explore</button>
             </div>
-            <img src="/api/placeholder/140/90" alt="Black SUV" class="banner-image">
+            <img src="assets/car-img1.png" alt="Premium Car" class="banner-image">
         </div>
         
         <div class="section-header">
@@ -577,7 +579,7 @@
         <div class="cars-scroll">
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Hyundai i20">
+                    <img src="assets/car-img1.png" alt="Hyundai i20">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.5</span>
@@ -601,7 +603,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Toyota Fortuner">
+                    <img src="assets/car-img1.png" alt="Toyota Fortuner">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.3</span>
@@ -625,7 +627,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Tesla Model 3">
+                    <img src="assets/car-img1.png" alt="Tesla Model 3">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.8</span>
@@ -656,7 +658,7 @@
         <div class="cars-scroll">
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Hyundai Creta">
+                    <img src="assets/car-img1.png" alt="Hyundai Creta">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.7</span>
@@ -680,7 +682,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Tata Punch">
+                    <img src="assets/car-img1.png" alt="Tata Punch">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.4</span>
@@ -704,7 +706,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="BMW X5">
+                    <img src="assets/car-img1.png" alt="BMW X5">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.9</span>
@@ -735,7 +737,7 @@
         <div class="cars-scroll">
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Ferrari Roma">
+                    <img src="assets/car-img1.png" alt="Ferrari Roma">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.90</span>
@@ -759,7 +761,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="/api/placeholder/290/200" alt="Audi A8">
+                    <img src="assets/car-img1.png" alt="Audi A8">
                     <div class="rating">
                         <span class="rating-star">★</span>
                         <span class="rating-value">4.75</span>
@@ -783,22 +785,22 @@
         </div>
         
         <div class="bottom-navigation">
-            <div class="nav-item active">
+            <a href="dash.html" class="nav-item active">
                 <div class="nav-icon">🏠</div>
                 Home
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="search.html" class="nav-item">
                 <div class="nav-icon">🔍</div>
                 Search
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="favorites.html" class="nav-item">
                 <div class="nav-icon">❤️</div>
                 Favorites
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="activity.html" class="nav-item">
                 <div class="nav-icon">📑</div>
                 Activity
-            </div>
+            </a>
         </div>
     </div>
 </body>
