@@ -644,41 +644,52 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background-color: rgba(255, 191, 0, 0.6);
+            background-color:rgba(255,191, 0, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-around;
-            padding: clamp(8px, 2vw, 10px) 0;
-            margin-bottom: clamp(15px, 4vw, 20px);
+            padding: 10px 0;
+            margin-bottom: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             z-index: 100;
-            border-radius: clamp(30px, 8vw, 50px);
+            border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
         
-        @media (max-width: 480px) {
-            .bottom-navigation {
-                width: 95%;
-                margin-bottom: 10px;
-            }
+        .bottom-navigation {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background-color:rgba(255,191, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
         
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: clamp(10px, 2.5vw, 12px);
-            color: #000000;
+            font-size: 12px;
+            color: #996600;
             font-weight: 500;
-            padding: 0 clamp(8px, 2vw, 10px);
+            padding: 0 10px;
             text-decoration: none;
-            min-width: 0;
-            text-align: center;
         }
         
         .nav-item.active {
-            color: #ffffff;
+            color: #996600;
             position: relative;
         }
         
@@ -690,13 +701,13 @@
             transform: translateX(-50%);
             width: 5px;
             height: 5px;
-            background-color: #ffffff;
+            background-color: #664400;
             border-radius: 50%;
         }
         
         .nav-icon {
-            margin-bottom: clamp(3px, 1vw, 5px);
-            font-size: clamp(16px, 4vw, 20px);
+            margin-bottom: 5px;
+            font-size: 20px;
         }
         
         /* Ensure text doesn't break in small screens */
@@ -747,7 +758,7 @@
                 <div class="location-icon">📍</div>
                 Dubai
             </div>
-            <div class="profile-icon">👤</div>
+            <div class="profile-icon">🔔</div>
         </div>
         
         <div class="welcome-section">
@@ -1079,19 +1090,19 @@
         <div class="bottom-navigation">
             <a href="dash.html" class="nav-item active">
                 <div class="nav-icon">🏠</div>
-                <span>Home</span>
+                Home
             </a>
-            <a href="search.html" class="nav-item">
+            <a href="search.html" class="nav-item ">
                 <div class="nav-icon">🔍</div>
-                <span>Search</span>
+                Search
             </a>
-            <a href="favorites.html" class="nav-item">
-                <div class="nav-icon">❤️</div>
-                <span>Favorites</span>
+            <a href="wallet.html" class="nav-item">
+                <div class="nav-icon">💰</div>
+                Wallet
             </a>
-            <a href="activity.html" class="nav-item">
-                <div class="nav-icon">📑</div>
-                <span>Activity</span>
+            <a href="profile.html" class="nav-item">
+                <div class="nav-icon">👤</div>
+                Profile
             </a>
         </div>
     </div>
