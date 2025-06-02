@@ -1,675 +1,1081 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>D Cars - Car Details</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      :root {
+        --primary: #FFBF00;
+        --primary-dark: #E6AC00;
+        --secondary: #FFDA77;
+        --accent: #FFF0C8;
+        --dark: #1A202C;
+        --light: #F6F7F9;
+        --gray: #90A3BF;
+        --background: #FFFFFF;
+        --card-bg: #F6F7F9;
+        --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: var(--background);
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 100px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: var(--dark);
+        font-size: 14px;
+        background-color: var(--background);
+      }
+
+      .header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+      }
+
+      .back-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        font-size: 18px;
+        text-decoration: none;
+        border: 1px solid #e0e0e0;
+        transition: var(--transition);
+      }
+      
+      .back-button:hover {
+        background-color: var(--accent);
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .action-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        font-size: 18px;
+        border: 1px solid #e0e0e0;
+        transition: var(--transition);
+      }
+      
+      .action-button:hover {
+        background-color: var(--accent);
+      }
+
+      .car-image-container {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        overflow: hidden;
+      }
+
+      .car-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-indicators {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+      }
+
+      .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+
+      .indicator.active {
+        background-color: var(--primary);
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      .car-info-section {
+        padding: 20px;
+      }
+
+      .car-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .car-name-container {
+        flex: 1;
+      }
+
+      .car-name {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #000000;
+      }
+
+      .car-type {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .rating-container {
+        display: flex;
+        align-items: center;
+        background-color: #f0f0f0;
+        padding: 5px 15px;
+        border-radius: 20px;
+        margin-left: 10px;
+      }
+
+      .rating-star {
+        color: var(--primary);
+        margin-right: 5px;
+        font-size: 18px;
+      }
+
+      .rating-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .description {
+        color: #444;
+        font-size: 16px;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .feature-item {
+        background-color: #f0f0f0;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .feature-icon {
+        font-size: 24px;
+        margin-bottom: 8px;
+        color: #000000;
+      }
+
+      .feature-label {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .feature-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .specs-container {
+        margin-bottom: 25px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #000000;
+      }
+
+      .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .specs-table tr {
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .specs-table tr:last-child {
+        border-bottom: none;
+      }
+
+      .specs-table td {
+        padding: 12px 0;
+      }
+
+      .spec-name {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .spec-value {
+        color: #000000;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: right;
+      }
+
+      .price-container {
+        background-color: #f9f9f9;
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .price-label {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .price-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .price-note {
+        color: #666;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .dealer-container {
+        background-color: #f9f9f9;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 25px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .dealer-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .dealer-logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .dealer-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .dealer-rating {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+      }
+
+      .dealer-stars {
+        color: var(--primary);
+        margin-right: 5px;
+        font-size: 14px;
+      }
+
+      .dealer-rating-value {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .dealer-info {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .dealer-location,
+      .dealer-contact {
+        font-size: 14px;
+        color: #666;
+        display: flex;
+        align-items: center;
+      }
+
+      .info-icon {
+        margin-right: 5px;
+      }
+
+      .similar-cars-section {
+        margin-bottom: 25px;
+      }
+
+      .cars-scroll {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 0 15px 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 15px;
+      }
+
+      .cars-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .similar-car-card {
+        min-width: 180px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .similar-car-image {
+        height: 120px;
+        width: 100%;
+      }
+
+      .similar-car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .similar-car-details {
+        padding: 12px;
+      }
+
+      .similar-car-name {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #000000;
+      }
+
+      .similar-car-price {
+        font-size: 14px;
+        color: #666;
+      }
+
+      /* Demo container styles removed - no longer needed */
+
+      .bottom-actions {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        padding: 15px 20px;
+        gap: 15px;
+        box-shadow: var(--shadow);
+        z-index: 100;
+        border-radius: 50px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .slide-button-container {
+        position: relative;
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        border-radius: 30px;
+        overflow: hidden;
+        cursor: pointer;
+        user-select: none;
+        box-shadow: 0 4px 20px rgba(255, 191, 0, 0.3);
+        transition: var(--transition);
+      }
+
+      .slide-button-container:hover {
+        box-shadow: 0 6px 25px rgba(255, 191, 0, 0.4);
+      }
+
+      .slide-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        overflow: hidden;
+      }
+
+      .slide-thumb {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 52px;
+        height: 52px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 50%;
+        cursor: grab;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+      }
+
+      .slide-thumb:active {
+        cursor: grabbing;
+        transform: scale(1.05);
+      }
+
+      .slide-thumb::before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/></svg>')
+          no-repeat center;
+        background-size: contain;
+        transition: all 0.3s ease;
+      }
+
+      .slide-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 600;
+        font-size: 16px;
+        color: #1a1a1a;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 2;
+      }
+
+      .slide-text.sliding {
+        opacity: 0.6;
+        transform: translate(-30%, -50%);
+      }
+
+      .slide-text.completed {
+        opacity: 0;
+      }
+
+      .progress-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0.1) 100%
+        );
+        border-radius: 30px;
+        width: 0%;
+        transition: width 0.1s ease;
+        z-index: 1;
+      }
+
+      .slide-button-container.completed {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        animation: successPulse 0.6s ease;
+      }
+
+      .slide-button-container.completed .slide-thumb {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        transform: translateX(calc(100vw - 120px)) scale(1.1);
+      }
+
+      .slide-button-container.completed .slide-thumb::before {
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2328a745"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>')
+          no-repeat center;
+        background-size: contain;
+      }
+
+      @keyframes successPulse {
+        0% {
+          transform: scale(1);
         }
-        
-        body {
-            background-color: #ffffff;
-            color: #000000;
-            line-height: 1.6;
+        50% {
+          transform: scale(1.02);
         }
-        
-        .container {
-            max-width: 430px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            padding-bottom: 100px;
+        100% {
+          transform: scale(1);
         }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            color: #000000;
-            font-size: 14px;
-            background-color: #ffffff;
+      }
+
+      .completion-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 4;
+        transition: all 0.3s ease;
+      }
+
+      .slide-button-container.completed .completion-text {
+        opacity: 1;
+      }
+
+      /* Loading animation */
+      .slide-button-container.loading {
+        pointer-events: none;
+      }
+
+      .slide-button-container.loading .slide-thumb {
+        animation: loadingPulse 1.5s infinite;
+      }
+
+      @keyframes loadingPulse {
+        0%,
+        100% {
+          opacity: 1;
         }
-        
-        .header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        50% {
+          opacity: 0.6;
         }
-        
-        .back-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000000;
-            font-size: 18px;
-            text-decoration: none;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .action-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000000;
-            font-size: 18px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .car-image-container {
-            position: relative;
-            width: 100%;
-            height: 260px;
-            overflow: hidden;
-        }
-        
-        .car-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .image-indicators {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 5px;
-        }
-        
-        .indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .indicator.active {
-            background-color: #FFBF00;
-            width: 24px;
-            border-radius: 4px;
-        }
-        
-        .car-info-section {
-            padding: 20px;
-        }
-        
-        .car-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-        
-        .car-name-container {
-            flex: 1;
-        }
-        
-        .car-name {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #000000;
-        }
-        
-        .car-type {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .rating-container {
-            display: flex;
-            align-items: center;
-            background-color: #f0f0f0;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-left: 10px;
-        }
-        
-        .rating-star {
-            color: #FFBF00;
-            margin-right: 5px;
-            font-size: 18px;
-        }
-        
-        .rating-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #000000;
-        }
-        
-        .description {
-            color: #444;
-            font-size: 16px;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .feature-item {
-            background-color: #f0f0f0;
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .feature-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #000000;
-        }
-        
-        .feature-label {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .feature-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #000000;
-        }
-        
-        .specs-container {
-            margin-bottom: 25px;
-        }
-        
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #000000;
-        }
-        
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .specs-table tr {
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .specs-table tr:last-child {
-            border-bottom: none;
-        }
-        
-        .specs-table td {
-            padding: 12px 0;
-        }
-        
-        .spec-name {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .spec-value {
-            color: #000000;
-            font-size: 16px;
-            font-weight: 500;
-            text-align: right;
-        }
-        
-        .price-container {
-            background-color: #f9f9f9;
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .price-label {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .price-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #000000;
-        }
-        
-        .price-note {
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        
-        .dealer-container {
-            background-color: #f9f9f9;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .dealer-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .dealer-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .dealer-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #000000;
-        }
-        
-        .dealer-rating {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-        }
-        
-        .dealer-stars {
-            color: #FFBF00;
-            margin-right: 5px;
-            font-size: 14px;
-        }
-        
-        .dealer-rating-value {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .dealer-info {
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .dealer-location, .dealer-contact {
-            font-size: 14px;
-            color: #666;
-            display: flex;
-            align-items: center;
-        }
-        
-        .info-icon {
-            margin-right: 5px;
-        }
-        
-        .similar-cars-section {
-            margin-bottom: 25px;
-        }
-        
-        .cars-scroll {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 0 15px 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            gap: 15px;
-        }
-        
-        .cars-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .similar-car-card {
-            min-width: 180px;
-            background-color: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .similar-car-image {
-            height: 120px;
-            width: 100%;
-        }
-        
-        .similar-car-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .similar-car-details {
-            padding: 12px;
-        }
-        
-        .similar-car-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #000000;
-        }
-        
-        .similar-car-price {
-            font-size: 14px;
-            color: #666;
-        }
-        
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 480px) {
         .bottom-actions {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: rgba(255, 191, 0, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            padding: 15px 20px;
-            gap: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+          width: 95%;
+          padding: 12px 16px;
         }
-        
-        .bottom-navigation {
-            position: fixed;
-            bottom: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: rgba(255, 191, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 99;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+
+        .slide-button-container {
+          height: 55px;
         }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 12px;
-            color: #000000;
-            font-weight: 500;
-            padding: 0 10px;
-            text-decoration: none;
+
+        .slide-thumb {
+          width: 47px;
+          height: 47px;
+          top: 4px;
         }
-        
-        .nav-item.active {
-            color: #ffffff;
-            position: relative;
+
+        .slide-text,
+        .completion-text {
+          font-size: 15px;
         }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #ffffff;
-            border-radius: 50%;
-        }
-        
-        .favorite-button {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .book-button {
-            flex: 1;
-            background-color: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            color: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 30px;
-            padding: 0 20px;
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
+      }
+
+      /* Demo content removed - no longer needed */
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow);
+        z-index: 99;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #000000;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #ffffff;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #ffffff;
+        border-radius: 50%;
+      }
+
+      .favorite-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .book-button {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        color: #000000;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 30px;
+        padding: 0 20px;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="status-bar">
-            <div class="time">9:41</div>
-            <div class="indicators">
-                <span>●●●●</span>
-                <span>●●●</span>
-                <span>85%</span>
-            </div>
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
         </div>
-        
-        <div class="header">
-            <a href="javascript:history.back()" class="back-button">←</a>
-            <div class="actions">
-                <button class="action-button">⋮</button>
-                <!-- <button class="action-button">↗</button> -->
-            </div>
+      </div>
+
+      <div class="header">
+        <a href="javascript:history.back()" class="back-button">←</a>
+        <div class="actions">
+          <button class="action-button">↗</button>
+          <button class="favorite-button">🤍</button>
         </div>
-        
-        <div class="car-image-container">
-            <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image">
-            <div class="image-indicators">
-                <div class="indicator active"></div>
-                <div class="indicator"></div>
-                <div class="indicator"></div>
-                <div class="indicator"></div>
-            </div>
+      </div>
+
+      <div class="car-image-container">
+        <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image" />
+        <div class="image-indicators">
+          <div class="indicator active"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
         </div>
-        
-        <div class="car-info-section">
-            <div class="car-title-row">
-                <div class="car-name-container">
-                    <div class="car-name">Tesla Model 3</div>
-                    <div class="car-type">Electric Sedan</div>
-                </div>
-                <div class="rating-container">
-                    <span class="rating-star">★</span>
-                    <span class="rating-value">4.8</span>
-                </div>
-            </div>
-            
-            <div class="description">
-                The Tesla Model 3 is an electric four-door fastback sedan developed by Tesla. The Model 3 Standard Range Plus delivers 267 miles of range along with impressive performance.
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-label">Range</div>
-                    <div class="feature-value">267 mi</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🚀</div>
-                    <div class="feature-label">0-60 mph</div>
-                    <div class="feature-value">5.3 sec</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">💺</div>
-                    <div class="feature-label">Seats</div>
-                    <div class="feature-value">5</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🔋</div>
-                    <div class="feature-label">Battery</div>
-                    <div class="feature-value">50 kWh</div>
-                </div>
-            </div>
-            
-            <div class="specs-container">
-                <div class="section-title">Specifications</div>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-name">Top Speed</td>
-                        <td class="spec-value">140 mph</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-name">Drive</td>
-                        <td class="spec-value">Rear-Wheel</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-name">Charging (DC)</td>
-                        <td class="spec-value">170 kW</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-name">Autopilot</td>
-                        <td class="spec-value">Standard</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-name">Trunk Capacity</td>
-                        <td class="spec-value">15 cu ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-name">Warranty</td>
-                        <td class="spec-value">4 years / 50,000 mi</td>
-                    </tr>
-                </table>
-            </div>
-            
-            <div class="price-container">
-                <div>
-                    <div class="price-label">Price Starting From</div>
-                    <div class="price-value">$45,000</div>
-                    <div class="price-note">*Before potential incentives</div>
-                </div>
-                <div>
-                    <div class="price-label">Monthly Rate From</div>
-                    <div class="price-value">$499</div>
-                    <div class="price-note">*With 10% down payment</div>
-                </div>
-            </div>
-            
-            <div class="dealer-container">
-                <div class="dealer-header">
-                    <div class="dealer-logo">T</div>
-                    <div>
-                        <div class="dealer-name">Tesla Dubai</div>
-                        <div class="dealer-rating">
-                            <span class="dealer-stars">★★★★★</span>
-                            <span class="dealer-rating-value">(4.9)</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="dealer-info">
-                    <div class="dealer-location">
-                        <span class="info-icon">📍</span> Downtown Dubai
-                    </div>
-                    <div class="dealer-contact">
-                        <span class="info-icon">📞</span> +971-4-123-4567
-                    </div>
-                </div>
-            </div>
-            
-            <div class="similar-cars-section">
-                <div class="section-title">Similar Cars</div>
-                <div class="cars-scroll">
-                    <div class="similar-car-card">
-                        <div class="similar-car-image">
-                            <img src="assets/car-img1.png" alt="BMW i4">
-                        </div>
-                        <div class="similar-car-details">
-                            <div class="similar-car-name">BMW i4</div>
-                            <div class="similar-car-price">$56,000</div>
-                        </div>
-                    </div>
-                    <div class="similar-car-card">
-                        <div class="similar-car-image">
-                            <img src="assets/car-img1.png" alt="Polestar 2">
-                        </div>
-                        <div class="similar-car-details">
-                            <div class="similar-car-name">Polestar 2</div>
-                            <div class="similar-car-price">$49,000</div>
-                        </div>
-                    </div>
-                    <div class="similar-car-card">
-                        <div class="similar-car-image">
-                            <img src="assets/car-img1.png" alt="Audi e-tron GT">
-                        </div>
-                        <div class="similar-car-details">
-                            <div class="similar-car-name">Audi e-tron GT</div>
-                            <div class="similar-car-price">$102,000</div>
-                        </div>
-                    </div>
-                    <div class="similar-car-card">
-                        <div class="similar-car-image">
-                            <img src="assets/car-img1.png" alt="Lucid Air">
-                        </div>
-                        <div class="similar-car-details">
-                            <div class="similar-car-name">Lucid Air</div>
-                            <div class="similar-car-price">$87,000</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      <div class="car-info-section">
+        <div class="car-title-row">
+          <div class="car-name-container">
+            <div class="car-name">Tesla Model 3</div>
+            <div class="car-type">Electric Sedan</div>
+          </div>
+          <div class="rating-container">
+            <span class="rating-star">★</span>
+            <span class="rating-value">4.8</span>
+          </div>
         </div>
-        
-        <div class="bottom-actions">
-            <button class="favorite-button">🤍</button>
-            <button class="book-button">Book Drive</button>
+
+        <div class="description">
+          The Tesla Model 3 is an electric four-door fastback sedan developed by
+          Tesla. The Model 3 Standard Range Plus delivers 267 miles of range
+          along with impressive performance.
         </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-label">Range</div>
+            <div class="feature-value">267 mi</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-label">0-60 mph</div>
+            <div class="feature-value">5.3 sec</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💺</div>
+            <div class="feature-label">Seats</div>
+            <div class="feature-value">5</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔋</div>
+            <div class="feature-label">Battery</div>
+            <div class="feature-value">50 kWh</div>
+          </div>
+        </div>
+
+        <div class="specs-container">
+          <div class="section-title">Specifications</div>
+          <table class="specs-table">
+            <tr>
+              <td class="spec-name">Top Speed</td>
+              <td class="spec-value">140 mph</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Drive</td>
+              <td class="spec-value">Rear-Wheel</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Charging (DC)</td>
+              <td class="spec-value">170 kW</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Autopilot</td>
+              <td class="spec-value">Standard</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Trunk Capacity</td>
+              <td class="spec-value">15 cu ft</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Warranty</td>
+              <td class="spec-value">4 years / 50,000 mi</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="price-container">
+          <div>
+            <div class="price-label">Price Starting From</div>
+            <div class="price-value">$45,000</div>
+            <div class="price-note">*Before potential incentives</div>
+          </div>
+          <div>
+            <div class="price-label">Monthly Rate From</div>
+            <div class="price-value">$499</div>
+            <div class="price-note">*With 10% down payment</div>
+          </div>
+        </div>
+
+        <div class="dealer-container">
+          <div class="dealer-header">
+            <div class="dealer-logo">T</div>
+            <div>
+              <div class="dealer-name">Tesla Dubai</div>
+              <div class="dealer-rating">
+                <span class="dealer-stars">★★★★★</span>
+                <span class="dealer-rating-value">(4.9)</span>
+              </div>
+            </div>
+          </div>
+          <div class="dealer-info">
+            <div class="dealer-location">
+              <span class="info-icon">📍</span> Downtown Dubai
+            </div>
+            <div class="dealer-contact">
+              <span class="info-icon">📞</span> +971-4-123-4567
+            </div>
+          </div>
+        </div>
+
+        <div class="similar-cars-section">
+          <div class="section-title">Similar Cars</div>
+          <div class="cars-scroll">
+            <div class="similar-car-card">
+              <div class="similar-car-image">
+                <img src="assets/car-img1.png" alt="BMW i4" />
+              </div>
+              <div class="similar-car-details">
+                <div class="similar-car-name">BMW i4</div>
+                <div class="similar-car-price">$56,000</div>
+              </div>
+            </div>
+            <div class="similar-car-card">
+              <div class="similar-car-image">
+                <img src="assets/car-img1.png" alt="Polestar 2" />
+              </div>
+              <div class="similar-car-details">
+                <div class="similar-car-name">Polestar 2</div>
+                <div class="similar-car-price">$49,000</div>
+              </div>
+            </div>
+            <div class="similar-car-card">
+              <div class="similar-car-image">
+                <img src="assets/car-img1.png" alt="Audi e-tron GT" />
+              </div>
+              <div class="similar-car-details">
+                <div class="similar-car-name">Audi e-tron GT</div>
+                <div class="similar-car-price">$102,000</div>
+              </div>
+            </div>
+            <div class="similar-car-card">
+              <div class="similar-car-image">
+                <img src="assets/car-img1.png" alt="Lucid Air" />
+              </div>
+              <div class="similar-car-details">
+                <div class="similar-car-name">Lucid Air</div>
+                <div class="similar-car-price">$87,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bottom-actions">
+        <div class="slide-button-container" id="slideButton">
+          <div class="slide-track"></div>
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="slide-thumb" id="slideThumb"></div>
+          <div class="slide-text" id="slideText">Slide to Book Drive</div>
+          <div class="completion-text" id="completionText">
+            Booking Confirmed! 🚗
+          </div>
+        </div>
+      </div>
+      <script>
+        class SlidableButton {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.thumb = document.getElementById('slideThumb');
+                this.text = document.getElementById('slideText');
+                this.completionText = document.getElementById('completionText');
+                this.progressFill = document.getElementById('progressFill');
+                
+                this.isDragging = false;
+                this.startX = 0;
+                this.currentX = 0;
+                this.maxSlide = 0;
+                this.threshold = 0.8; // 80% slide to complete
+                this.isCompleted = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.calculateMaxSlide();
+                this.bindEvents();
+                
+                // Recalculate on window resize
+                window.addEventListener('resize', () => {
+                    this.calculateMaxSlide();
+                });
+            }
+            
+            calculateMaxSlide() {
+                const containerWidth = this.container.offsetWidth;
+                const thumbWidth = this.thumb.offsetWidth;
+                this.maxSlide = containerWidth - thumbWidth - 8; // 8px for padding
+            }
+            
+            bindEvents() {
+                // Mouse events
+                this.thumb.addEventListener('mousedown', this.startDrag.bind(this));
+                document.addEventListener('mousemove', this.drag.bind(this));
+                document.addEventListener('mouseup', this.endDrag.bind(this));
+                
+                // Touch events for mobile
+                this.thumb.addEventListener('touchstart', this.startDrag.bind(this), { passive: false });
+                document.addEventListener('touchmove', this.drag.bind(this), { passive: false });
+                document.addEventListener('touchend', this.endDrag.bind(this));
+                
+                // Prevent default touch behavior
+                this.container.addEventListener('touchstart', (e) => e.preventDefault());
+            }
+            
+            startDrag(e) {
+                if (this.isCompleted) return;
+                
+                this.isDragging = true;
+                this.startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                this.text.classList.add('sliding');
+                
+                // Add visual feedback
+                this.thumb.style.transition = 'transform 0.1s ease';
+            }
+            
+            drag(e) {
+                if (!this.isDragging || this.isCompleted) return;
+                
+                e.preventDefault();
+                const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+                const deltaX = clientX - this.startX;
+                
+                // Constrain movement
+                this.currentX = Math.max(0, Math.min(deltaX, this.maxSlide));
+                
+                // Update thumb position
+                this.thumb.style.transform = `translateX(${this.currentX}px)`;
+                
+                // Update progress fill
+                const progress = (this.currentX / this.maxSlide) * 100;
+                this.progressFill.style.width = `${progress}%`;
+                
+                // Update text opacity based on progress
+                const textOpacity = Math.max(0.3, 1 - (progress / 100));
+                this.text.style.opacity = textOpacity;
+            }
+            
+            endDrag() {
+                if (!this.isDragging || this.isCompleted) return;
+                
+                this.isDragging = false;
+                const progress = this.currentX / this.maxSlide;
+                
+                if (progress >= this.threshold) {
+                    this.completeSlide();
+                } else {
+                    this.resetSlide();
+                }
+            }
+            
+            completeSlide() {
+                this.isCompleted = true;
+                this.container.classList.add('completed');
+                this.text.classList.add('completed');
+                
+                // Animate to end
+                this.thumb.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                this.thumb.style.transform = `translateX(${this.maxSlide}px)`;
+                this.progressFill.style.width = '100%';
+                
+                // Show loading state briefly
+                this.container.classList.add('loading');
+                
+                setTimeout(() => {
+                    this.container.classList.remove('loading');
+                    this.onComplete();
+                }, 800);
+            }
+            
+            resetSlide() {
+                this.thumb.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                this.thumb.style.transform = 'translateX(0px)';
+                this.progressFill.style.width = '0%';
+                this.text.style.opacity = '1';
+                this.text.classList.remove('sliding');
+                this.currentX = 0;
+            }
+            
+            onComplete() {
+                // Simulate booking process
+                setTimeout(() => {
+                    // alert('🚗 Drive booked successfully!\n\nRedirecting to booking details...');
+                    window.location.href = 'booking-confirmation.html';
+                }, 500);
+            }
+            
+            reset() {
+                this.isCompleted = false;
+                this.container.classList.remove('completed', 'loading');
+                this.text.classList.remove('sliding', 'completed');
+                this.text.style.opacity = '1';
+                this.resetSlide();
+            }
+        }
         
-        <!-- Bottom Navigation -->
-        <!-- <div class="bottom-navigation">
+        // Initialize the slidable button
+        const slidableButton = new SlidableButton('slideButton');
+        
+        // Reset function for demo
+        function resetButton() {
+            slidableButton.reset();
+        }
+        
+        // Add some haptic feedback for mobile devices
+        function vibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 100, 50]);
+            }
+        }
+        
+        // Add vibration on slide complete
+        document.getElementById('slideButton').addEventListener('transitionend', function(e) {
+            if (e.target.classList.contains('completed')) {
+                vibrate();
+            }
+        });
+        
+        // Initialize date for the booking which will be passed to the confirmation page
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        // Format date to store in localStorage
+        const bookingDate = tomorrow.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        // Store booking info to be retrieved on confirmation page
+        localStorage.setItem('bookingDate', bookingDate);
+        localStorage.setItem('bookingTime', '10:30 AM - 11:30 AM');
+        localStorage.setItem('bookingId', 'DC' + Math.floor(10000 + Math.random() * 90000));
+    </script>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-navigation">
             <a href="dash.html" class="nav-item">
                 <div class="nav-icon">🏠</div>
                 Home
@@ -686,7 +1092,7 @@
                 <div class="nav-icon">📑</div>
                 Activity
             </a>
-        </div> -->
+        </div>
     </div>
-</body>
+  </body>
 </html>

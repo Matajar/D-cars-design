@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D Cars - Booking Confirmation</title>
+    <style>
+      :root {
+        --primary: #FFBF00;
+        --primary-dark: #E6AC00;
+        --secondary: #FFDA77;
+        --accent: #FFF0C8;
+        --dark: #1A202C;
+        --light: #F6F7F9;
+        --gray: #90A3BF;
+        --background: #FFFFFF;
+        --card-bg: #F6F7F9;
+        --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+        --transition: all 0.3s ease;
+        --success: #28a745;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: var(--background);
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 100px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: var(--dark);
+        font-size: 14px;
+        background-color: var(--background);
+      }
+
+      .header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+      }
+
+      .back-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        font-size: 18px;
+        text-decoration: none;
+        border: 1px solid #e0e0e0;
+        transition: var(--transition);
+      }
+      
+      .back-button:hover {
+        background-color: var(--accent);
+      }
+
+      .success-animation {
+        margin: 30px auto;
+        text-align: center;
+      }
+
+      .checkmark-circle {
+        width: 120px;
+        height: 120px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .checkmark-circle .background {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--primary);
+        position: absolute;
+      }
+
+      .checkmark-circle .checkmark {
+        border-radius: 5px;
+      }
+
+      .checkmark-circle .checkmark.draw:after {
+        -webkit-animation-delay: 300ms;
+        -moz-animation-delay: 300ms;
+        animation-delay: 300ms;
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-timing-function: ease;
+        -moz-animation-timing-function: ease;
+        animation-timing-function: ease;
+        -webkit-animation-name: checkmark;
+        -moz-animation-name: checkmark;
+        animation-name: checkmark;
+        -webkit-transform: scaleX(-1) rotate(135deg);
+        -moz-transform: scaleX(-1) rotate(135deg);
+        -ms-transform: scaleX(-1) rotate(135deg);
+        -o-transform: scaleX(-1) rotate(135deg);
+        transform: scaleX(-1) rotate(135deg);
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+      }
+
+      .checkmark-circle .checkmark:after {
+        opacity: 1;
+        height: 60px;
+        width: 30px;
+        -webkit-transform-origin: left top;
+        -moz-transform-origin: left top;
+        -ms-transform-origin: left top;
+        -o-transform-origin: left top;
+        transform-origin: left top;
+        border-right: 10px solid white;
+        border-top: 10px solid white;
+        border-radius: 2px !important;
+        content: '';
+        left: 28px;
+        top: 60px;
+        position: absolute;
+      }
+
+      @-webkit-keyframes checkmark {
+        0% {
+          height: 0;
+          width: 0;
+          opacity: 1;
+        }
+        20% {
+          height: 0;
+          width: 30px;
+          opacity: 1;
+        }
+        40% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+        100% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+      }
+
+      @-moz-keyframes checkmark {
+        0% {
+          height: 0;
+          width: 0;
+          opacity: 1;
+        }
+        20% {
+          height: 0;
+          width: 30px;
+          opacity: 1;
+        }
+        40% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+        100% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes checkmark {
+        0% {
+          height: 0;
+          width: 0;
+          opacity: 1;
+        }
+        20% {
+          height: 0;
+          width: 30px;
+          opacity: 1;
+        }
+        40% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+        100% {
+          height: 60px;
+          width: 30px;
+          opacity: 1;
+        }
+      }
+
+      .success-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--dark);
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+
+      .success-message {
+        font-size: 16px;
+        color: var(--gray);
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 0 20px;
+      }
+
+      .booking-details {
+        background-color: var(--light);
+        border-radius: 16px;
+        margin: 0 20px 30px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .booking-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .booking-id {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .booking-status {
+        display: inline-block;
+        padding: 5px 12px;
+        background-color: var(--success);
+        color: white;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .car-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .car-image-small {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        object-fit: contain;
+        background-color: var(--accent);
+        margin-right: 15px;
+      }
+
+      .car-details {
+        flex: 1;
+      }
+
+      .car-name-booking {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 5px;
+      }
+
+      .car-type-booking {
+        color: var(--gray);
+        font-size: 14px;
+      }
+
+      .details-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .detail-label {
+        color: var(--gray);
+        font-size: 14px;
+      }
+
+      .detail-value {
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 15px;
+        text-align: right;
+      }
+
+      .price-summary {
+        background-color: var(--accent);
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .price-row:last-child {
+        margin-bottom: 0;
+        padding-top: 10px;
+        border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      }
+
+      .price-label {
+        color: var(--dark);
+        font-size: 14px;
+      }
+
+      .price-value {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .total-label {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .total-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        padding: 0 20px;
+        margin-bottom: 30px;
+      }
+
+      .action-btn {
+        flex: 1;
+        padding: 15px 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .primary-btn {
+        background-color: var(--primary);
+        color: var(--dark);
+        box-shadow: var(--shadow);
+      }
+
+      .primary-btn:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .secondary-btn {
+        background-color: var(--light);
+        color: var(--dark);
+        border: 1px solid #e0e0e0;
+      }
+
+      .secondary-btn:hover {
+        background-color: #e8e8e8;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: var(--shadow);
+        z-index: 99;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: var(--dark);
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: white;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: white;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <a href="javascript:history.back()" class="back-button">←</a>
+      </div>
+
+      <div class="success-animation">
+        <div class="checkmark-circle">
+          <div class="background"></div>
+          <div class="checkmark draw"></div>
+        </div>
+      </div>
+
+      <h1 class="success-title">Booking Confirmed!</h1>
+      <p class="success-message">
+        Your test drive has been successfully booked. We've sent the confirmation details to your email and mobile number.
+      </p>
+
+      <div class="booking-details">
+        <div class="booking-header">
+          <div class="booking-id" id="bookingIdField">Booking #DC87921</div>
+          <div class="booking-status">Confirmed</div>
+        </div>
+
+        <div class="car-info">
+          <img src="assets/car-img1.png" alt="Tesla Model 3" class="car-image-small" />
+          <div class="car-details">
+            <div class="car-name-booking">Tesla Model 3</div>
+            <div class="car-type-booking">Electric Sedan</div>
+          </div>
+        </div>
+
+        <div class="details-row">
+          <div class="detail-label">Test Drive Date</div>
+          <div class="detail-value" id="bookingDateField">June 5, 2025</div>
+        </div>
+
+        <div class="details-row">
+          <div class="detail-label">Time Slot</div>
+          <div class="detail-value" id="bookingTimeField">10:30 AM - 11:30 AM</div>
+        </div>
+
+        <div class="details-row">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">Tesla Dubai, Downtown</div>
+        </div>
+
+        <div class="details-row">
+          <div class="detail-label">Duration</div>
+          <div class="detail-value">60 minutes</div>
+        </div>
+
+        <div class="price-summary">
+          <div class="price-row">
+            <div class="price-label">Test Drive Fee</div>
+            <div class="price-value">$0.00</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Refundable Deposit</div>
+            <div class="price-value">$50.00</div>
+          </div>
+          <div class="price-row">
+            <div class="total-label">Total Paid</div>
+            <div class="total-value">$50.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a href="dash.html" class="action-btn secondary-btn">Go to Home</a>
+        <a href="activity.html" class="action-btn primary-btn">View All Bookings</a>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item">
+          <div class="nav-icon">🏠</div>
+          Home
+        </a>
+        <a href="search.html" class="nav-item">
+          <div class="nav-icon">🔍</div>
+          Search
+        </a>
+        <a href="favorites.html" class="nav-item">
+          <div class="nav-icon">❤️</div>
+          Favorites
+        </a>
+        <a href="activity.html" class="nav-item active">
+          <div class="nav-icon">📑</div>
+          Activity
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Retrieve booking information from localStorage when the page loads
+      window.addEventListener('DOMContentLoaded', () => {
+        // Get booking details from localStorage
+        const bookingId = localStorage.getItem('bookingId') || 'DC87921';
+        const bookingDate = localStorage.getItem('bookingDate') || 'June 5, 2025';
+        const bookingTime = localStorage.getItem('bookingTime') || '10:30 AM - 11:30 AM';
+        
+        // Update the DOM with retrieved values
+        document.getElementById('bookingIdField').textContent = `Booking #${bookingId}`;
+        document.getElementById('bookingDateField').textContent = bookingDate;
+        document.getElementById('bookingTimeField').textContent = bookingTime;
+        
+        // Add animation entrance effect for key elements
+        const animationDelay = 300;
+        
+        setTimeout(() => {
+          document.querySelector('.success-title').style.animation = 'fadeInUp 0.6s ease forwards';
+        }, animationDelay);
+        
+        setTimeout(() => {
+          document.querySelector('.success-message').style.animation = 'fadeInUp 0.6s ease forwards';
+        }, animationDelay + 100);
+        
+        setTimeout(() => {
+          document.querySelector('.booking-details').style.animation = 'fadeInUp 0.6s ease forwards';
+        }, animationDelay + 200);
+        
+        setTimeout(() => {
+          document.querySelector('.action-buttons').style.animation = 'fadeInUp 0.6s ease forwards';
+        }, animationDelay + 300);
+        
+        // Add haptic feedback on page load
+        if (navigator.vibrate) {
+          navigator.vibrate([50, 100, 50]);
+        }
+      });
+      
+      // Define animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .success-title, .success-message, .booking-details, .action-buttons {
+          opacity: 0;
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>
