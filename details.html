@@ -440,287 +440,41 @@
         color: #666;
       }
 
-      /* Demo container styles removed - no longer needed */
-
       .bottom-actions {
         position: fixed;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        background-color: rgba(255, 191, 0, 0.7);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        width: 100%;
+        max-width: 430px;
         display: flex;
         padding: 15px 20px;
         gap: 15px;
-        box-shadow: var(--shadow);
-        z-index: 100;
-        border-radius: 50px;
-        margin-bottom: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .slide-button-container {
-        position: relative;
-        width: 100%;
-        height: 60px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        border-radius: 30px;
-        overflow: hidden;
-        cursor: pointer;
-        user-select: none;
-        box-shadow: 0 4px 20px rgba(255, 191, 0, 0.3);
-        transition: var(--transition);
-      }
-
-      .slide-button-container:hover {
-        box-shadow: 0 6px 25px rgba(255, 191, 0, 0.4);
-      }
-
-      .slide-track {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 30px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        overflow: hidden;
-      }
-
-      .slide-thumb {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 52px;
-        height: 52px;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border-radius: 50%;
-        cursor: grab;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 3;
-      }
-
-      .slide-thumb:active {
-        cursor: grabbing;
-        transform: scale(1.05);
-      }
-
-      .slide-thumb::before {
-        content: "";
-        width: 20px;
-        height: 20px;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/></svg>')
-          no-repeat center;
-        background-size: contain;
-        transition: all 0.3s ease;
-      }
-
-      .slide-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-weight: 600;
-        font-size: 16px;
-        color: #1a1a1a;
-        pointer-events: none;
-        transition: all 0.3s ease;
-        z-index: 2;
-      }
-
-      .slide-text.sliding {
-        opacity: 0.6;
-        transform: translate(-30%, -50%);
-      }
-
-      .slide-text.completed {
-        opacity: 0;
-      }
-
-      .progress-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.2) 0%,
-          rgba(255, 255, 255, 0.1) 100%
-        );
-        border-radius: 30px;
-        width: 0%;
-        transition: width 0.1s ease;
-        z-index: 1;
-      }
-
-      .slide-button-container.completed {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        animation: successPulse 0.6s ease;
-      }
-
-      .slide-button-container.completed .slide-thumb {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        transform: translateX(calc(100vw - 120px)) scale(1.1);
-      }
-
-      .slide-button-container.completed .slide-thumb::before {
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2328a745"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>')
-          no-repeat center;
-        background-size: contain;
-      }
-
-      @keyframes successPulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.02);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .completion-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-weight: 600;
-        font-size: 16px;
-        color: white;
-        opacity: 0;
-        pointer-events: none;
-        z-index: 4;
-        transition: all 0.3s ease;
-      }
-
-      .slide-button-container.completed .completion-text {
-        opacity: 1;
-      }
-
-      /* Loading animation */
-      .slide-button-container.loading {
-        pointer-events: none;
-      }
-
-      .slide-button-container.loading .slide-thumb {
-        animation: loadingPulse 1.5s infinite;
-      }
-
-      @keyframes loadingPulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.6;
-        }
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 480px) {
-        .bottom-actions {
-          width: 95%;
-          padding: 12px 16px;
-        }
-
-        .slide-button-container {
-          height: 55px;
-        }
-
-        .slide-thumb {
-          width: 47px;
-          height: 47px;
-          top: 4px;
-        }
-
-        .slide-text,
-        .completion-text {
-          font-size: 15px;
-        }
-      }
-
-      /* Demo content removed - no longer needed */
-
-      .bottom-navigation {
-        position: fixed;
-        bottom: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        background-color:rgba(255,191, 0, 0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        display: flex;
-        justify-content: space-around;
-        padding: 10px 0;
-        margin-bottom: 20px;
-        box-shadow: var(--shadow);
-        z-index: 99;
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 12px;
-        color: #000000;
-        font-weight: 500;
-        padding: 0 10px;
-        text-decoration: none;
-      }
-
-      .nav-item.active {
-        color: #ffffff;
-        position: relative;
-      }
-
-      .nav-item.active::after {
-        content: "";
-        position: absolute;
-        bottom: -6px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 5px;
-        height: 5px;
-        background-color: #ffffff;
-        border-radius: 50%;
+        z-index: 90;
+        background-color: #fff;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid #e0e0e0;
       }
 
       .favorite-button {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
+        background-color: var(--light);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        border: 1px solid #e0e0e0;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       }
 
       .book-button {
         flex: 1;
-        background-color: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        color: #000000;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 30px;
+        background-color: var(--primary);
+        color: var(--dark);
+        border: none;
+        border-radius: 12px;
         padding: 0 20px;
         font-size: 18px;
         font-weight: 600;
@@ -730,6 +484,495 @@
         height: 50px;
         cursor: pointer;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+      
+      .book-button:hover {
+        background-color: var(--primary-dark);
+      }
+
+      /* Bottom sheet styles */
+      .bottom-sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        max-height: 90vh;
+        background-color: #fff;
+        z-index: 1000;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .bottom-sheet.open {
+        transform: translateY(0);
+      }
+
+      .sheet-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      .sheet-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000;
+        text-align: center;
+        flex: 1;
+      }
+
+      .sheet-close {
+        position: absolute;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #666;
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
+
+      .sheet-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .sheet-actions {
+        padding: 16px 20px;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        gap: 10px;
+      }
+
+      .sheet-button {
+        flex: 1;
+        height: 50px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .secondary-button {
+        background-color: var(--light);
+        color: var(--dark);
+        border: 1px solid #e0e0e0;
+      }
+
+      .primary-button {
+        background-color: var(--primary);
+        color: var(--dark);
+        border: none;
+      }
+
+      .primary-button:hover {
+        background-color: var(--primary-dark);
+      }
+
+      /* Calendar styles */
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .month-selector {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .month-nav {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: var(--dark);
+        cursor: pointer;
+        border: 1px solid #e0e0e0;
+      }
+
+      .current-month {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+      }
+
+      .weekday {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+        padding: 8px 0;
+      }
+
+      .calendar-day {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .calendar-day.disabled {
+        color: #ccc;
+        cursor: default;
+      }
+
+      .calendar-day.today {
+        border: 1px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .calendar-day.selected {
+        background-color: var(--primary);
+        color: var(--dark);
+      }
+
+      .calendar-day.range {
+        background-color: var(--accent);
+        color: var(--dark);
+      }
+
+      .date-range-display {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--light);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .date-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .date-label {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .date-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+      }
+
+      .days-count {
+        font-size: 14px;
+        color: #666;
+        text-align: right;
+      }
+
+      /* Quick selection options */
+      .quick-options {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+      }
+
+      .quick-options::-webkit-scrollbar {
+        display: none;
+      }
+
+      .quick-option {
+        min-width: 120px;
+        padding: 12px;
+        background-color: var(--light);
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .quick-option:hover {
+        background-color: var(--accent);
+      }
+
+      .quick-option.selected {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .quick-option-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 5px;
+      }
+
+      .quick-option-subtitle {
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Time picker styles */
+      .time-picker-container {
+        margin-top: 20px;
+      }
+
+      .time-picker-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .time-picker {
+        width: 48%;
+      }
+
+      .time-label {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+
+      .time-select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        background-color: var(--light);
+        font-size: 14px;
+        color: #000;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 9L1 4h10z" fill="%23666"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        cursor: pointer;
+      }
+
+      /* Delivery options styles */
+      .delivery-options {
+        margin-top: 20px;
+      }
+
+      .option-group {
+        margin-bottom: 20px;
+      }
+
+      .option-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #000;
+      }
+
+      .location-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        background-color: var(--light);
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        background-color: var(--light);
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex: 1;
+        min-width: 140px;
+      }
+
+      .radio-option.selected {
+        background-color: var(--accent);
+        border-color: var(--primary);
+      }
+
+      .radio-input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+      }
+
+      .radio-label {
+        font-size: 14px;
+        color: #000;
+      }
+
+      /* Pricing summary styles */
+      .pricing-summary {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: var(--light);
+        border-radius: 12px;
+      }
+
+      .summary-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #000;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .summary-label {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .summary-value {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+      }
+
+      .summary-discount {
+        font-size: 14px;
+        color: #28a745;
+      }
+
+      .summary-total {
+        padding-top: 10px;
+        border-top: 1px dashed #e0e0e0;
+        margin-top: 10px;
+      }
+
+      .total-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+      }
+
+      .total-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      .step-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+      }
+
+      .step-dot.active {
+        background-color: var(--primary);
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      /* Overlay */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+
+      .overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      /* Service type badge */
+      .service-badge {
+        display: inline-block;
+        background-color: rgba(255, 191, 0, 0.1);
+        color: #ff8a00;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 5px;
+        border: 1px solid rgba(255, 191, 0, 0.2);
+      }
+      
+      /* Sheet transitions */
+      .step {
+        display: none;
+      }
+      
+      .step.active {
+        display: block;
+      }
+      
+      /* Animation for sheet content */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .step.active {
+        animation: fadeIn 0.3s ease;
       }
     </style>
   </head>
@@ -748,7 +991,7 @@
         <a href="javascript:history.back()" class="back-button">←</a>
         <div class="actions">
           <button class="action-button">↗</button>
-          <button class="favorite-button">🤍</button>
+          <button class="action-button">🤍</button>
         </div>
       </div>
 
@@ -782,6 +1025,7 @@
           <div class="car-name-container">
             <div class="car-name">Tesla Model 3</div>
             <div class="car-type">Electric Sedan</div>
+            <div class="service-badge" id="service-type">RENT</div>
           </div>
           <div class="rating-container">
             <span class="rating-star">★</span>
@@ -850,14 +1094,14 @@
 
         <div class="price-container">
           <div>
-            <div class="price-label">Price Starting From</div>
-            <div class="price-value">$45,000</div>
-            <div class="price-note">*Before potential incentives</div>
+            <div class="price-label">Rental Rate From</div>
+            <div class="price-value">$120/day</div>
+            <div class="price-note">*Discounts for longer rentals</div>
           </div>
           <div>
-            <div class="price-label">Monthly Rate From</div>
-            <div class="price-value">$499</div>
-            <div class="price-note">*With 10% down payment</div>
+            <div class="price-label">Security Deposit</div>
+            <div class="price-value">$500</div>
+            <div class="price-note">*Refundable</div>
           </div>
         </div>
 
@@ -865,7 +1109,7 @@
           <div class="dealer-header">
             <div class="dealer-logo">T</div>
             <div>
-              <div class="dealer-name">Tesla Dubai</div>
+              <div class="dealer-name">Tesla Rentals</div>
               <div class="dealer-rating">
                 <span class="dealer-stars">★★★★★</span>
                 <span class="dealer-rating-value">(4.9)</span>
@@ -874,10 +1118,10 @@
           </div>
           <div class="dealer-info">
             <div class="dealer-location">
-              <span class="info-icon">📍</span> Downtown Dubai
+              <span class="info-icon">📍</span> Downtown New York
             </div>
             <div class="dealer-contact">
-              <span class="info-icon">📞</span> +971-4-123-4567
+              <span class="info-icon">📞</span> +1-212-555-1234
             </div>
           </div>
         </div>
@@ -891,7 +1135,7 @@
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">BMW i4</div>
-                <div class="similar-car-price">$56,000</div>
+                <div class="similar-car-price">$150/day</div>
               </div>
             </div>
             <div class="similar-car-card" onclick="window.location.href='details.html'">
@@ -900,7 +1144,7 @@
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Polestar 2</div>
-                <div class="similar-car-price">$49,000</div>
+                <div class="similar-car-price">$130/day</div>
               </div>
             </div>
             <div class="similar-car-card" onclick="window.location.href='details.html'">
@@ -909,7 +1153,7 @@
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Audi e-tron GT</div>
-                <div class="similar-car-price">$102,000</div>
+                <div class="similar-car-price">$200/day</div>
               </div>
             </div>
             <div class="similar-car-card" onclick="window.location.href='details.html'">
@@ -918,257 +1162,818 @@
               </div>
               <div class="similar-car-details">
                 <div class="similar-car-name">Lucid Air</div>
-                <div class="similar-car-price">$87,000</div>
+                <div class="similar-car-price">$180/day</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-
+      <!-- Bottom Actions -->
       <div class="bottom-actions">
-        <div class="slide-button-container" id="slideButton">
-          <div class="slide-track"></div>
-          <div class="progress-fill" id="progressFill"></div>
-          <div class="slide-thumb" id="slideThumb"></div>
-          <div class="slide-text" id="slideText">Slide to Book Drive</div>
-          <div class="completion-text" id="completionText">
-            Booking Confirmed! 🚗
+        <button class="favorite-button">🤍</button>
+        <button class="book-button" id="bookButton">Book Now</button>
+      </div>
+      
+      <!-- Overlay -->
+      <div class="overlay" id="overlay"></div>
+      
+      <!-- Bottom Sheet -->
+      <div class="bottom-sheet" id="bookingSheet">
+        <!-- Calendar Step -->
+        <div class="step active" id="calendarStep">
+          <div class="sheet-header">
+            <div class="sheet-title">Select Rental Period</div>
+            <button class="sheet-close" id="closeSheet">✕</button>
+          </div>
+          
+          <div class="sheet-content">
+            <div class="step-indicator">
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+            
+            <!-- Quick options -->
+            <div class="quick-options">
+              <div class="quick-option" data-days="1">
+                <div class="quick-option-title">1 Day</div>
+                <div class="quick-option-subtitle">$120 total</div>
+              </div>
+              <div class="quick-option" data-days="7">
+                <div class="quick-option-title">1 Week</div>
+                <div class="quick-option-subtitle">$770 (save 8%)</div>
+              </div>
+              <div class="quick-option" data-days="14">
+                <div class="quick-option-title">2 Weeks</div>
+                <div class="quick-option-subtitle">$1,470 (save 12%)</div>
+              </div>
+              <div class="quick-option" data-days="30">
+                <div class="quick-option-title">1 Month</div>
+                <div class="quick-option-subtitle">$2,880 (save 20%)</div>
+              </div>
+            </div>
+            
+            <!-- Calendar display -->
+            <div class="calendar-container">
+              <div class="calendar-header">
+                <div class="month-selector">
+                  <div class="month-nav" id="prevMonth">←</div>
+                  <div class="current-month" id="currentMonth">June 2023</div>
+                  <div class="month-nav" id="nextMonth">→</div>
+                </div>
+              </div>
+              
+              <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated by JavaScript -->
+              </div>
+            </div>
+            
+            <!-- Date range display -->
+            <div class="date-range-display">
+              <div class="date-display">
+                <div class="date-label">Start Date</div>
+                <div class="date-value" id="startDate">--</div>
+              </div>
+              <div class="date-display">
+                <div class="date-label">End Date</div>
+                <div class="date-value" id="endDate">--</div>
+              </div>
+              <div class="days-count" id="daysCount">0 days selected</div>
+            </div>
+          </div>
+          
+          <div class="sheet-actions">
+            <button class="sheet-button secondary-button" id="cancelButton">Cancel</button>
+            <button class="sheet-button primary-button" id="nextToTimeButton">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Time Selection Step -->
+        <div class="step" id="timeStep">
+          <div class="sheet-header">
+            <div class="sheet-title">Select Pickup & Return Time</div>
+            <button class="sheet-close">✕</button>
+          </div>
+          
+          <div class="sheet-content">
+            <div class="step-indicator">
+              <div class="step-dot"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+            </div>
+            
+            <div class="time-picker-container">
+              <div class="time-picker-row">
+                <div class="time-picker">
+                  <div class="time-label">Pickup Time</div>
+                  <select class="time-select" id="pickupTime">
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                    <option value="18:00">06:00 PM</option>
+                  </select>
+                </div>
+                
+                <div class="time-picker">
+                  <div class="time-label">Return Time</div>
+                  <select class="time-select" id="returnTime">
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                    <option value="18:00">06:00 PM</option>
+                  </select>
+                </div>
+              </div>
+              
+              <!-- Delivery options -->
+              <div class="delivery-options">
+                <div class="option-group">
+                  <div class="option-title">Pickup Option</div>
+                  <div class="radio-group">
+                    <div class="radio-option selected" id="pickupAtLocation">
+                      <input type="radio" name="pickup" id="pickupRadio1" class="radio-input" checked>
+                      <label for="pickupRadio1" class="radio-label">Pickup at location</label>
+                    </div>
+                    <div class="radio-option" id="deliveryToYou">
+                      <input type="radio" name="pickup" id="pickupRadio2" class="radio-input">
+                      <label for="pickupRadio2" class="radio-label">Delivery to you</label>
+                    </div>
+                  </div>
+                  
+                  <div id="deliveryAddressContainer" style="display: none;">
+                    <input type="text" class="location-input" placeholder="Enter delivery address" id="deliveryAddress">
+                  </div>
+                </div>
+                
+                <div class="option-group">
+                  <div class="option-title">Return Option</div>
+                  <div class="radio-group">
+                    <div class="radio-option selected" id="returnToLocation">
+                      <input type="radio" name="return" id="returnRadio1" class="radio-input" checked>
+                      <label for="returnRadio1" class="radio-label">Return to location</label>
+                    </div>
+                    <div class="radio-option" id="pickupFromYou">
+                      <input type="radio" name="return" id="returnRadio2" class="radio-input">
+                      <label for="returnRadio2" class="radio-label">Pickup from you</label>
+                    </div>
+                  </div>
+                  
+                  <div id="returnAddressContainer" style="display: none;">
+                    <input type="text" class="location-input" placeholder="Enter pickup address" id="returnAddress">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="sheet-actions">
+            <button class="sheet-button secondary-button" id="backToCalendarButton">Back</button>
+            <button class="sheet-button primary-button" id="nextToSummaryButton">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Summary Step -->
+        <div class="step" id="summaryStep">
+          <div class="sheet-header">
+            <div class="sheet-title">Booking Summary</div>
+            <button class="sheet-close">✕</button>
+          </div>
+          
+          <div class="sheet-content">
+            <div class="step-indicator">
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot active"></div>
+            </div>
+            
+            <!-- Rental Details -->
+            <div class="date-range-display">
+              <div class="date-display">
+                <div class="date-label">Pickup</div>
+                <div class="date-value" id="summaryPickup">Jun 15, 2023 at 10:00 AM</div>
+              </div>
+              <div class="date-display">
+                <div class="date-label">Return</div>
+                <div class="date-value" id="summaryReturn">Jun 22, 2023 at 10:00 AM</div>
+              </div>
+              <div class="days-count" id="summaryDuration">7 days rental</div>
+            </div>
+            
+            <!-- Location Details -->
+            <div class="date-range-display">
+              <div class="date-display">
+                <div class="date-label">Pickup Location</div>
+                <div class="date-value" id="summaryPickupLocation">Tesla Rentals, Downtown New York</div>
+              </div>
+              <div class="date-display">
+                <div class="date-label">Return Location</div>
+                <div class="date-value" id="summaryReturnLocation">Tesla Rentals, Downtown New York</div>
+              </div>
+            </div>
+            
+            <!-- Pricing Summary -->
+            <div class="pricing-summary">
+              <div class="summary-title">Pricing Details</div>
+              
+              <div class="summary-row">
+                <div class="summary-label">Daily Rate</div>
+                <div class="summary-value" id="dailyRate">$120 × 7 days</div>
+              </div>
+              
+              <div class="summary-row">
+                <div class="summary-label">Subtotal</div>
+                <div class="summary-value" id="subtotal">$840.00</div>
+              </div>
+              
+              <div class="summary-row" id="discountRow">
+                <div class="summary-label">Weekly Discount</div>
+                <div class="summary-discount" id="discount">-$70.00 (8%)</div>
+              </div>
+              
+              <div class="summary-row">
+                <div class="summary-label">Delivery Fee</div>
+                <div class="summary-value" id="deliveryFee">$0.00</div>
+              </div>
+              
+              <div class="summary-row">
+                <div class="summary-label">Taxes & Fees</div>
+                <div class="summary-value" id="taxesFees">$92.40</div>
+              </div>
+              
+              <div class="summary-row summary-total">
+                <div class="total-label">Total</div>
+                <div class="total-value" id="totalPrice">$862.40</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="sheet-actions">
+            <button class="sheet-button secondary-button" id="backToTimeButton">Back</button>
+            <button class="sheet-button primary-button" id="confirmBookingButton">Confirm Booking</button>
           </div>
         </div>
       </div>
-      <script>
-        class SlidableButton {
-            constructor(containerId) {
-                this.container = document.getElementById(containerId);
-                this.thumb = document.getElementById('slideThumb');
-                this.text = document.getElementById('slideText');
-                this.completionText = document.getElementById('completionText');
-                this.progressFill = document.getElementById('progressFill');
-                
-                this.isDragging = false;
-                this.startX = 0;
-                this.currentX = 0;
-                this.maxSlide = 0;
-                this.threshold = 0.8; // 80% slide to complete
-                this.isCompleted = false;
-                
-                this.init();
-            }
-            
-            init() {
-                this.calculateMaxSlide();
-                this.bindEvents();
-                
-                // Recalculate on window resize
-                window.addEventListener('resize', () => {
-                    this.calculateMaxSlide();
-                });
-            }
-            
-            calculateMaxSlide() {
-                const containerWidth = this.container.offsetWidth;
-                const thumbWidth = this.thumb.offsetWidth;
-                this.maxSlide = containerWidth - thumbWidth - 8; // 8px for padding
-            }
-            
-            bindEvents() {
-                // Mouse events
-                this.thumb.addEventListener('mousedown', this.startDrag.bind(this));
-                document.addEventListener('mousemove', this.drag.bind(this));
-                document.addEventListener('mouseup', this.endDrag.bind(this));
-                
-                // Touch events for mobile
-                this.thumb.addEventListener('touchstart', this.startDrag.bind(this), { passive: false });
-                document.addEventListener('touchmove', this.drag.bind(this), { passive: false });
-                document.addEventListener('touchend', this.endDrag.bind(this));
-                
-                // Prevent default touch behavior
-                this.container.addEventListener('touchstart', (e) => e.preventDefault());
-            }
-            
-            startDrag(e) {
-                if (this.isCompleted) return;
-                
-                this.isDragging = true;
-                this.startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-                this.text.classList.add('sliding');
-                
-                // Add visual feedback
-                this.thumb.style.transition = 'transform 0.1s ease';
-            }
-            
-            drag(e) {
-                if (!this.isDragging || this.isCompleted) return;
-                
-                e.preventDefault();
-                const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-                const deltaX = clientX - this.startX;
-                
-                // Constrain movement
-                this.currentX = Math.max(0, Math.min(deltaX, this.maxSlide));
-                
-                // Update thumb position
-                this.thumb.style.transform = `translateX(${this.currentX}px)`;
-                
-                // Update progress fill
-                const progress = (this.currentX / this.maxSlide) * 100;
-                this.progressFill.style.width = `${progress}%`;
-                
-                // Update text opacity based on progress
-                const textOpacity = Math.max(0.3, 1 - (progress / 100));
-                this.text.style.opacity = textOpacity;
-            }
-            
-            endDrag() {
-                if (!this.isDragging || this.isCompleted) return;
-                
-                this.isDragging = false;
-                const progress = this.currentX / this.maxSlide;
-                
-                if (progress >= this.threshold) {
-                    this.completeSlide();
-                } else {
-                    this.resetSlide();
-                }
-            }
-            
-            completeSlide() {
-                this.isCompleted = true;
-                this.container.classList.add('completed');
-                this.text.classList.add('completed');
-                
-                // Animate to end
-                this.thumb.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                this.thumb.style.transform = `translateX(${this.maxSlide}px)`;
-                this.progressFill.style.width = '100%';
-                
-                // Show loading state briefly
-                this.container.classList.add('loading');
-                
-                setTimeout(() => {
-                    this.container.classList.remove('loading');
-                    this.onComplete();
-                }, 800);
-            }
-            
-            resetSlide() {
-                this.thumb.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                this.thumb.style.transform = 'translateX(0px)';
-                this.progressFill.style.width = '0%';
-                this.text.style.opacity = '1';
-                this.text.classList.remove('sliding');
-                this.currentX = 0;
-            }
-            
-            onComplete() {
-                // Simulate booking process
-                setTimeout(() => {
-                    // alert('🚗 Drive booked successfully!\n\nRedirecting to booking details...');
-                    window.location.href = 'booking-confirmation.html';
-                }, 500);
-            }
-            
-            reset() {
-                this.isCompleted = false;
-                this.container.classList.remove('completed', 'loading');
-                this.text.classList.remove('sliding', 'completed');
-                this.text.style.opacity = '1';
-                this.resetSlide();
-            }
-        }
-        
-        // Initialize the slidable button
-        const slidableButton = new SlidableButton('slideButton');
-        
-        // Reset function for demo
-        function resetButton() {
-            slidableButton.reset();
-        }
-        
-        // Add some haptic feedback for mobile devices
-        function vibrate() {
-            if (navigator.vibrate) {
-                navigator.vibrate([50, 100, 50]);
-            }
-        }
-        
-        // Add vibration on slide complete
-        document.getElementById('slideButton').addEventListener('transitionend', function(e) {
-            if (e.target.classList.contains('completed')) {
-                vibrate();
-            }
-        });
-        
-        // Initialize date for the booking which will be passed to the confirmation page
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        
-        // Format date to store in localStorage
-        const bookingDate = tomorrow.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-        
-        // Store booking info to be retrieved on confirmation page
-        localStorage.setItem('bookingDate', bookingDate);
-        localStorage.setItem('bookingTime', '10:30 AM - 11:30 AM');
-        localStorage.setItem('bookingId', 'DC' + Math.floor(10000 + Math.random() * 90000));
-        
-        // Carousel functionality
-        let slideIndex = 1;
-        showSlides(slideIndex);
-        
-        // Auto cycle through slides
-        setInterval(function() {
-            showSlides(slideIndex += 1);
-        }, 5000);
-        
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-        
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("carousel-item");
-            let dots = document.getElementsByClassName("indicator");
-            
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            
-            for (i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].classList.remove("active");
-            }
-            
-            slides[slideIndex-1].classList.add("active");
-            dots[slideIndex-1].classList.add("active");
-        }
-    </script>
-
-      <!-- Bottom Navigation -->
-      <!-- <div class="bottom-navigation">
-            <a href="dash.html" class="nav-item">
-                <div class="nav-icon">🏠</div>
-                Home
-            </a>
-            <a href="search.html" class="nav-item">
-                <div class="nav-icon">🔍</div>
-                Search
-            </a>
-            <a href="favorites.html" class="nav-item">
-                <div class="nav-icon">❤️</div>
-                Favorites
-            </a>
-            <a href="activity.html" class="nav-item">
-                <div class="nav-icon">📑</div>
-                Activity
-            </a>
-        </div> -->
     </div>
+
+    <script>
+      // Car service type switcher (for demo purposes)
+      const serviceTypes = ['RENT', 'LEASE', 'BUY'];
+      const serviceBadge = document.getElementById('service-type');
+      let currentServiceIndex = 0;
+      
+      serviceBadge.addEventListener('click', function() {
+        currentServiceIndex = (currentServiceIndex + 1) % serviceTypes.length;
+        serviceBadge.textContent = serviceTypes[currentServiceIndex];
+      });
+      
+      // Carousel functionality
+      let slideIndex = 1;
+      showSlides(slideIndex);
+      
+      // Auto cycle through slides
+      setInterval(function() {
+        showSlides(slideIndex += 1);
+      }, 5000);
+      
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+      
+      function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("carousel-item");
+        let dots = document.getElementsByClassName("indicator");
+        
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        
+        for (i = 0; i < slides.length; i++) {
+          slides[i].classList.remove("active");
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].classList.remove("active");
+        }
+        
+        slides[slideIndex-1].classList.add("active");
+        dots[slideIndex-1].classList.add("active");
+      }
+      
+      // Bottom sheet functionality
+      const bookButton = document.getElementById('bookButton');
+      const bookingSheet = document.getElementById('bookingSheet');
+      const overlay = document.getElementById('overlay');
+      const closeButtons = document.querySelectorAll('.sheet-close');
+      const cancelButton = document.getElementById('cancelButton');
+      
+      bookButton.addEventListener('click', function() {
+        bookingSheet.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      function closeSheet() {
+        bookingSheet.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      
+      closeButtons.forEach(button => {
+        button.addEventListener('click', closeSheet);
+      });
+      
+      cancelButton.addEventListener('click', closeSheet);
+      
+      overlay.addEventListener('click', closeSheet);
+      
+      // Step navigation
+      const steps = document.querySelectorAll('.step');
+      const nextToTimeButton = document.getElementById('nextToTimeButton');
+      const backToCalendarButton = document.getElementById('backToCalendarButton');
+      const nextToSummaryButton = document.getElementById('nextToSummaryButton');
+      const backToTimeButton = document.getElementById('backToTimeButton');
+      const confirmBookingButton = document.getElementById('confirmBookingButton');
+      
+      nextToTimeButton.addEventListener('click', function() {
+        steps.forEach(step => step.classList.remove('active'));
+        document.getElementById('timeStep').classList.add('active');
+      });
+      
+      backToCalendarButton.addEventListener('click', function() {
+        steps.forEach(step => step.classList.remove('active'));
+        document.getElementById('calendarStep').classList.add('active');
+      });
+      
+      nextToSummaryButton.addEventListener('click', function() {
+        steps.forEach(step => step.classList.remove('active'));
+        document.getElementById('summaryStep').classList.add('active');
+        updateSummary();
+      });
+      
+      backToTimeButton.addEventListener('click', function() {
+        steps.forEach(step => step.classList.remove('active'));
+        document.getElementById('timeStep').classList.add('active');
+      });
+      
+      confirmBookingButton.addEventListener('click', function() {
+        // Generate a random booking ID
+        const bookingId = 'DC' + Math.floor(100000 + Math.random() * 900000);
+        
+        // Get booking details
+        const pickupDate = selectedStartDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        const returnDate = selectedEndDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        const pickupTime = document.getElementById('pickupTime').value;
+        const returnTime = document.getElementById('returnTime').value;
+        
+        // Format times for display
+        function formatTime(time) {
+          const [hours, minutes] = time.split(':');
+          const hourNum = parseInt(hours);
+          return `${hourNum % 12 || 12}:${minutes} ${hourNum >= 12 ? 'PM' : 'AM'}`;
+        }
+        
+        // Get locations
+        let pickupLocation = 'Tesla Rentals, Downtown New York';
+        let returnLocation = 'Tesla Rentals, Downtown New York';
+        
+        if (document.getElementById('pickupRadio2').checked) {
+          pickupLocation = 'Delivery: ' + (document.getElementById('deliveryAddress').value || 'Your address');
+        }
+        
+        if (document.getElementById('returnRadio2').checked) {
+          returnLocation = 'Pickup from: ' + (document.getElementById('returnAddress').value || 'Your address');
+        }
+        
+        // Get pricing
+        const dailyRate = 120;
+        const subtotal = dailyRate * selectedDays;
+        let discount = 0;
+        let discountPercentage = 0;
+        
+        // Apply discount based on duration
+        if (selectedDays >= 30) {
+          discountPercentage = 20;
+        } else if (selectedDays >= 14) {
+          discountPercentage = 12;
+        } else if (selectedDays >= 7) {
+          discountPercentage = 8;
+        }
+        
+        discount = (subtotal * discountPercentage) / 100;
+        
+        // Calculate delivery fee
+        let deliveryFee = 0;
+        if (document.getElementById('pickupRadio2').checked || document.getElementById('returnRadio2').checked) {
+          deliveryFee = 25;
+        }
+        
+        // Calculate taxes (assuming 12%)
+        const taxRate = 0.12;
+        const taxesFees = (subtotal - discount + deliveryFee) * taxRate;
+        
+        // Calculate total
+        const total = subtotal - discount + deliveryFee + taxesFees;
+        
+        // Store booking information in localStorage
+        localStorage.setItem('bookingId', bookingId);
+        localStorage.setItem('carName', 'Tesla Model 3');
+        localStorage.setItem('carType', 'Electric Sedan');
+        localStorage.setItem('pickupDate', pickupDate);
+        localStorage.setItem('pickupTime', formatTime(pickupTime));
+        localStorage.setItem('returnDate', returnDate);
+        localStorage.setItem('returnTime', formatTime(returnTime));
+        localStorage.setItem('pickupLocation', pickupLocation);
+        localStorage.setItem('returnLocation', returnLocation);
+        localStorage.setItem('rentalDays', selectedDays.toString());
+        localStorage.setItem('dailyRate', dailyRate.toString());
+        localStorage.setItem('subtotal', subtotal.toFixed(2));
+        localStorage.setItem('discount', discount.toFixed(2));
+        localStorage.setItem('discountPercentage', discountPercentage.toString());
+        localStorage.setItem('deliveryFee', deliveryFee.toFixed(2));
+        localStorage.setItem('taxesFees', taxesFees.toFixed(2));
+        localStorage.setItem('total', total.toFixed(2));
+        
+        // Redirect to confirmation page
+        window.location.href = 'booking-confirmation.html';
+      });
+      
+      // Calendar functionality
+      const calendarGrid = document.getElementById('calendarGrid');
+      const currentMonthEl = document.getElementById('currentMonth');
+      const prevMonthBtn = document.getElementById('prevMonth');
+      const nextMonthBtn = document.getElementById('nextMonth');
+      const startDateEl = document.getElementById('startDate');
+      const endDateEl = document.getElementById('endDate');
+      const daysCountEl = document.getElementById('daysCount');
+      
+      let currentDate = new Date();
+      let currentMonth = currentDate.getMonth();
+      let currentYear = currentDate.getFullYear();
+      
+      let selectedStartDate = null;
+      let selectedEndDate = null;
+      let selectedDays = 0;
+      
+      // Render calendar
+      function renderCalendar() {
+        // Clear previous calendar
+        calendarGrid.innerHTML = '';
+        
+        // Update month and year display
+        const monthName = new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' });
+        currentMonthEl.textContent = `${monthName} ${currentYear}`;
+        
+        // Add weekday headers
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        weekdays.forEach(day => {
+          const weekdayEl = document.createElement('div');
+          weekdayEl.className = 'weekday';
+          weekdayEl.textContent = day;
+          calendarGrid.appendChild(weekdayEl);
+        });
+        
+        // Get first day of month and total days
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        
+        // Add empty cells for days before first of month
+        for (let i = 0; i < firstDay; i++) {
+          const emptyDay = document.createElement('div');
+          emptyDay.className = 'calendar-day';
+          calendarGrid.appendChild(emptyDay);
+        }
+        
+        // Add days of month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayEl = document.createElement('div');
+          dayEl.className = 'calendar-day';
+          dayEl.textContent = day;
+          
+          const dateObj = new Date(currentYear, currentMonth, day);
+          const today = new Date();
+          
+          // Check if date is today
+          if (
+            dateObj.getDate() === today.getDate() &&
+            dateObj.getMonth() === today.getMonth() &&
+            dateObj.getFullYear() === today.getFullYear()
+          ) {
+            dayEl.classList.add('today');
+          }
+          
+          // Disable past dates
+          if (dateObj < new Date(today.setHours(0, 0, 0, 0))) {
+            dayEl.classList.add('disabled');
+          } else {
+            // Check if date is in selected range
+            if (selectedStartDate && selectedEndDate) {
+              if (
+                dateObj >= new Date(selectedStartDate.setHours(0, 0, 0, 0)) &&
+                dateObj <= new Date(selectedEndDate.setHours(0, 0, 0, 0))
+              ) {
+                dayEl.classList.add('range');
+                
+                // Highlight start and end dates
+                if (
+                  dateObj.getDate() === selectedStartDate.getDate() &&
+                  dateObj.getMonth() === selectedStartDate.getMonth() &&
+                  dateObj.getFullYear() === selectedStartDate.getFullYear()
+                ) {
+                  dayEl.classList.add('selected');
+                }
+                
+                if (
+                  dateObj.getDate() === selectedEndDate.getDate() &&
+                  dateObj.getMonth() === selectedEndDate.getMonth() &&
+                  dateObj.getFullYear() === selectedEndDate.getFullYear()
+                ) {
+                  dayEl.classList.add('selected');
+                }
+              }
+            } else if (selectedStartDate) {
+              // Highlight only start date
+              if (
+                dateObj.getDate() === selectedStartDate.getDate() &&
+                dateObj.getMonth() === selectedStartDate.getMonth() &&
+                dateObj.getFullYear() === selectedStartDate.getFullYear()
+              ) {
+                dayEl.classList.add('selected');
+              }
+            }
+            
+            // Add click event
+            dayEl.addEventListener('click', function() {
+              selectDate(dateObj);
+            });
+          }
+          
+          calendarGrid.appendChild(dayEl);
+        }
+      }
+      
+      // Initialize calendar
+      renderCalendar();
+      
+      // Month navigation
+      prevMonthBtn.addEventListener('click', function() {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      });
+      
+      nextMonthBtn.addEventListener('click', function() {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      });
+      
+      // Date selection logic
+      function selectDate(date) {
+        // Clear selection if both dates are already selected
+        if (selectedStartDate && selectedEndDate) {
+          selectedStartDate = date;
+          selectedEndDate = null;
+          selectedDays = 0;
+        } 
+        // Set end date if start date is already selected
+        else if (selectedStartDate) {
+          // Ensure end date is after start date
+          if (date < selectedStartDate) {
+            selectedEndDate = selectedStartDate;
+            selectedStartDate = date;
+          } else {
+            selectedEndDate = date;
+          }
+          
+          // Calculate days difference
+          const diffTime = Math.abs(selectedEndDate - selectedStartDate);
+          selectedDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        } 
+        // Set start date if nothing is selected
+        else {
+          selectedStartDate = date;
+        }
+        
+        // Update display
+        updateDateDisplay();
+        renderCalendar();
+      }
+      
+      // Update date display
+      function updateDateDisplay() {
+        if (selectedStartDate) {
+          startDateEl.textContent = selectedStartDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          });
+        } else {
+          startDateEl.textContent = '--';
+        }
+        
+        if (selectedEndDate) {
+          endDateEl.textContent = selectedEndDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          });
+          daysCountEl.textContent = `${selectedDays} days selected`;
+        } else {
+          endDateEl.textContent = '--';
+          daysCountEl.textContent = selectedStartDate ? '1 day selected' : '0 days selected';
+        }
+      }
+      
+      // Quick options functionality
+      const quickOptions = document.querySelectorAll('.quick-option');
+      
+      quickOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          // Remove selected class from all options
+          quickOptions.forEach(opt => opt.classList.remove('selected'));
+          
+          // Add selected class to clicked option
+          this.classList.add('selected');
+          
+          // Get days from data attribute
+          const days = parseInt(this.getAttribute('data-days'));
+          
+          // Set start date to today
+          selectedStartDate = new Date();
+          
+          // Calculate end date
+          selectedEndDate = new Date();
+          selectedEndDate.setDate(selectedEndDate.getDate() + (days - 1));
+          
+          // Set selected days
+          selectedDays = days;
+          
+          // Update display
+          updateDateDisplay();
+          
+          // Update calendar if needed
+          currentMonth = selectedStartDate.getMonth();
+          currentYear = selectedStartDate.getFullYear();
+          renderCalendar();
+        });
+      });
+      
+      // Toggle delivery address field
+      const pickupAtLocation = document.getElementById('pickupAtLocation');
+      const deliveryToYou = document.getElementById('deliveryToYou');
+      const deliveryAddressContainer = document.getElementById('deliveryAddressContainer');
+      
+      pickupAtLocation.addEventListener('click', function() {
+        pickupAtLocation.classList.add('selected');
+        deliveryToYou.classList.remove('selected');
+        deliveryAddressContainer.style.display = 'none';
+        document.getElementById('pickupRadio1').checked = true;
+      });
+      
+      deliveryToYou.addEventListener('click', function() {
+        deliveryToYou.classList.add('selected');
+        pickupAtLocation.classList.remove('selected');
+        deliveryAddressContainer.style.display = 'block';
+        document.getElementById('pickupRadio2').checked = true;
+      });
+      
+      // Toggle return address field
+      const returnToLocation = document.getElementById('returnToLocation');
+      const pickupFromYou = document.getElementById('pickupFromYou');
+      const returnAddressContainer = document.getElementById('returnAddressContainer');
+      
+      returnToLocation.addEventListener('click', function() {
+        returnToLocation.classList.add('selected');
+        pickupFromYou.classList.remove('selected');
+        returnAddressContainer.style.display = 'none';
+        document.getElementById('returnRadio1').checked = true;
+      });
+      
+      pickupFromYou.addEventListener('click', function() {
+        pickupFromYou.classList.add('selected');
+        returnToLocation.classList.remove('selected');
+        returnAddressContainer.style.display = 'block';
+        document.getElementById('returnRadio2').checked = true;
+      });
+      
+      // Update summary
+      function updateSummary() {
+        // Get selected dates and times
+        const pickupTime = document.getElementById('pickupTime').value;
+        const returnTime = document.getElementById('returnTime').value;
+        
+        // Format dates for display
+        const pickupDateStr = selectedStartDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        
+        const returnDateStr = selectedEndDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        
+        // Convert 24h to 12h format
+        function formatTime(time) {
+          const [hours, minutes] = time.split(':');
+          const hourNum = parseInt(hours);
+          return `${hourNum % 12 || 12}:${minutes} ${hourNum >= 12 ? 'PM' : 'AM'}`;
+        }
+        
+        // Update pickup and return info
+        document.getElementById('summaryPickup').textContent = `${pickupDateStr} at ${formatTime(pickupTime)}`;
+        document.getElementById('summaryReturn').textContent = `${returnDateStr} at ${formatTime(returnTime)}`;
+        document.getElementById('summaryDuration').textContent = `${selectedDays} days rental`;
+        
+        // Update location info based on delivery options
+        if (document.getElementById('pickupRadio2').checked) {
+          const deliveryAddress = document.getElementById('deliveryAddress').value || 'Your address';
+          document.getElementById('summaryPickupLocation').textContent = `Delivery to: ${deliveryAddress}`;
+        } else {
+          document.getElementById('summaryPickupLocation').textContent = 'Tesla Rentals, Downtown New York';
+        }
+        
+        if (document.getElementById('returnRadio2').checked) {
+          const returnAddress = document.getElementById('returnAddress').value || 'Your address';
+          document.getElementById('summaryReturnLocation').textContent = `Pickup from: ${returnAddress}`;
+        } else {
+          document.getElementById('summaryReturnLocation').textContent = 'Tesla Rentals, Downtown New York';
+        }
+        
+        // Calculate pricing
+        const dailyRate = 120;
+        const subtotal = dailyRate * selectedDays;
+        let discount = 0;
+        let discountPercentage = 0;
+        
+        // Apply discount based on duration
+        if (selectedDays >= 30) {
+          discountPercentage = 20;
+        } else if (selectedDays >= 14) {
+          discountPercentage = 12;
+        } else if (selectedDays >= 7) {
+          discountPercentage = 8;
+        }
+        
+        discount = (subtotal * discountPercentage) / 100;
+        
+        // Calculate delivery fee
+        let deliveryFee = 0;
+        if (document.getElementById('pickupRadio2').checked || document.getElementById('returnRadio2').checked) {
+          deliveryFee = 25;
+        }
+        
+        // Calculate taxes (assuming 12%)
+        const taxRate = 0.12;
+        const taxesFees = (subtotal - discount + deliveryFee) * taxRate;
+        
+        // Calculate total
+        const total = subtotal - discount + deliveryFee + taxesFees;
+        
+        // Update pricing summary
+        document.getElementById('dailyRate').textContent = `$${dailyRate} × ${selectedDays} days`;
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        
+        // Show/hide discount row
+        if (discount > 0) {
+          document.getElementById('discountRow').style.display = 'flex';
+          document.getElementById('discount').textContent = `-$${discount.toFixed(2)} (${discountPercentage}%)`;
+        } else {
+          document.getElementById('discountRow').style.display = 'none';
+        }
+        
+        document.getElementById('deliveryFee').textContent = `$${deliveryFee.toFixed(2)}`;
+        document.getElementById('taxesFees').textContent = `$${taxesFees.toFixed(2)}`;
+        document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+      }
+    </script>
   </body>
 </html>

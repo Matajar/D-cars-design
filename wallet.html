@@ -50,7 +50,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #000;
+        /* background-color: #000; */
         border-radius: clamp(25px, 8vw, 40px);
         margin: 10px clamp(10px, 3vw, 20px) clamp(15px, 4vw, 20px);
       }
@@ -60,7 +60,7 @@
         align-items: center;
         font-size: clamp(16px, 4vw, 20px);
         font-weight: 600;
-        color: #fff;
+        color: #000;
       }
 
       .page-icon {
@@ -72,19 +72,19 @@
         width: clamp(32px, 8vw, 38px);
         height: clamp(32px, 8vw, 38px);
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.05); /* light gray instead of white */
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1); /* subtle gray border */
         font-size: clamp(16px, 4vw, 20px);
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
       .back-button:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(0, 0, 0, 0.08); /* slightly darker on hover */
       }
 
       .wallet-section {
@@ -371,7 +371,7 @@
         transform: translateX(-50%);
         width: 90%;
         max-width: 400px;
-        background-color:rgba(255,191, 0, 0.5);
+        background-color: rgba(255, 191, 0, 0.5);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         display: flex;
@@ -395,22 +395,22 @@
         text-decoration: none;
       }
 
-        .nav-item.active {
-            color: #996600;
-            position: relative;
-        }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #664400;
-            border-radius: 50%;
-        }
+      .nav-item.active {
+        color: #996600;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #664400;
+        border-radius: 50%;
+      }
 
       .nav-icon {
         margin-bottom: 5px;

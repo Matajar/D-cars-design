@@ -1,483 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>D Cars - Favorites</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        :root {
-            --primary: #FFBF00;
-            --primary-dark: #E6AC00;
-            --secondary: #FFDA77;
-            --dark: #1A202C;
-            --light: #FFFFFF;
-            --gray: #90A3BF;
-            --background: #FFFFFF;
-            --card-bg: #F6F7F9;
-            --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-        
-        body {
-            background-color: var(--background);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 430px;
-            margin: 0 auto;
-            background-color: var(--background);
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            padding-bottom: 80px;
-        }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            color: var(--dark);
-            font-size: 14px;
-            background-color: var(--background);
-        }
-        
-        .header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .page-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        .profile-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark);
-        }
-        
-        .search-container {
-            padding: 0 20px;
-            margin-bottom: 20px;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #f5f5f5;
-            border-radius: 30px;
-            padding: 12px 16px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .search-icon {
-            margin-right: 10px;
-            color: #888;
-        }
-        
-        .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--dark);
-            font-size: 16px;
-            width: 100%;
-        }
-        
-        .search-input::placeholder {
-            color: #aaa;
-        }
-        
-        .empty-state {
-            padding: 40px 20px;
-            text-align: center;
-            display: none;
-        }
-        
-        .empty-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            opacity: 0.4;
-        }
-        
-        .empty-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        
-        .empty-description {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-        
-        .browse-button {
-            background-color: var(--primary);
-            color: var(--dark);
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            display: inline-block;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-        }
-        
-        .browse-button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .favorites-section {
-            padding: 0 20px;
-        }
-        
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .favorites-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .car-card {
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .car-image {
-            height: 120px;
-            position: relative;
-        }
-        
-        .car-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .favorite-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            color: #FF4D4F;
-        }
-        
-        .car-info {
-            padding: 12px;
-        }
-        
-        .car-name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .car-price {
-            display: flex;
-            color: #555;
-            font-size: 12px;
-            margin-bottom: 5px;
-        }
-        
-        .price-value {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .car-rating {
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            color: #888;
-        }
-        
-        .rating-star {
-            color: var(--primary);
-            margin-right: 3px;
-        }
-        
-        .tab-container {
-            padding: 0 20px;
-            margin-bottom: 20px;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 5px;
-            background-color: #f0f0f0;
-            padding: 5px;
-            border-radius: 30px;
-        }
-        
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            font-weight: 500;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-        
-        .tab.active {
-            background-color: var(--primary);
-            color: var(--dark);
-        }
-        
-        .bottom-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color:rgba(255,191, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 12px;
-            color: #000000;
-            font-weight: 500;
-            padding: 0 10px;
-            text-decoration: none;
-        }
-        
-        .nav-item.active {
-            color: #ffffff;
-            position: relative;
-        }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #ffffff;
-            border-radius: 50%;
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --primary: #ffbf00;
+        --primary-dark: #e6ac00;
+        --secondary: #ffda77;
+        --dark: #1a202c;
+        --light: #ffffff;
+        --gray: #90a3bf;
+        --background: #ffffff;
+        --card-bg: #f6f7f9;
+        --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: var(--background);
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: var(--dark);
+        font-size: 14px;
+        background-color: var(--background);
+      }
+
+      .header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+
+      .profile-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+      }
+
+      .search-container {
+        padding: 0 20px;
+        margin-bottom: 20px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 30px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-icon {
+        margin-right: 10px;
+        color: #888;
+      }
+
+      .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--dark);
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .search-input::placeholder {
+        color: #aaa;
+      }
+
+      .empty-state {
+        padding: 40px 20px;
+        text-align: center;
+        display: none;
+      }
+
+      .empty-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        opacity: 0.4;
+      }
+
+      .empty-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--dark);
+      }
+
+      .empty-description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+      }
+
+      .browse-button {
+        background-color: var(--primary);
+        color: var(--dark);
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+        transition: var(--transition);
+      }
+
+      .browse-button:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .favorites-section {
+        padding: 0 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--dark);
+      }
+
+      .favorites-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .car-card {
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .car-image {
+        height: 120px;
+        position: relative;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        color: #ff4d4f;
+      }
+
+      .car-info {
+        padding: 12px;
+      }
+
+      .car-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .car-price {
+        display: flex;
+        color: #555;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      .price-value {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .car-rating {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #888;
+      }
+
+      .rating-star {
+        color: var(--primary);
+        margin-right: 3px;
+      }
+
+      .tab-container {
+        padding: 0 20px;
+        margin-bottom: 20px;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 5px;
+        background-color: #f0f0f0;
+        padding: 5px;
+        border-radius: 30px;
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        font-weight: 500;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        background-color: var(--primary);
+        color: var(--dark);
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #000000;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #ffffff;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #ffffff;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="status-bar">
-            <div class="time">9:41</div>
-            <div class="indicators">
-                <span>●●●●</span>
-                <span>●●●</span>
-                <span>85%</span>
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <div class="page-title">Favorites</div>
+        <div class="profile-icon">👤</div>
+      </div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-icon">🔍</div>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search in favorites"
+          />
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tabs">
+          <div class="tab active">All (6)</div>
+          <div class="tab">Available (4)</div>
+          <div class="tab">Rented (2)</div>
+        </div>
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div class="empty-state" style="display: none">
+        <div class="empty-icon">❤️</div>
+        <div class="empty-title">No favorites yet</div>
+        <div class="empty-description">
+          Cars you mark as favorite will appear here
+        </div>
+        <button
+          class="browse-button"
+          onclick="window.location.href='search.html'"
+        >
+          Browse Cars
+        </button>
+      </div>
+
+      <div class="favorites-section">
+        <div class="favorites-grid">
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="Tesla Model 3" />
+              <button class="favorite-button">❤️</button>
             </div>
-        </div>
-        
-        <div class="header">
-            <div class="page-title">Favorites</div>
-            <div class="profile-icon">👤</div>
-        </div>
-        
-        <div class="search-container">
-            <div class="search-box">
-                <div class="search-icon">🔍</div>
-                <input type="text" class="search-input" placeholder="Search in favorites">
+            <div class="car-info">
+              <div class="car-name">Tesla Model 3</div>
+              <div class="car-price">
+                <span class="price-value">$45,000</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.8 (120 reviews)
+              </div>
             </div>
-        </div>
-        
-        <div class="tab-container">
-            <div class="tabs">
-                <div class="tab active">All (6)</div>
-                <div class="tab">Available (4)</div>
-                <div class="tab">Rented (2)</div>
+          </div>
+
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="BMW i4" />
+              <button class="favorite-button">❤️</button>
             </div>
-        </div>
-        
-        <!-- Empty state (hidden by default) -->
-        <div class="empty-state" style="display: none;">
-            <div class="empty-icon">❤️</div>
-            <div class="empty-title">No favorites yet</div>
-            <div class="empty-description">Cars you mark as favorite will appear here</div>
-            <button class="browse-button" onclick="window.location.href='search.html'">
-                Browse Cars
-            </button>
-        </div>
-        
-        <div class="favorites-section">
-            <div class="favorites-grid">
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="Tesla Model 3">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">Tesla Model 3</div>
-                        <div class="car-price">
-                            <span class="price-value">$45,000</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.8 (120 reviews)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="BMW i4">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">BMW i4</div>
-                        <div class="car-price">
-                            <span class="price-value">$56,000</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.6 (85 reviews)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="Audi e-tron GT">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">Audi e-tron GT</div>
-                        <div class="car-price">
-                            <span class="price-value">$102,000</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.9 (76 reviews)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="Porsche Taycan">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">Porsche Taycan</div>
-                        <div class="car-price">
-                            <span class="price-value">$86,700</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.7 (94 reviews)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="Lucid Air">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">Lucid Air</div>
-                        <div class="car-price">
-                            <span class="price-value">$87,400</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.5 (68 reviews)
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="car-card" onclick="window.location.href='details.html'">
-                    <div class="car-image">
-                        <img src="assets/car-img1.png" alt="Rivian R1T">
-                        <button class="favorite-button">❤️</button>
-                    </div>
-                    <div class="car-info">
-                        <div class="car-name">Rivian R1T</div>
-                        <div class="car-price">
-                            <span class="price-value">$73,000</span>
-                        </div>
-                        <div class="car-rating">
-                            <span class="rating-star">★</span> 4.8 (45 reviews)
-                        </div>
-                    </div>
-                </div>
+            <div class="car-info">
+              <div class="car-name">BMW i4</div>
+              <div class="car-price">
+                <span class="price-value">$56,000</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.6 (85 reviews)
+              </div>
             </div>
+          </div>
+
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="Audi e-tron GT" />
+              <button class="favorite-button">❤️</button>
+            </div>
+            <div class="car-info">
+              <div class="car-name">Audi e-tron GT</div>
+              <div class="car-price">
+                <span class="price-value">$102,000</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.9 (76 reviews)
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="Porsche Taycan" />
+              <button class="favorite-button">❤️</button>
+            </div>
+            <div class="car-info">
+              <div class="car-name">Porsche Taycan</div>
+              <div class="car-price">
+                <span class="price-value">$86,700</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.7 (94 reviews)
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="Lucid Air" />
+              <button class="favorite-button">❤️</button>
+            </div>
+            <div class="car-info">
+              <div class="car-name">Lucid Air</div>
+              <div class="car-price">
+                <span class="price-value">$87,400</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.5 (68 reviews)
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-image">
+              <img src="assets/car-img1.png" alt="Rivian R1T" />
+              <button class="favorite-button">❤️</button>
+            </div>
+            <div class="car-info">
+              <div class="car-name">Rivian R1T</div>
+              <div class="car-price">
+                <span class="price-value">$73,000</span>
+              </div>
+              <div class="car-rating">
+                <span class="rating-star">★</span> 4.8 (45 reviews)
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <!-- Bottom Navigation -->
-        <div class="bottom-navigation">
-            <a href="dash.html" class="nav-item">
-                <div class="nav-icon">🏠</div>
-                Home
-            </a>
-            <a href="search.html" class="nav-item">
-                <div class="nav-icon">🔍</div>
-                Search
-            </a>
-            <a href="favorites.html" class="nav-item active">
-                <div class="nav-icon">❤️</div>
-                Favorites
-            </a>
-            <a href="activity.html" class="nav-item">
-                <div class="nav-icon">📑</div>
-                Activity
-            </a>
-        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item">
+          <div class="nav-icon">🏠</div>
+          Home
+        </a>
+        <a href="search.html" class="nav-item active">
+          <div class="nav-icon">🔍</div>
+          Search
+        </a>
+        <a href="wallet.html" class="nav-item">
+          <div class="nav-icon">💰</div>
+          Wallet
+        </a>
+        <a href="profile.html" class="nav-item">
+          <div class="nav-icon">👤</div>
+          Profile
+        </a>
+      </div>
     </div>
-</body>
+  </body>
 </html>

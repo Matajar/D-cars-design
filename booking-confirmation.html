@@ -40,7 +40,7 @@
         min-height: 100vh;
         position: relative;
         overflow: hidden;
-        padding-bottom: 100px;
+        /* padding-bottom: 100px; */
       }
 
       .status-bar {
@@ -464,7 +464,7 @@
 
       <h1 class="success-title">Booking Confirmed!</h1>
       <p class="success-message">
-        Your test drive has been successfully booked. We've sent the confirmation details to your email and mobile number.
+        Your car rental has been successfully booked. We've sent the confirmation details to your email and mobile number.
       </p>
 
       <div class="booking-details">
@@ -482,37 +482,68 @@
         </div>
 
         <div class="details-row">
-          <div class="detail-label">Test Drive Date</div>
-          <div class="detail-value" id="bookingDateField">June 5, 2025</div>
+          <div class="detail-label">Pickup Date</div>
+          <div class="detail-value" id="pickupDateField">June 5, 2025</div>
         </div>
 
         <div class="details-row">
-          <div class="detail-label">Time Slot</div>
-          <div class="detail-value" id="bookingTimeField">10:30 AM - 11:30 AM</div>
+          <div class="detail-label">Pickup Time</div>
+          <div class="detail-value" id="pickupTimeField">10:30 AM</div>
+        </div>
+        
+        <div class="details-row">
+          <div class="detail-label">Return Date</div>
+          <div class="detail-value" id="returnDateField">June 12, 2025</div>
         </div>
 
         <div class="details-row">
-          <div class="detail-label">Location</div>
-          <div class="detail-value">Tesla Dubai, Downtown</div>
+          <div class="detail-label">Return Time</div>
+          <div class="detail-value" id="returnTimeField">10:30 AM</div>
+        </div>
+
+        <div class="details-row">
+          <div class="detail-label">Pickup Location</div>
+          <div class="detail-value" id="pickupLocationField">Tesla Rentals, Downtown New York</div>
+        </div>
+        
+        <div class="details-row">
+          <div class="detail-label">Return Location</div>
+          <div class="detail-value" id="returnLocationField">Tesla Rentals, Downtown New York</div>
         </div>
 
         <div class="details-row">
           <div class="detail-label">Duration</div>
-          <div class="detail-value">60 minutes</div>
+          <div class="detail-value" id="durationField">7 days</div>
         </div>
 
         <div class="price-summary">
           <div class="price-row">
-            <div class="price-label">Test Drive Fee</div>
-            <div class="price-value">$0.00</div>
+            <div class="price-label">Daily Rate</div>
+            <div class="price-value" id="dailyRateField">$120.00</div>
           </div>
           <div class="price-row">
-            <div class="price-label">Refundable Deposit</div>
-            <div class="price-value">$50.00</div>
+            <div class="price-label">Rental Duration</div>
+            <div class="price-value" id="rentalDurationField">7 days</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Subtotal</div>
+            <div class="price-value" id="subtotalField">$840.00</div>
+          </div>
+          <div class="price-row" id="discountRow">
+            <div class="price-label">Discount</div>
+            <div class="price-value" id="discountField" style="color: #28a745;">-$67.20 (8%)</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Delivery Fee</div>
+            <div class="price-value" id="deliveryFeeField">$0.00</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Taxes & Fees</div>
+            <div class="price-value" id="taxesFeesField">$92.74</div>
           </div>
           <div class="price-row">
             <div class="total-label">Total Paid</div>
-            <div class="total-value">$50.00</div>
+            <div class="total-value" id="totalField">$865.54</div>
           </div>
         </div>
       </div>
@@ -523,7 +554,7 @@
       </div>
 
       <!-- Bottom Navigation -->
-      <div class="bottom-navigation">
+      <!-- <div class="bottom-navigation">
         <a href="dash.html" class="nav-item">
           <div class="nav-icon">🏠</div>
           Home
@@ -540,7 +571,7 @@
           <div class="nav-icon">📑</div>
           Activity
         </a>
-      </div>
+      </div> -->
     </div>
 
     <script>
@@ -548,13 +579,53 @@
       window.addEventListener('DOMContentLoaded', () => {
         // Get booking details from localStorage
         const bookingId = localStorage.getItem('bookingId') || 'DC87921';
-        const bookingDate = localStorage.getItem('bookingDate') || 'June 5, 2025';
-        const bookingTime = localStorage.getItem('bookingTime') || '10:30 AM - 11:30 AM';
+        const carName = localStorage.getItem('carName') || 'Tesla Model 3';
+        const carType = localStorage.getItem('carType') || 'Electric Sedan';
+        const pickupDate = localStorage.getItem('pickupDate') || 'Jun 5, 2025';
+        const pickupTime = localStorage.getItem('pickupTime') || '10:30 AM';
+        const returnDate = localStorage.getItem('returnDate') || 'Jun 12, 2025';
+        const returnTime = localStorage.getItem('returnTime') || '10:30 AM';
+        const pickupLocation = localStorage.getItem('pickupLocation') || 'Tesla Rentals, Downtown New York';
+        const returnLocation = localStorage.getItem('returnLocation') || 'Tesla Rentals, Downtown New York';
+        const rentalDays = localStorage.getItem('rentalDays') || '7';
+        const dailyRate = localStorage.getItem('dailyRate') || '120';
+        const subtotal = localStorage.getItem('subtotal') || '840.00';
+        const discount = localStorage.getItem('discount') || '67.20';
+        const discountPercentage = localStorage.getItem('discountPercentage') || '8';
+        const deliveryFee = localStorage.getItem('deliveryFee') || '0.00';
+        const taxesFees = localStorage.getItem('taxesFees') || '92.74';
+        const total = localStorage.getItem('total') || '865.54';
+        
+        // Update car details
+        document.querySelector('.car-name-booking').textContent = carName;
+        document.querySelector('.car-type-booking').textContent = carType;
         
         // Update the DOM with retrieved values
         document.getElementById('bookingIdField').textContent = `Booking #${bookingId}`;
-        document.getElementById('bookingDateField').textContent = bookingDate;
-        document.getElementById('bookingTimeField').textContent = bookingTime;
+        document.getElementById('pickupDateField').textContent = pickupDate;
+        document.getElementById('pickupTimeField').textContent = pickupTime;
+        document.getElementById('returnDateField').textContent = returnDate;
+        document.getElementById('returnTimeField').textContent = returnTime;
+        document.getElementById('pickupLocationField').textContent = pickupLocation;
+        document.getElementById('returnLocationField').textContent = returnLocation;
+        document.getElementById('durationField').textContent = `${rentalDays} days`;
+        
+        // Update pricing information
+        document.getElementById('dailyRateField').textContent = `$${dailyRate}.00`;
+        document.getElementById('rentalDurationField').textContent = `${rentalDays} days`;
+        document.getElementById('subtotalField').textContent = `$${subtotal}`;
+        
+        // Handle discount display
+        if (parseFloat(discount) > 0) {
+          document.getElementById('discountField').textContent = `-$${discount} (${discountPercentage}%)`;
+          document.getElementById('discountRow').style.display = 'flex';
+        } else {
+          document.getElementById('discountRow').style.display = 'none';
+        }
+        
+        document.getElementById('deliveryFeeField').textContent = `$${deliveryFee}`;
+        document.getElementById('taxesFeesField').textContent = `$${taxesFees}`;
+        document.getElementById('totalField').textContent = `$${total}`;
         
         // Add animation entrance effect for key elements
         const animationDelay = 300;
@@ -579,6 +650,11 @@
         if (navigator.vibrate) {
           navigator.vibrate([50, 100, 50]);
         }
+        
+        // Clear localStorage after loading data (optional)
+        // This prevents old data from being displayed if user navigates directly to this page
+        // Uncomment if you want this behavior
+        // localStorage.clear();
       });
       
       // Define animations

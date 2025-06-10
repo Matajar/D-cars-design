@@ -50,7 +50,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #000;
+        /* background-color: #000; */
         border-radius: clamp(25px, 8vw, 40px);
         margin: 10px clamp(10px, 3vw, 20px) clamp(15px, 4vw, 20px);
       }
@@ -60,7 +60,7 @@
         align-items: center;
         font-size: clamp(16px, 4vw, 20px);
         font-weight: 600;
-        color: #fff;
+        color: #000;
       }
 
       .page-icon {
@@ -72,19 +72,19 @@
         width: clamp(32px, 8vw, 38px);
         height: clamp(32px, 8vw, 38px);
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.05); /* light gray instead of white */
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1); /* subtle gray border */
         font-size: clamp(16px, 4vw, 20px);
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
       .settings-button:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(0, 0, 0, 0.08); /* slightly darker on hover */
       }
 
       .profile-section {
