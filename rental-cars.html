@@ -517,7 +517,7 @@
         <div class="cars-grid">
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Tesla Model 3">
+                    <img src="assets/carbg1.png" alt="Tesla Model 3">
                     <div class="car-overlay"></div>
                     <div class="car-release">Available</div>
                     <button class="favorite-button">🤍</button>
@@ -549,7 +549,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="BMW 5 Series">
+                    <img src="assets/carbg2.png" alt="BMW 5 Series">
                     <div class="car-overlay"></div>
                     <div class="car-release">Available</div>
                     <button class="favorite-button">🤍</button>
@@ -581,7 +581,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Audi Q7">
+                    <img src="assets/carbg3.png" alt="Audi Q7">
                     <div class="car-overlay"></div>
                     <div class="car-release">Available</div>
                     <button class="favorite-button">🤍</button>
@@ -717,6 +717,7 @@
         
         // Filter functionality
         const filterTags = document.querySelectorAll('.filter-tag');
+        const carCards = document.querySelectorAll('.car-card');
         
         filterTags.forEach(tag => {
             tag.addEventListener('click', () => {
@@ -726,10 +727,64 @@
                 // Add active class to clicked tag
                 tag.classList.add('active');
                 
-                // Here you would implement the actual filtering logic
-                console.log('Selected filter:', tag.textContent);
+                // Get the selected filter value
+                const filterValue = tag.textContent.trim();
+                
+                // Filter the car cards based on the selected filter
+                filterCars(filterValue);
             });
         });
+        
+        function filterCars(filterValue) {
+            // Loop through all car cards
+            carCards.forEach(card => {
+                // Get the car type from the card
+                const carType = card.querySelector('.car-type').textContent;
+                
+                // If filter is 'All' or car type includes the filter value, show the card
+                if (filterValue === 'All' || carType.includes(filterValue)) {
+                    card.style.display = 'block';
+                    // Add a subtle animation when showing the card
+                    card.style.animation = 'fadeIn 0.5s ease forwards';
+                } else {
+                    // Otherwise, hide the card
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Check if no cars are visible after filtering
+            const visibleCars = Array.from(carCards).filter(card => card.style.display !== 'none');
+            const noResultsElement = document.getElementById('noResults');
+            
+            // If no results element doesn't exist and there are no visible cars, create it
+            if (!noResultsElement && visibleCars.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.id = 'noResults';
+                noResults.style.textAlign = 'center';
+                noResults.style.padding = '30px';
+                noResults.style.color = '#666';
+                noResults.style.fontSize = '16px';
+                noResults.innerHTML = 'No cars found matching your filter.<br>Try a different filter or check back later.';
+                
+                // Insert after the cars grid
+                const carsGrid = document.querySelector('.cars-grid');
+                carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
+            } 
+            // If no results element exists but there are visible cars, remove it
+            else if (noResultsElement && visibleCars.length > 0) {
+                noResultsElement.remove();
+            }
+        }
+        
+        // Add animation style for filtered cars
+        const filterStyle = document.createElement('style');
+        filterStyle.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(filterStyle);
         
         // Load more functionality
         const loadMoreButton = document.querySelector('.load-more');

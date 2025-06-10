@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D Cars - Recommended Cars</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      /* Responsive breakpoints */
+      @media (max-width: 480px) {
+        .container {
+          max-width: 100%;
+          padding-bottom: 90px;
+        }
+      }
+
+      .header {
+        background-color: #ffffff;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .back-button {
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #000;
+      }
+
+      .page-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .filter-icon {
+        font-size: 24px;
+        color: #000;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .search-container {
+        padding: 15px 20px;
+        margin-bottom: 5px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 15px;
+        padding: 12px 15px;
+        flex: 1;
+      }
+
+      .search-icon {
+        margin-right: 10px;
+        color: #9ca3af;
+        font-size: 16px;
+      }
+
+      .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #374151;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .filter-container {
+        padding: 0 15px;
+        margin-bottom: 15px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+
+      .filter-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-tags {
+        display: inline-flex;
+        gap: 10px;
+        padding-bottom: 5px;
+      }
+
+      .filter-tag {
+        padding: 8px 15px;
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-tag.active {
+        background-color: #ffbf00;
+        color: #000;
+        font-weight: 500;
+      }
+
+      .cars-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 15px;
+        margin-bottom: 20px;
+      }
+
+      .car-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .car-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .car-image {
+        height: 180px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .car-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.5) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease;
+        z-index: 2;
+      }
+
+      .favorite-button:hover {
+        transform: scale(1.1);
+      }
+
+      .car-details {
+        padding: 15px;
+      }
+
+      .car-name {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #000000;
+        line-height: 1.2;
+      }
+
+      .car-type {
+        display: none;
+      }
+
+      .car-availability {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .car-description {
+        color: #444;
+        font-size: 13px;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .car-features {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .seats-info,
+      .price-info {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        color: #000000;
+        background-color: #f0f0f0;
+        padding: 6px 12px;
+        border-radius: 20px;
+        white-space: nowrap;
+        flex: 1;
+        justify-content: center;
+      }
+
+      .seats-icon,
+      .price-icon {
+        color: #69c077;
+        margin-right: 5px;
+        font-size: 14px;
+      }
+
+      .rating {
+        position: absolute;
+        top: 10px;
+        right: 55px;
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 4px 8px;
+        border-radius: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+      }
+
+      .rating-star {
+        color: #ffbf00;
+        margin-right: 3px;
+        font-size: 14px;
+      }
+
+      .rating-value {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #996600;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #996600;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #664400;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        margin-bottom: 5px;
+        font-size: 20px;
+      }
+
+      /* Ensure text doesn't break in small screens */
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
+
+      /* Animation for cards */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <button class="back-button" onclick="window.location.href='dash.html'">
+          ←
+        </button>
+        <div class="page-title">Recommended Cars</div>
+        <button class="filter-icon">
+          <svg
+            viewBox="0 -3.5 21 21"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            fill="#000000"
+            width="24"
+            height="24"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <title>settings [#1389]</title>
+              <desc>Created with Sketch.</desc>
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+              >
+                <g
+                  id="Dribbble-Light-Preview"
+                  transform="translate(-99.000000, -760.000000)"
+                  fill="#000000"
+                >
+                  <g id="icons" transform="translate(56.000000, 160.000000)">
+                    <path
+                      d="M53.5,603 C53.5,602.647 53.5756,602 53.6932,602 L43,602 L43,604 L53.6932,604 C53.5756,604 53.5,603.353 53.5,603 L53.5,603 Z M61.7068,602 C61.27315,601 60.1192,600 58.75,600 C57.01015,600 55.6,601.343 55.6,603 C55.6,604.657 57.01015,606 58.75,606 C60.1192,606 61.27315,605 61.7068,604 L64,604 L64,602 L61.7068,602 Z M53.5,611 C53.5,611.353 53.4244,611.686 53.3068,612 L64,612 L64,610 L53.3068,610 C53.4244,610 53.5,610.647 53.5,611 L53.5,611 Z M51.4,611 C51.4,612.657 49.98985,614 48.25,614 C46.8808,614 45.72685,613 45.2932,612 L43,612 L43,610 L45.2932,610 C45.72685,609 46.8808,608 48.25,608 C49.98985,608 51.4,609.343 51.4,611 L51.4,611 Z"
+                      id="settings-[#1389]"
+                    ></path>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-icon">🔍</div>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search recommended cars..."
+          />
+        </div>
+      </div>
+
+      <div class="filter-container">
+        <div class="filter-tags">
+          <div class="filter-tag active" onclick="filterCars('All')">All</div>
+          <div class="filter-tag" onclick="filterCars('Sedan')">Sedan</div>
+          <div class="filter-tag" onclick="filterCars('SUV')">SUV</div>
+          <div class="filter-tag" onclick="filterCars('Luxury')">Luxury</div>
+          <div class="filter-tag" onclick="filterCars('Sport')">Sport</div>
+          <div class="filter-tag" onclick="filterCars('Electric')">Electric</div>
+        </div>
+      </div>
+
+      <div class="cars-grid">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg4.jpg" alt="Hyundai Creta" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.7</span>
+            </div>
+            <button class="favorite-button">❤️</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Hyundai Creta</div>
+            <div class="car-type">SUV</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Spacious SUV with modern styling and advanced features for
+              comfortable city driving.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹10.44L (Buy)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg5.png" alt="Tata Punch" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.4</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Tata Punch</div>
+            <div class="car-type">SUV</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Compact SUV with rugged design, high ground clearance and
+              excellent safety features.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹2.5K/day (Rent)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg6.jpg" alt="BMW X5" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.9</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">BMW X5</div>
+            <div class="car-type">Luxury</div>
+            <div class="car-availability">Limited Availability</div>
+            <div class="car-description">
+              Luxury SUV with powerful engine, premium interior, and
+              cutting-edge technology features.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$4.5K/month (Lease)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg7.png" alt="Honda Civic" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.6</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Honda Civic</div>
+            <div class="car-type">Sedan</div>
+            <div class="car-availability">Available from 10 August</div>
+            <div class="car-description">
+              Reliable sedan with sleek design, responsive handling, and
+              excellent fuel efficiency.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹15.45L (Buy)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item active">
+          <div class="nav-icon">🏠</div>
+          Home
+        </a>
+        <a href="search.html" class="nav-item">
+          <div class="nav-icon">🔍</div>
+          Search
+        </a>
+        <a href="activity.html" class="nav-item">
+          <div class="nav-icon">📊</div>
+          Activity
+        </a>
+        <a href="profile.html" class="nav-item">
+          <div class="nav-icon">👤</div>
+          Profile
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Wait for the DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get all car cards and filter tags
+        const carCards = document.querySelectorAll(".car-card");
+        const filterTags = document.querySelectorAll(".filter-tag");
+
+        // Add click event listeners to filter tags
+        filterTags.forEach((tag) => {
+          tag.addEventListener("click", function () {
+            // Remove active class from all tags
+            filterTags.forEach((t) => t.classList.remove("active"));
+            // Add active class to clicked tag
+            this.classList.add("active");
+            // Filter cars based on selected tag
+            const filterValue = this.textContent.trim();
+            filterCars(filterValue);
+          });
+        });
+
+        // Function to filter car cards
+        function filterCars(filterValue) {
+          // Loop through all car cards
+          carCards.forEach((card) => {
+            // Get the car type from the card
+            const carType = card.querySelector(".car-type").textContent;
+            
+            // If filter is 'All' or car type includes the filter value, show the card
+            if (filterValue === "All" || carType === filterValue) {
+              card.style.display = "block";
+              // Add a subtle animation when showing the card
+              card.style.animation = "fadeIn 0.5s ease forwards";
+            } else {
+              // Otherwise, hide the card
+              card.style.display = "none";
+            }
+          });
+          
+          // Check if no cars are visible after filtering
+          const visibleCars = Array.from(carCards).filter(
+            (card) => card.style.display !== "none"
+          );
+          const noResultsElement = document.getElementById("noResults");
+          
+          // Show/hide "no results" message as needed
+          if (!noResultsElement && visibleCars.length === 0) {
+            const noResults = document.createElement("div");
+            noResults.id = "noResults";
+            noResults.style.textAlign = "center";
+            noResults.style.padding = "30px";
+            noResults.style.color = "#666";
+            noResults.style.fontSize = "16px";
+            noResults.innerHTML =
+              "No cars found matching your filter.<br>Try a different filter or check back later.";
+            
+            // Insert after the cars grid
+            const carsGrid = document.querySelector(".cars-grid");
+            carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
+          } else if (noResultsElement && visibleCars.length > 0) {
+            noResultsElement.remove();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

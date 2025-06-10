@@ -780,7 +780,7 @@
         <div class="cars-grid">
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="BMW 3 Series">
+                    <img src="assets/carbg8.png" alt="BMW 3 Series">
                     <div class="car-overlay"></div>
                     <div class="car-release">New</div>
                     <button class="favorite-button">🤍</button>
@@ -833,7 +833,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Tesla Model 3">
+                    <img src="assets/carbg9.png" alt="Tesla Model 3">
                     <div class="car-overlay"></div>
                     <div class="car-release">New</div>
                     <button class="favorite-button">🤍</button>
@@ -886,7 +886,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Toyota Camry">
+                    <img src="assets/carbg10.jpg" alt="Toyota Camry">
                     <div class="car-overlay"></div>
                     <div class="car-release">New</div>
                     <button class="favorite-button">🤍</button>
@@ -939,7 +939,7 @@
             
             <div class="car-card" onclick="window.location.href='details.html'">
                 <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Mercedes-Benz S-Class">
+                    <img src="assets/carbg11.png" alt="Mercedes-Benz S-Class">
                     <div class="car-overlay"></div>
                     <div class="car-release">New</div>
                     <button class="favorite-button">🤍</button>
@@ -1046,12 +1046,51 @@
         document.head.appendChild(style);
         
         function filterByPrice(maxPrice) {
-            // Logic to filter cars by price
-            console.log('Filtering cars by price: $' + parseInt(maxPrice).toLocaleString());
+            // Get the currently selected car type filter
+            const activeFilter = document.querySelector('.filter-tag.active').textContent.trim();
+            
+            // Loop through all car cards
+            carCards.forEach(card => {
+                // Get the car type and price from the card
+                const carType = card.querySelector('.car-type').textContent;
+                const cardPrice = parseInt(card.querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+                
+                // Show card if price is within range AND matches active filter (or filter is 'All')
+                if (cardPrice <= maxPrice && (activeFilter === 'All' || carType.includes(activeFilter))) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Check if no cars are visible after filtering
+            const visibleCars = Array.from(carCards).filter(card => card.style.display !== 'none');
+            const noResultsElement = document.getElementById('noResults');
+            
+            // If no results element doesn't exist and there are no visible cars, create it
+            if (!noResultsElement && visibleCars.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.id = 'noResults';
+                noResults.style.textAlign = 'center';
+                noResults.style.padding = '30px';
+                noResults.style.color = '#666';
+                noResults.style.fontSize = '16px';
+                noResults.innerHTML = 'No cars found matching your price range.<br>Try adjusting the price or filter.';
+                
+                // Insert after the cars grid
+                const carsGrid = document.querySelector('.cars-grid');
+                carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
+            } 
+            // If no results element exists but there are visible cars, remove it
+            else if (noResultsElement && visibleCars.length > 0) {
+                noResultsElement.remove();
+            }
         }
         
         // Filter functionality
         const filterTags = document.querySelectorAll('.filter-tag');
+        const carCards = document.querySelectorAll('.car-card');
         
         filterTags.forEach(tag => {
             tag.addEventListener('click', () => {
@@ -1061,10 +1100,108 @@
                 // Add active class to clicked tag
                 tag.classList.add('active');
                 
-                // Here you would implement the actual filtering logic
-                console.log('Selected filter:', tag.textContent);
+                // Get the selected filter value
+                const filterValue = tag.textContent.trim();
+                
+                // Filter the car cards based on the selected filter
+                filterCars(filterValue);
+                
+                // Also update the price range if filtering by a specific car type
+                // This is to demonstrate combined filtering (price + type)
+                if (filterValue !== 'All') {
+                    adjustPriceRangeForCarType(filterValue);
+                }
             });
         });
+        
+        function filterCars(filterValue) {
+            // Loop through all car cards
+            carCards.forEach(card => {
+                // Get the car type from the card
+                const carType = card.querySelector('.car-type').textContent;
+                
+                // Also consider current price filter
+                const priceRange = document.getElementById('priceRange');
+                const maxPrice = parseInt(priceRange.value);
+                const cardPrice = parseInt(card.querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+                
+                // If filter is 'All' or car type includes the filter value, AND price is within range, show the card
+                if ((filterValue === 'All' || carType.includes(filterValue)) && cardPrice <= maxPrice) {
+                    card.style.display = 'block';
+                    // Add a subtle animation when showing the card
+                    card.style.animation = 'fadeIn 0.5s ease forwards';
+                } else {
+                    // Otherwise, hide the card
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Check if no cars are visible after filtering
+            const visibleCars = Array.from(carCards).filter(card => card.style.display !== 'none');
+            const noResultsElement = document.getElementById('noResults');
+            
+            // If no results element doesn't exist and there are no visible cars, create it
+            if (!noResultsElement && visibleCars.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.id = 'noResults';
+                noResults.style.textAlign = 'center';
+                noResults.style.padding = '30px';
+                noResults.style.color = '#666';
+                noResults.style.fontSize = '16px';
+                noResults.innerHTML = 'No cars found matching your filter.<br>Try a different filter or price range.';
+                
+                // Insert after the cars grid
+                const carsGrid = document.querySelector('.cars-grid');
+                carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
+            } 
+            // If no results element exists but there are visible cars, remove it
+            else if (noResultsElement && visibleCars.length > 0) {
+                noResultsElement.remove();
+            }
+        }
+        
+        // Add animation style for filtered cars
+        const filterStyle = document.createElement('style');
+        filterStyle.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(filterStyle);
+        
+        // Helper function to adjust price range based on car type
+        function adjustPriceRangeForCarType(carType) {
+            const priceRange = document.getElementById('priceRange');
+            const currentPrice = document.getElementById('currentPrice');
+            let newValue = priceRange.value; // Default to current value
+            
+            // Set reasonable price ranges based on car type
+            switch(carType) {
+                case 'Luxury':
+                    newValue = 150000; // Higher for luxury cars
+                    break;
+                case 'Electric':
+                    newValue = 80000; // Medium-high for electric
+                    break;
+                case 'SUV':
+                    newValue = 70000; // Medium for SUVs
+                    break;
+                case 'Sedan':
+                    newValue = 60000; // Medium-low for sedans
+                    break;
+                case 'Economy':
+                    newValue = 30000; // Lower for economy cars
+                    break;
+            }
+            
+            // Update the slider value and display
+            priceRange.value = newValue;
+            currentPrice.textContent = '$' + parseInt(newValue).toLocaleString();
+            
+            // Now filter the cars again based on the new price
+            filterByPrice(newValue);
+        }
         
         // Load more functionality
         const loadMoreButton = document.querySelector('.load-more');
