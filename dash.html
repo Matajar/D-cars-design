@@ -11,9 +11,51 @@
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
-      
+
+      /* Fixed Nav Styles */
+      .fixed-nav {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 430px;
+        z-index: 1000;
+        background-color: transparent;
+        transition: transform 0.3s ease;
+        transform: translate(-50%, -100%);
+      }
+
+      .fixed-nav.visible {
+        transform: translate(-50%, 0);
+      }
+
+      .fixed-nav-content {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        background: linear-gradient(
+          135deg,
+          rgba(253, 186, 116, 0.4),
+          rgba(254, 240, 138, 0.4)
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 20px;
+      }
+
+      .fixed-search-container {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+      }
+
       /* Top Sheet Menu Styles */
-      
+
       .top-sheet-overlay {
         position: fixed;
         top: 0;
@@ -26,12 +68,12 @@
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
       }
-      
+
       .top-sheet-overlay.active {
         opacity: 1;
         visibility: visible;
       }
-      
+
       .top-sheet {
         position: fixed;
         top: -350px; /* Start off-screen */
@@ -47,11 +89,11 @@
         left: 50%;
         transform: translateX(-50%);
       }
-      
+
       .top-sheet.active {
         top: 0;
       }
-      
+
       .top-sheet-header {
         display: flex;
         justify-content: center;
@@ -60,18 +102,18 @@
         border-bottom: 1px solid #f0f0f0;
         position: relative;
       }
-      
+
       .top-sheet-title {
         font-size: 18px;
         font-weight: 600;
         color: #333;
       }
-      .dcars-logo{
+      .dcars-logo {
         width: auto;
         height: 40px;
         object-fit: contain;
       }
-      
+
       .close-button {
         position: absolute;
 
@@ -89,11 +131,11 @@
         color: #666;
         transition: all 0.2s ease;
       }
-      
+
       .close-button:hover {
         background-color: #e0e0e0;
       }
-      
+
       .menu-items {
         padding: 10px 0;
         display: flex;
@@ -101,7 +143,7 @@
         gap: 5px;
         align-items: center;
       }
-      
+
       .menu-item {
         display: flex;
         flex-direction: column;
@@ -110,12 +152,12 @@
         cursor: pointer;
         transition: background-color 0.2s ease;
       }
-      
+
       .menu-item:hover {
         border-radius: 10px;
         background-color: rgba(255, 191, 0, 0.1);
       }
-      
+
       .menu-item-icon {
         width: 40px;
         height: 40px;
@@ -128,7 +170,7 @@
         color: #ffbf00;
         font-size: 20px;
       }
-      
+
       .menu-item-text {
         font-size: 16px;
         font-weight: 500;
@@ -181,6 +223,7 @@
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        transition: all 0.3s ease;
       }
 
       .header {
@@ -905,9 +948,10 @@
         transition: transform 0.2s ease;
       }
 
-      /* .car-card:hover {
-            transform: translateY(-2px);
-        } */
+      .car-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      }
 
       .car-image {
         height: clamp(140px, 40vw, 200px);
@@ -1166,7 +1210,7 @@
     <div class="top-sheet" id="topSheet">
       <div class="top-sheet-header">
         <div class="top-sheet-title">
-          <img src="assets/Dcars.png" alt="Logo" class="dcars-logo">
+          <img src="assets/Dcars.png" alt="Logo" class="dcars-logo" />
         </div>
         <button class="close-button" id="closeTopSheet">✕</button>
       </div>
@@ -1182,6 +1226,67 @@
         <div class="menu-item">
           <div class="menu-item-icon">❤️</div>
           <div class="menu-item-text">Favorites</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Navigation -->
+    <div class="fixed-nav" id="fixedNav">
+      <div class="fixed-nav-content">
+        <div class="fixed-search-container">
+          <div class="search-box" id="fixedSearchBox" style="flex: 1">
+            <div class="search-icon">🔍</div>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search for cars, brands, or models"
+              readonly
+            />
+          </div>
+          <div
+            class="filter-button"
+            id="fixedFilterButton"
+            aria-label="Filter button"
+          >
+            <svg
+              viewBox="0 -3.5 21 21"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="#000000"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <title>settings [#1389]</title>
+                <desc>Created with Sketch.</desc>
+                <g
+                  id="Page-1"
+                  stroke="none"
+                  stroke-width="1"
+                  fill="none"
+                  fill-rule="evenodd"
+                >
+                  <g
+                    id="Dribbble-Light-Preview"
+                    transform="translate(-99.000000, -760.000000)"
+                    fill="#000000"
+                  >
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                      <path
+                        d="M53.5,603 C53.5,602.647 53.5756,602 53.6932,602 L43,602 L43,604 L53.6932,604 C53.5756,604 53.5,603.353 53.5,603 L53.5,603 Z M61.7068,602 C61.27315,601 60.1192,600 58.75,600 C57.01015,600 55.6,601.343 55.6,603 C55.6,604.657 57.01015,606 58.75,606 C60.1192,606 61.27315,605 61.7068,604 L64,604 L64,602 L61.7068,602 Z M53.5,611 C53.5,611.353 53.4244,611.686 53.3068,612 L64,612 L64,610 L53.3068,610 C53.4244,610 53.5,610.647 53.5,611 L53.5,611 Z M51.4,611 C51.4,612.657 49.98985,614 48.25,614 C46.8808,614 45.72685,613 45.2932,612 L43,612 L43,610 L45.2932,610 C45.72685,609 46.8808,608 48.25,608 C49.98985,608 51.4,609.343 51.4,611 L51.4,611 Z"
+                        id="settings-[#1389]"
+                      ></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -1292,7 +1397,11 @@
               readonly
             />
           </div>
-          <div class="filter-button" id="filterButton" aria-label="Filter button">
+          <div
+            class="filter-button"
+            id="filterButton"
+            aria-label="Filter button"
+          >
             <svg
               viewBox="0 -3.5 21 21"
               version="1.1"
@@ -1454,7 +1563,9 @@
 
       <div class="section-header">
         <div class="section-title">Top Cars</div>
-        <div class="view-all" onclick="window.location.href='top-cars.html'">View all</div>
+        <div class="view-all" onclick="window.location.href='top-cars.html'">
+          View all
+        </div>
       </div>
 
       <div class="cars-scroll">
@@ -1554,7 +1665,12 @@
 
       <div class="section-header">
         <div class="section-title">Recommended Cars For You</div>
-        <div class="view-all" onclick="window.location.href='recommended-cars.html'">View all</div>
+        <div
+          class="view-all"
+          onclick="window.location.href='recommended-cars.html'"
+        >
+          View all
+        </div>
       </div>
 
       <div class="cars-scroll">
@@ -1654,7 +1770,12 @@
 
       <div class="section-header">
         <div class="section-title">Most Popular Cars</div>
-        <div class="view-all" onclick="window.location.href='popular-cars.html'">View All</div>
+        <div
+          class="view-all"
+          onclick="window.location.href='popular-cars.html'"
+        >
+          View All
+        </div>
       </div>
 
       <div class="cars-scroll">
@@ -1767,70 +1888,104 @@
     <script>
       // Banner carousel functionality
       document.addEventListener("DOMContentLoaded", function () {
-        // Search box click handler
-        const searchBox = document.getElementById('searchBox');
-        const searchInput = document.querySelector('.search-input');
-        
-        // When search box is clicked, navigate to search page
-        searchBox.addEventListener('click', function() {
-          window.location.href = 'search.html';
+        // Fixed navigation scroll functionality
+        const fixedNav = document.getElementById("fixedNav");
+        const appBar = document.querySelector(".app-bar");
+        let lastScrollY = window.scrollY;
+        let appBarHeight = appBar.offsetHeight;
+
+        // Scroll event to show/hide fixed navigation
+        window.addEventListener("scroll", function () {
+          const currentScrollY = window.scrollY;
+
+          // Show fixed nav when scrolling down past the app bar
+          if (currentScrollY > appBarHeight) {
+            fixedNav.classList.add("visible");
+          } else {
+            fixedNav.classList.remove("visible");
+          }
+
+          lastScrollY = currentScrollY;
         });
-        
-        // Prevent focus on the input (since we're using the whole box as a button)
-        searchInput.addEventListener('focus', function(e) {
-          e.preventDefault();
-          searchBox.click();
+
+        // Search box click handler (main search box)
+        const searchBox = document.getElementById("searchBox");
+        const fixedSearchBox = document.getElementById("fixedSearchBox");
+        const searchInputs = document.querySelectorAll(".search-input");
+
+        // When search boxes are clicked, navigate to search page
+        searchBox.addEventListener("click", function () {
+          window.location.href = "search.html";
         });
+
+        fixedSearchBox.addEventListener("click", function () {
+          window.location.href = "search.html";
+        });
+
+        // Prevent focus on the inputs (since we're using the whole box as a button)
+        searchInputs.forEach((input) => {
+          input.addEventListener("focus", function (e) {
+            e.preventDefault();
+            window.location.href = "search.html";
+          });
+        });
+
         // Top Sheet Menu Functionality
-        const filterButton = document.getElementById('filterButton');
-        const topSheet = document.getElementById('topSheet');
-        const topSheetOverlay = document.getElementById('topSheetOverlay');
-        const closeTopSheet = document.getElementById('closeTopSheet');
-        
-        // Filter button now opens the search page with filters
-        filterButton.addEventListener('click', function(e) {
+        const filterButton = document.getElementById("filterButton");
+        const fixedFilterButton = document.getElementById("fixedFilterButton");
+        const topSheet = document.getElementById("topSheet");
+        const topSheetOverlay = document.getElementById("topSheetOverlay");
+        const closeTopSheet = document.getElementById("closeTopSheet");
+
+        // Filter buttons now open the search page with filters
+        filterButton.addEventListener("click", function (e) {
           e.stopPropagation(); // Prevent triggering search box click
-          window.location.href = 'search.html#filters';
+          window.location.href = "search.html#filters";
         });
-        
+
+        fixedFilterButton.addEventListener("click", function (e) {
+          e.stopPropagation(); // Prevent triggering search box click
+          window.location.href = "search.html#filters";
+        });
+
         // Hide top sheet when close button is clicked
-        closeTopSheet.addEventListener('click', function() {
-          topSheet.classList.remove('active');
-          topSheetOverlay.classList.remove('active');
-          document.body.style.overflow = ''; // Restore scrolling
+        closeTopSheet.addEventListener("click", function () {
+          topSheet.classList.remove("active");
+          topSheetOverlay.classList.remove("active");
+          document.body.style.overflow = ""; // Restore scrolling
         });
-        
+
         // Hide top sheet when overlay is clicked
-        topSheetOverlay.addEventListener('click', function() {
-          topSheet.classList.remove('active');
-          topSheetOverlay.classList.remove('active');
-          document.body.style.overflow = ''; // Restore scrolling
+        topSheetOverlay.addEventListener("click", function () {
+          topSheet.classList.remove("active");
+          topSheetOverlay.classList.remove("active");
+          document.body.style.overflow = ""; // Restore scrolling
         });
-        
+
         // Add click events for menu items
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-          item.addEventListener('click', function() {
-            const itemText = this.querySelector('.menu-item-text').textContent;
+        const menuItems = document.querySelectorAll(".menu-item");
+        menuItems.forEach((item) => {
+          item.addEventListener("click", function () {
+            const itemText = this.querySelector(".menu-item-text").textContent;
             console.log(`Menu item clicked: ${itemText}`);
-            
+
             // Handle menu item clicks
-            switch(itemText) {
-              case 'Help':
-                window.location.href = 'help.html';
+            switch (itemText) {
+              case "Help":
+                window.location.href = "help.html";
                 break;
-              case 'Activities':
-                window.location.href = 'activity.html';
+              case "Activities":
+                window.location.href = "activity.html";
                 break;
-              case 'Favorites':
-                window.location.href = 'favorites.html';
+              case "Favorites":
+                window.location.href = "favorites.html";
                 break;
             }
-            
+
             // Close the top sheet after clicking a menu item
-            topSheet.classList.remove('active');
-            topSheetOverlay.classList.remove('active');
-            document.body.style.overflow = '';
+            topSheet.classList.remove("active");
+            topSheetOverlay.classList.remove("active");
+            document.body.style.overflow = "";
           });
         });
 
