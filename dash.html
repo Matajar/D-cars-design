@@ -1283,12 +1283,13 @@
         </div>
 
         <div class="search-container">
-          <div class="search-box">
+          <div class="search-box" id="searchBox">
             <div class="search-icon">🔍</div>
             <input
               type="text"
               class="search-input"
               placeholder="Search for cars, brands, or models"
+              readonly
             />
           </div>
           <div class="filter-button" id="filterButton" aria-label="Filter button">
@@ -1748,9 +1749,9 @@
           <div class="nav-icon">🏠</div>
           Home
         </a>
-        <a href="search.html" class="nav-item">
-          <div class="nav-icon">🔍</div>
-          Search
+        <a href="sell-your-car.html" class="nav-item">
+          <div class="nav-icon">➕</div>
+          Sell
         </a>
         <a href="wallet.html" class="nav-item">
           <div class="nav-icon">💰</div>
@@ -1766,17 +1767,30 @@
     <script>
       // Banner carousel functionality
       document.addEventListener("DOMContentLoaded", function () {
+        // Search box click handler
+        const searchBox = document.getElementById('searchBox');
+        const searchInput = document.querySelector('.search-input');
+        
+        // When search box is clicked, navigate to search page
+        searchBox.addEventListener('click', function() {
+          window.location.href = 'search.html';
+        });
+        
+        // Prevent focus on the input (since we're using the whole box as a button)
+        searchInput.addEventListener('focus', function(e) {
+          e.preventDefault();
+          searchBox.click();
+        });
         // Top Sheet Menu Functionality
         const filterButton = document.getElementById('filterButton');
         const topSheet = document.getElementById('topSheet');
         const topSheetOverlay = document.getElementById('topSheetOverlay');
         const closeTopSheet = document.getElementById('closeTopSheet');
         
-        // Show top sheet when filter button is clicked
-        filterButton.addEventListener('click', function() {
-          topSheet.classList.add('active');
-          topSheetOverlay.classList.add('active');
-          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        // Filter button now opens the search page with filters
+        filterButton.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent triggering search box click
+          window.location.href = 'search.html#filters';
         });
         
         // Hide top sheet when close button is clicked

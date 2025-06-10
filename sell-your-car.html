@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D Cars - Sell Your Car</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #FFBF00;
+            --primary-dark: #E6AC00;
+            --secondary: #FFDA77;
+            --accent: #FFF0C8;
+            --dark: #1A202C;
+            --light: #F6F7F9;
+            --gray: #90A3BF;
+            --background: #FFFFFF;
+            --card-bg: #F6F7F9;
+            --shadow: 0 8px 16px rgba(255, 191, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 90px;
+        }
+        
+        /* Header Styles */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+            color: var(--dark);
+        }
+        
+        .page-title {
+            font-size: 20px;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            margin-right: 24px; /* To balance the back button */
+        }
+        
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background-color: #eee;
+            z-index: 1;
+        }
+        
+        .progress-line-active {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            height: 3px;
+            background-color: var(--primary);
+            z-index: 2;
+            transition: width 0.3s ease;
+            width: 0%; /* Will be controlled via JS */
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: relative;
+            z-index: 3;
+            color: #888;
+            border: 2px solid #eee;
+        }
+        
+        .step.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .step.completed {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .step.completed:after {
+            content: '✓';
+            position: absolute;
+        }
+        
+        /* Form Section */
+        .form-section {
+            padding: 20px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--dark);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231A202C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            min-height: 120px;
+            resize: vertical;
+            transition: var(--transition);
+        }
+        
+        .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 191, 0, 0.2);
+        }
+        
+        /* Photo Upload Section */
+        .photo-upload {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .upload-box {
+            width: calc(33.33% - 7px);
+            aspect-ratio: 1/1;
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-box:hover {
+            border-color: var(--primary);
+            background-color: rgba(255, 191, 0, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #888;
+        }
+        
+        .upload-text {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+        
+        .photo-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .remove-photo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        /* Feature Checkboxes */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-checkbox {
+            display: none;
+        }
+        
+        .feature-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .feature-checkbox:checked + .feature-label {
+            border-color: var(--primary);
+            background-color: rgba(255, 191, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 16px;
+        }
+        
+        .feature-checkbox:checked + .feature-label .feature-icon {
+            color: var(--primary);
+        }
+        
+        .feature-text {
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        /* Bottom Action Buttons */
+        .action-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            max-width: 430px;
+            margin: 0 auto;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cancel-button {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        
+        .cancel-button:hover {
+            background-color: #eee;
+        }
+        
+        .submit-button {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
+        }
+        
+        .submit-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 191, 0, 0.3);
+        }
+        
+        .next-button {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
+        }
+        
+        .next-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 191, 0, 0.3);
+        }
+        
+        .back-btn {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        
+        .back-btn:hover {
+            background-color: #eee;
+        }
+        
+        /* Form sections for multi-step form */
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        /* Success screen */
+        .success-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            height: calc(100vh - 200px);
+        }
+        
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255, 191, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .success-check {
+            font-size: 60px;
+            color: var(--primary);
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 300px;
+        }
+        
+        .success-buttons {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .success-button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .home-button {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        
+        .home-button:hover {
+            background-color: #eee;
+        }
+        
+        .view-listings-button {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
+        }
+        
+        .view-listings-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 191, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes checkmark {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .show-success .success-check {
+            animation: checkmark 0.5s forwards;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: #e74c3c;
+        }
+        
+        /* Toggle switch for negotiation */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-label {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--dark);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Required field indicator */
+        .required:after {
+            content: " *";
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-button" onclick="history.back()">←</button>
+            <div class="page-title">Sell Your Car</div>
+        </div>
+        
+        <div class="progress-steps">
+            <div class="progress-line"></div>
+            <div class="progress-line-active" id="progressLine"></div>
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+            <div class="step" data-step="4">4</div>
+        </div>
+        
+        <form id="sellCarForm">
+            <!-- Step 1: Car Photos -->
+            <div class="form-step active" id="step1">
+                <div class="form-section">
+                    <h2 class="section-title">Upload Car Photos</h2>
+                    <p class="upload-text" style="margin-bottom: 15px;">Add at least 3 photos of your car to attract more buyers</p>
+                    
+                    <div class="photo-upload" id="photoUploadContainer">
+                        <div class="upload-box" id="uploadBox1" onclick="triggerFileInput(1)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput1" style="display: none;" accept="image/*" onchange="handlePhotoUpload(1, event)">
+                        </div>
+                        <div class="upload-box" id="uploadBox2" onclick="triggerFileInput(2)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput2" style="display: none;" accept="image/*" onchange="handlePhotoUpload(2, event)">
+                        </div>
+                        <div class="upload-box" id="uploadBox3" onclick="triggerFileInput(3)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput3" style="display: none;" accept="image/*" onchange="handlePhotoUpload(3, event)">
+                        </div>
+                        <div class="upload-box" id="uploadBox4" onclick="triggerFileInput(4)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput4" style="display: none;" accept="image/*" onchange="handlePhotoUpload(4, event)">
+                        </div>
+                        <div class="upload-box" id="uploadBox5" onclick="triggerFileInput(5)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput5" style="display: none;" accept="image/*" onchange="handlePhotoUpload(5, event)">
+                        </div>
+                        <div class="upload-box" id="uploadBox6" onclick="triggerFileInput(6)">
+                            <span class="upload-icon">+</span>
+                            <span class="upload-text">Add Photo</span>
+                            <input type="file" id="photoInput6" style="display: none;" accept="image/*" onchange="handlePhotoUpload(6, event)">
+                        </div>
+                    </div>
+                    
+                    <div class="error-message" id="photoError">Please upload at least one photo of your car</div>
+                </div>
+            </div>
+            
+            <!-- Step 2: Car Details -->
+            <div class="form-step" id="step2">
+                <div class="form-section">
+                    <h2 class="section-title">Car Details</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="carMake">Make</label>
+                        <select class="form-select" id="carMake" required>
+                            <option value="">Select Make</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Mercedes">Mercedes</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Tesla">Tesla</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="error-message" id="makeError">Please select a car make</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="carModel">Model</label>
+                        <input type="text" class="form-input" id="carModel" placeholder="e.g. Camry, Civic, F-150" required>
+                        <div class="error-message" id="modelError">Please enter the car model</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="carYear">Year</label>
+                        <select class="form-select" id="carYear" required>
+                            <option value="">Select Year</option>
+                            <!-- Options will be populated via JavaScript -->
+                        </select>
+                        <div class="error-message" id="yearError">Please select the year of your car</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="carMileage">Mileage (miles)</label>
+                        <input type="number" class="form-input" id="carMileage" placeholder="e.g. 45000" required>
+                        <div class="error-message" id="mileageError">Please enter the car mileage</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="bodyType">Body Type</label>
+                        <select class="form-select" id="bodyType" required>
+                            <option value="">Select Body Type</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Truck">Truck</option>
+                            <option value="Coupe">Coupe</option>
+                            <option value="Convertible">Convertible</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Wagon">Wagon</option>
+                            <option value="Van">Van</option>
+                            <option value="Minivan">Minivan</option>
+                        </select>
+                        <div class="error-message" id="bodyTypeError">Please select a body type</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="fuelType">Fuel Type</label>
+                        <select class="form-select" id="fuelType" required>
+                            <option value="">Select Fuel Type</option>
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Plug-in Hybrid">Plug-in Hybrid</option>
+                        </select>
+                        <div class="error-message" id="fuelTypeError">Please select a fuel type</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="transmission">Transmission</label>
+                        <select class="form-select" id="transmission" required>
+                            <option value="">Select Transmission</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                            <option value="CVT">CVT</option>
+                            <option value="Dual-Clutch">Dual-Clutch</option>
+                        </select>
+                        <div class="error-message" id="transmissionError">Please select a transmission type</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="exteriorColor">Exterior Color</label>
+                        <input type="text" class="form-input" id="exteriorColor" placeholder="e.g. Black, White, Silver">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Features and Description -->
+            <div class="form-step" id="step3">
+                <div class="form-section">
+                    <h2 class="section-title">Features & Description</h2>
+                    
+                    <p style="margin-bottom: 15px;">Select all features that apply to your car:</p>
+                    
+                    <div class="features-grid">
+                        <div>
+                            <input type="checkbox" id="feature1" class="feature-checkbox">
+                            <label for="feature1" class="feature-label">
+                                <span class="feature-icon">🧭</span>
+                                <span class="feature-text">Navigation</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature2" class="feature-checkbox">
+                            <label for="feature2" class="feature-label">
+                                <span class="feature-icon">🛋️</span>
+                                <span class="feature-text">Leather Seats</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature3" class="feature-checkbox">
+                            <label for="feature3" class="feature-label">
+                                <span class="feature-icon">🌞</span>
+                                <span class="feature-text">Sunroof</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature4" class="feature-checkbox">
+                            <label for="feature4" class="feature-label">
+                                <span class="feature-icon">📱</span>
+                                <span class="feature-text">Bluetooth</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature5" class="feature-checkbox">
+                            <label for="feature5" class="feature-label">
+                                <span class="feature-icon">❄️</span>
+                                <span class="feature-text">A/C</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature6" class="feature-checkbox">
+                            <label for="feature6" class="feature-label">
+                                <span class="feature-icon">📹</span>
+                                <span class="feature-text">Backup Camera</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature7" class="feature-checkbox">
+                            <label for="feature7" class="feature-label">
+                                <span class="feature-icon">🔋</span>
+                                <span class="feature-text">Remote Start</span>
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="feature8" class="feature-checkbox">
+                            <label for="feature8" class="feature-label">
+                                <span class="feature-icon">🚨</span>
+                                <span class="feature-text">Safety Pkg</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="description">Description</label>
+                        <textarea class="form-textarea" id="description" placeholder="Tell potential buyers about your car's condition, history, and any additional features..." required></textarea>
+                        <div class="error-message" id="descriptionError">Please provide a description</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4: Pricing and Contact -->
+            <div class="form-step" id="step4">
+                <div class="form-section">
+                    <h2 class="section-title">Pricing & Contact</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="price">Price ($)</label>
+                        <input type="number" class="form-input" id="price" placeholder="e.g. 15000" required>
+                        <div class="error-message" id="priceError">Please enter a valid price</div>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <span class="toggle-label">Open to negotiation</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="negotiable" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="contactPhone">Phone Number</label>
+                        <input type="tel" class="form-input" id="contactPhone" placeholder="e.g. (123) 456-7890" required>
+                        <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="contactEmail">Email</label>
+                        <input type="email" class="form-input" id="contactEmail" placeholder="e.g. yourname@example.com" required>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="contactLocation">Location</label>
+                        <input type="text" class="form-input" id="contactLocation" placeholder="e.g. New York, NY" required>
+                        <div class="error-message" id="locationError">Please enter your location</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Success Screen -->
+        <div class="success-screen" id="successScreen">
+            <div class="success-icon">
+                <span class="success-check">✓</span>
+            </div>
+            <h2 class="success-title">Car Listed Successfully!</h2>
+            <p class="success-message">Your car has been listed for sale. We'll notify you when potential buyers show interest.</p>
+            <div class="success-buttons">
+                <button class="success-button home-button" onclick="window.location.href='dash.html'">Home</button>
+                <button class="success-button view-listings-button" onclick="window.location.href='my-listings.html'">My Listings</button>
+            </div>
+        </div>
+        
+        <!-- Bottom Action Buttons -->
+        <div class="action-buttons" id="actionButtons">
+            <button class="action-button back-btn" id="backButton" style="display: none;" onclick="navigateStep('back')">Back</button>
+            <button class="action-button next-button" id="nextButton" onclick="navigateStep('next')">Next</button>
+        </div>
+    </div>
+    
+    <script>
+        // Current step tracker
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        // Function to navigate between steps
+        function navigateStep(direction) {
+            // Get the current step element
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            
+            if (direction === 'next') {
+                // Validate current step before proceeding
+                if (!validateStep(currentStep)) {
+                    return; // Stop if validation fails
+                }
+                
+                // If on the last step, show success screen
+                if (currentStep === totalSteps) {
+                    submitForm();
+                    return;
+                }
+                
+                // Move to next step
+                const nextStep = currentStep + 1;
+                const nextStepElement = document.getElementById(`step${nextStep}`);
+                
+                // Hide current step and show next step
+                currentStepElement.classList.remove('active');
+                nextStepElement.classList.add('active');
+                
+                // Update step indicator
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('completed');
+                document.querySelector(`.step[data-step="${nextStep}"]`).classList.add('active');
+                
+                // Update progress line
+                const progressPercentage = ((nextStep - 1) / (totalSteps - 1)) * 100;
+                document.getElementById('progressLine').style.width = `${progressPercentage}%`;
+                
+                // Update current step
+                currentStep = nextStep;
+                
+                // Show back button starting from step 2
+                document.getElementById('backButton').style.display = 'block';
+                
+                // Update next button text on the last step
+                if (currentStep === totalSteps) {
+                    document.getElementById('nextButton').textContent = 'List My Car';
+                }
+            } else if (direction === 'back') {
+                // Move to previous step
+                const prevStep = currentStep - 1;
+                
+                if (prevStep < 1) return; // Prevent going below step 1
+                
+                const prevStepElement = document.getElementById(`step${prevStep}`);
+                
+                // Hide current step and show previous step
+                currentStepElement.classList.remove('active');
+                prevStepElement.classList.add('active');
+                
+                // Update step indicator
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+                document.querySelector(`.step[data-step="${prevStep}"]`).classList.remove('completed');
+                document.querySelector(`.step[data-step="${prevStep}"]`).classList.add('active');
+                
+                // Update progress line
+                const progressPercentage = ((prevStep - 1) / (totalSteps - 1)) * 100;
+                document.getElementById('progressLine').style.width = `${progressPercentage}%`;
+                
+                // Update current step
+                currentStep = prevStep;
+                
+                // Hide back button on step 1
+                if (currentStep === 1) {
+                    document.getElementById('backButton').style.display = 'none';
+                }
+                
+                // Reset next button text if not on the last step
+                if (currentStep < totalSteps) {
+                    document.getElementById('nextButton').textContent = 'Next';
+                }
+            }
+            
+            // Scroll to top of form
+            window.scrollTo(0, 0);
+        }
+        
+        // Validate each step
+        function validateStep(step) {
+            let isValid = true;
+            
+            switch (step) {
+                case 1:
+                    // Check if at least one photo is uploaded
+                    const hasPhotos = document.querySelectorAll('.photo-preview').length > 0;
+                    document.getElementById('photoError').style.display = hasPhotos ? 'none' : 'block';
+                    isValid = hasPhotos;
+                    break;
+                    
+                case 2:
+                    // Validate car details
+                    const requiredFields = ['carMake', 'carModel', 'carYear', 'carMileage', 'bodyType', 'fuelType', 'transmission'];
+                    
+                    requiredFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        const errorElement = document.getElementById(fieldId.replace('car', '').toLowerCase() + 'Error');
+                        
+                        if (!field.value.trim()) {
+                            field.classList.add('error');
+                            errorElement.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            field.classList.remove('error');
+                            errorElement.style.display = 'none';
+                        }
+                    });
+                    break;
+                    
+                case 3:
+                    // Validate description
+                    const description = document.getElementById('description');
+                    const descriptionError = document.getElementById('descriptionError');
+                    
+                    if (!description.value.trim() || description.value.trim().length < 20) {
+                        description.classList.add('error');
+                        descriptionError.style.display = 'block';
+                        descriptionError.textContent = description.value.trim().length < 20 ? 
+                            'Description should be at least 20 characters' : 'Please provide a description';
+                        isValid = false;
+                    } else {
+                        description.classList.remove('error');
+                        descriptionError.style.display = 'none';
+                    }
+                    break;
+                    
+                case 4:
+                    // Validate pricing and contact
+                    const priceField = document.getElementById('price');
+                    const phoneField = document.getElementById('contactPhone');
+                    const emailField = document.getElementById('contactEmail');
+                    const locationField = document.getElementById('contactLocation');
+                    
+                    // Validate price
+                    if (!priceField.value || parseInt(priceField.value) <= 0) {
+                        priceField.classList.add('error');
+                        document.getElementById('priceError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        priceField.classList.remove('error');
+                        document.getElementById('priceError').style.display = 'none';
+                    }
+                    
+                    // Validate phone
+                    if (!phoneField.value.trim()) {
+                        phoneField.classList.add('error');
+                        document.getElementById('phoneError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        phoneField.classList.remove('error');
+                        document.getElementById('phoneError').style.display = 'none';
+                    }
+                    
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailField.value.trim() || !emailRegex.test(emailField.value.trim())) {
+                        emailField.classList.add('error');
+                        document.getElementById('emailError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        emailField.classList.remove('error');
+                        document.getElementById('emailError').style.display = 'none';
+                    }
+                    
+                    // Validate location
+                    if (!locationField.value.trim()) {
+                        locationField.classList.add('error');
+                        document.getElementById('locationError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        locationField.classList.remove('error');
+                        document.getElementById('locationError').style.display = 'none';
+                    }
+                    break;
+            }
+            
+            return isValid;
+        }
+        
+        // Handle photo upload
+        function triggerFileInput(boxNumber) {
+            document.getElementById(`photoInput${boxNumber}`).click();
+        }
+        
+        function handlePhotoUpload(boxNumber, event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const uploadBox = document.getElementById(`uploadBox${boxNumber}`);
+                    
+                    // Create image preview
+                    uploadBox.innerHTML = `
+                        <img src="${e.target.result}" class="photo-preview" alt="Car Photo ${boxNumber}">
+                        <div class="remove-photo" onclick="removePhoto(${boxNumber}, event)">✕</div>
+                        <input type="file" id="photoInput${boxNumber}" style="display: none;" accept="image/*" onchange="handlePhotoUpload(${boxNumber}, event)">
+                    `;
+                }
+                
+                reader.readAsDataURL(file);
+                
+                // Hide photo error if at least one photo is uploaded
+                document.getElementById('photoError').style.display = 'none';
+            }
+        }
+        
+        function removePhoto(boxNumber, event) {
+            event.stopPropagation(); // Prevent triggering the file input
+            
+            const uploadBox = document.getElementById(`uploadBox${boxNumber}`);
+            uploadBox.innerHTML = `
+                <span class="upload-icon">+</span>
+                <span class="upload-text">Add Photo</span>
+                <input type="file" id="photoInput${boxNumber}" style="display: none;" accept="image/*" onchange="handlePhotoUpload(${boxNumber}, event)">
+            `;
+            
+            // Check if any photos are left
+            const hasPhotos = document.querySelectorAll('.photo-preview').length > 0;
+            document.getElementById('photoError').style.display = hasPhotos ? 'none' : 'block';
+        }
+        
+        // Populate year dropdown
+        function populateYearOptions() {
+            const yearSelect = document.getElementById('carYear');
+            const currentYear = new Date().getFullYear();
+            
+            for (let year = currentYear; year >= 1980; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        // Submit form and show success screen
+        function submitForm() {
+            // Hide the form and action buttons
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById('actionButtons').style.display = 'none';
+            
+            // Show the success screen
+            const successScreen = document.getElementById('successScreen');
+            successScreen.style.display = 'flex';
+            successScreen.classList.add('show-success');
+            
+            // Animate the checkmark
+            setTimeout(() => {
+                document.querySelector('.success-check').style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            populateYearOptions();
+            
+            // Set initial progress line width
+            document.getElementById('progressLine').style.width = '0%';
+        });
+    </script>
+</body>
+</html>

@@ -30,7 +30,17 @@
         color: var(--dark);
         line-height: 1.6;
       }
-
+      
+      /* Page Slide Up Animation */
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      
       .container {
         max-width: 430px;
         margin: 0 auto;
@@ -39,6 +49,7 @@
         position: relative;
         overflow: hidden;
         padding-bottom: 80px;
+        animation: slideUp 0.2s ease-out;
       }
 
       .status-bar {
@@ -948,6 +959,11 @@
           applyFilters();
         });
 
+        // Show filters modal if URL contains #filters
+        if (window.location.hash === '#filters') {
+          filtersModal.style.display = 'block';
+        }
+      
         // Function to apply all filters
         function applyFilters() {
           // Hide all cars first
