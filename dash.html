@@ -42,7 +42,7 @@
         border-bottom-right-radius: 20px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         z-index: 999;
-        transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: top 0.3s ease-in;
         max-width: 430px;
         left: 50%;
         transform: translateX(-50%);
@@ -56,7 +56,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px;
+        padding: 20px;
         border-bottom: 1px solid #f0f0f0;
         position: relative;
       }
@@ -1803,7 +1803,7 @@
             // Handle menu item clicks
             switch(itemText) {
               case 'Help':
-                alert('Help section coming soon!');
+                window.location.href = 'help.html';
                 break;
               case 'Activities':
                 window.location.href = 'activity.html';
