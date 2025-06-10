@@ -11,6 +11,129 @@
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
+      
+      /* Top Sheet Menu Styles */
+      
+      .top-sheet-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      
+      .top-sheet-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .top-sheet {
+        position: fixed;
+        top: -350px; /* Start off-screen */
+        left: 0;
+        width: 100%;
+        background-color: white;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        z-index: 999;
+        transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        max-width: 430px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      .top-sheet.active {
+        top: 0;
+      }
+      
+      .top-sheet-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+      }
+      
+      .top-sheet-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+      .dcars-logo{
+        width: auto;
+        height: 40px;
+        object-fit: contain;
+      }
+      
+      .close-button {
+        position: absolute;
+
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #666;
+        transition: all 0.2s ease;
+      }
+      
+      .close-button:hover {
+        background-color: #e0e0e0;
+      }
+      
+      .menu-items {
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        align-items: center;
+      }
+      
+      .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+      
+      .menu-item:hover {
+        border-radius: 10px;
+        background-color: rgba(255, 191, 0, 0.1);
+      }
+      
+      .menu-item-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 191, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* margin-right: 15px; */
+        color: #ffbf00;
+        font-size: 20px;
+      }
+      
+      .menu-item-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+      }
 
       body {
         background-color: #ffffff;
@@ -1038,6 +1161,31 @@
     </style>
   </head>
   <body>
+    <!-- Top Sheet Menu -->
+    <div class="top-sheet-overlay" id="topSheetOverlay"></div>
+    <div class="top-sheet" id="topSheet">
+      <div class="top-sheet-header">
+        <div class="top-sheet-title">
+          <img src="assets/Dcars.png" alt="Logo" class="dcars-logo">
+        </div>
+        <button class="close-button" id="closeTopSheet">✕</button>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="menu-item-icon">❓</div>
+          <div class="menu-item-text">Help</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-icon">📊</div>
+          <div class="menu-item-text">Activities</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-icon">❤️</div>
+          <div class="menu-item-text">Favorites</div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <!-- <div class="status-bar">
         <div class="time">9:41</div>
@@ -1143,7 +1291,7 @@
               placeholder="Search for cars, brands, or models"
             />
           </div>
-          <div class="filter-button" aria-label="Filter button">
+          <div class="filter-button" id="filterButton" aria-label="Filter button">
             <svg
               viewBox="0 -3.5 21 21"
               version="1.1"
@@ -1618,6 +1766,60 @@
     <script>
       // Banner carousel functionality
       document.addEventListener("DOMContentLoaded", function () {
+        // Top Sheet Menu Functionality
+        const filterButton = document.getElementById('filterButton');
+        const topSheet = document.getElementById('topSheet');
+        const topSheetOverlay = document.getElementById('topSheetOverlay');
+        const closeTopSheet = document.getElementById('closeTopSheet');
+        
+        // Show top sheet when filter button is clicked
+        filterButton.addEventListener('click', function() {
+          topSheet.classList.add('active');
+          topSheetOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+        
+        // Hide top sheet when close button is clicked
+        closeTopSheet.addEventListener('click', function() {
+          topSheet.classList.remove('active');
+          topSheetOverlay.classList.remove('active');
+          document.body.style.overflow = ''; // Restore scrolling
+        });
+        
+        // Hide top sheet when overlay is clicked
+        topSheetOverlay.addEventListener('click', function() {
+          topSheet.classList.remove('active');
+          topSheetOverlay.classList.remove('active');
+          document.body.style.overflow = ''; // Restore scrolling
+        });
+        
+        // Add click events for menu items
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+          item.addEventListener('click', function() {
+            const itemText = this.querySelector('.menu-item-text').textContent;
+            console.log(`Menu item clicked: ${itemText}`);
+            
+            // Handle menu item clicks
+            switch(itemText) {
+              case 'Help':
+                alert('Help section coming soon!');
+                break;
+              case 'Activities':
+                window.location.href = 'activity.html';
+                break;
+              case 'Favorites':
+                window.location.href = 'favorites.html';
+                break;
+            }
+            
+            // Close the top sheet after clicking a menu item
+            topSheet.classList.remove('active');
+            topSheetOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+
         // Initialize banner carousel
         const banners = document.querySelectorAll(".banner");
         const dots = document.querySelectorAll(".pagination-dots .dot");
