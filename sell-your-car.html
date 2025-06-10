@@ -878,11 +878,12 @@
             // Get the current step element
             const currentStepElement = document.getElementById(`step${currentStep}`);
             
+            console.log(direction)
             if (direction === 'next') {
                 // Validate current step before proceeding
-                if (!validateStep(currentStep)) {
-                    return; // Stop if validation fails
-                }
+                // if (!validateStep(currentStep)) {
+                //     return; // Stop if validation fails
+                // }
                 
                 // If on the last step, show success screen
                 if (currentStep === totalSteps) {
