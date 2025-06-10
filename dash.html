@@ -1,1161 +1,1761 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>D Cars - Home</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #ffffff;
-            color: #000000;
-            line-height: 1.6;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      /* Responsive breakpoints */
+      @media (max-width: 480px) {
         .container {
-            max-width: 430px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            padding-bottom: 80px;
+          max-width: 100%;
+          padding-bottom: 90px;
         }
-        
-        /* Responsive breakpoints */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 100%;
-                padding-bottom: 90px;
-            }
-        }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            color: #000000;
-            font-size: clamp(12px, 2.5vw, 14px);
-            background-color: #ffffff;
-        }
-        
-        .header {
-            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #000;
-            border-radius: clamp(25px, 8vw, 40px);
-            margin-bottom: 10px;
-            margin-left: clamp(10px, 3vw, 20px);
-            margin-right: clamp(10px, 3vw, 20px);
-        }
-        
-        .location {
-            display: flex;
-            align-items: center;
-            font-size: clamp(14px, 4vw, 18px);
-            font-weight: 600;
-            color: #fff;
-        }
-        
-        .location-icon {
-            margin-right: clamp(3px, 1vw, 5px);
-            font-size: clamp(12px, 3.5vw, 16px);
-        }
-        
-        .profile-icon {
-            width: clamp(28px, 7vw, 36px);
-            height: clamp(28px, 7vw, 36px);
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000000;
-            border: 1px solid #e0e0e0;
-            font-size: clamp(14px, 3.5vw, 18px);
-        }
-        
-        .search-container {
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #f0f0f0;
-            border-radius: clamp(20px, 6vw, 30px);
-            padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .search-icon {
-            margin-right: clamp(6px, 2vw, 10px);
-            color: #666;
-            font-size: clamp(14px, 3.5vw, 16px);
-        }
-        
-        .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #000000;
-            font-size: clamp(14px, 3.5vw, 16px);
-            width: 100%;
-        }
-        
-        .search-input::placeholder {
-            color: #666;
-        }
-        
-        .welcome-section {
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(20px, 5vw, 25px);
-        }
-        
-        .welcome-title {
-            font-size: clamp(20px, 5.5vw, 24px);
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #000000;
-        }
-        
-        .welcome-subtitle {
-            color: #666;
-            font-size: clamp(12px, 3vw, 14px);
-            margin-bottom: 15px;
-        }
-        
-        .banner {
-            background: linear-gradient(135deg, #FFBF00 0%, #FF8A00 100%);
-            border-radius: clamp(20px, 5vw, 30px);
-            padding: clamp(20px, 5vw, 30px);
-            display: flex;
-            margin: 0 clamp(15px, 4vw, 20px) clamp(25px, 6vw, 35px);
-            overflow: hidden;
-            position: relative;
-            min-height: clamp(140px, 35vw, 180px);
-            box-shadow: 0 10px 25px rgba(255, 191, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        /* .banner:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 191, 0, 0.4);
-        } */
-        
-        .banner::before {
-            content: "";
-            position: absolute;
-            top: -100px;
-            left: -100px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .banner::after {
-            content: "";
-            position: absolute;
-            bottom: -80px;
-            right: -80px;
-            width: 180px;
-            height: 180px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .banner-content {
-            flex: 1;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .banner-title {
-            font-size: clamp(20px, 5vw, 28px);
-            font-weight: 800;
-            margin-bottom: clamp(8px, 2vw, 12px);
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .banner-subtitle {
-            font-size: clamp(14px, 3.5vw, 18px);
-            margin-bottom: clamp(15px, 4vw, 25px);
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
-        
-        .banner-button {
-            background-color: #fff;
-            color: #FF8A00;
-            padding: clamp(8px, 2.5vw, 12px) clamp(15px, 4vw, 25px);
-            border-radius: clamp(25px, 6vw, 30px);
-            font-size: clamp(14px, 3.5vw, 16px);
-            font-weight: 700;
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            max-width: 150px;
-            text-align: center;
-        }
-        
-        .banner-button:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .banner-image {
-            position: absolute;
-            right: -10px;
-            bottom: -15px;
-            width: clamp(150px, 45vw, 200px);
-            height: auto;
-            transform: scaleX(-1);
-            z-index: 2;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
-            transition: transform 0.3s ease;
-        }
-        
-        /* .banner:hover .banner-image {
-            transform: scaleX(-1) translateY(-5px);
-        } */
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin: clamp(25px, 6vw, 30px) 0 clamp(12px, 3vw, 15px);
-        }
-        
-        .section-title {
-            font-size: clamp(18px, 5vw, 22px);
-            font-weight: 700;
-            color: #000000;
-        }
-        
-        .view-all {
-            color: #666;
-            font-size: clamp(14px, 3.5vw, 16px);
-            cursor: pointer;
-        }
-        
-        .category-scroll {
-            display: flex;
-            padding: 0 clamp(12px, 3vw, 15px);
-            overflow-x: auto;
-            scrollbar-width: none;
-            margin-bottom: clamp(15px, 4vw, 20px);
-            gap: clamp(10px, 3vw, 15px);
-        }
-        
-        .category-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .category-item {
-            min-width: clamp(60px, 18vw, 80px);
-            padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
-            background-color: #f0f0f0;
-            border-radius: clamp(15px, 4vw, 20px);
-            text-align: center;
-            font-size: clamp(12px, 3vw, 14px);
-            color: #000000;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        
-        .category-item.active {
-            background-color: #FFBF00;
-            color: #000;
-        }
-        
-        /* Enhanced Service Section Styles */
-        .services-title {
-            font-size: clamp(22px, 6vw, 28px);
-            font-weight: 800;
-            text-align: center;
-            margin: clamp(25px, 6vw, 35px) 0 clamp(20px, 5vw, 25px);
-            color: #000;
-            position: relative;
-        }
-        
-        .services-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: clamp(80px, 20vw, 120px);
-            height: 4px;
-            background: linear-gradient(to right, #FFBF00, #FF8A00);
-            border-radius: 2px;
-        }
-        
-        .services-container {
-            margin: clamp(25px, 6vw, 35px) clamp(15px, 4vw, 20px);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: clamp(15px, 4vw, 20px);
-        }
-        
-        .service-card {
-            position: relative;
-            background: #fff;
-            border-radius: clamp(20px, 5vw, 25px);
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            height: clamp(120px, 30vw, 150px);
-            display: flex;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        /* .service-card:hover {
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: #000000;
+        font-size: clamp(12px, 2.5vw, 14px);
+        background-color: #ffffff;
+      }
+      .app-bar {
+        padding: 20px;
+        background: linear-gradient(135deg, #f97316, #facc15);
+        margin-bottom: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+      }
+
+      .header {
+        /* padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px); */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-left: clamp(10px, 3vw, 20px);
+        margin-right: clamp(10px, 3vw, 20px);
+      }
+
+      .location {
+        display: flex;
+        align-items: center;
+        font-size: clamp(14px, 4vw, 16px);
+        font-weight: 500;
+        color: #ffffff;
+      }
+
+      .location-icon {
+        margin-right: clamp(3px, 1vw, 5px);
+        font-size: clamp(12px, 3.5vw, 14px);
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: clamp(10px, 2.5vw, 16px);
+      }
+      
+      .notification-icon {
+        width: clamp(24px, 6vw, 28px);
+        height: clamp(24px, 6vw, 28px);
+        border-radius: 50%;
+        padding: 4px;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: clamp(14px, 3.5vw, 16px);
+        box-sizing: border-box;
+        position: relative;
+      }
+      
+      .notification-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: #ff4444;
+        color: white;
+        font-size: 10px;
+        min-width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+      
+      .profile-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      
+      .profile-pic {
+        width: clamp(30px, 7.5vw, 36px);
+        height: clamp(30px, 7.5vw, 36px);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #ffffff;
+      }
+      
+      .profile-pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .username {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: clamp(13px, 3.5vw, 16px);
+      }
+
+      .search-container {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        display: flex;
+        gap: 10px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: clamp(12px, 3vw, 15px) clamp(12px, 3vw, 16px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        flex: 1;
+      }
+
+      .search-icon {
+        margin-right: clamp(8px, 2vw, 12px);
+        color: #9ca3af;
+        font-size: clamp(16px, 4vw, 18px);
+      }
+
+      .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #374151;
+        font-size: clamp(14px, 3.5vw, 16px);
+        width: 100%;
+        font-weight: 400;
+      }
+
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .filter-button {
+        width: clamp(45px, 12vw, 55px);
+        height: clamp(45px, 12vw, 55px);
+        background-color: #ffffff;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-size: clamp(18px, 5vw, 22px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        padding: 0;
+      }
+
+      .filter-button:hover {
+        background-color: #f0f0f0;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transform: scale(1.05);
+      }
+
+      .filter-button:active {
+        transform: scale(0.97);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .filter-button svg {
+        width: 50%;
+        height: 50%;
+      }
+
+      .welcome-section {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(16px, 4vw, 20px);
+        margin-top: clamp(10px, 3vw, 15px);
+      }
+
+      .welcome-title {
+        font-size: clamp(22px, 6vw, 26px);
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #ffffff;
+      }
+
+      .welcome-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: 15px;
+        font-weight: 400;
+      }
+
+      .special-section {
+        margin: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .section-title {
+        font-size: clamp(18px, 4.5vw, 24px);
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0;
+      }
+
+      .see-all {
+        font-size: clamp(14px, 3.5vw, 16px);
+        color: #8b5cf6;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .see-all:hover {
+        text-decoration: underline;
+      }
+
+      .banner-container {
+        position: relative;
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .banner-slider {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .banner {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: clamp(15px, 4vw, 20px);
+        padding: clamp(20px, 5vw, 25px);
+        display: flex;
+        overflow: hidden;
+        position: relative;
+        min-height: clamp(140px, 35vw, 160px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+        cursor: pointer;
+      }
+
+      .banner[data-index="0"] {
+        background-image: url("assets/bannerimg1.jpeg");
+      }
+
+      .banner[data-index="1"] {
+        background-image: url("assets/bannerimg2.jpeg");
+      }
+
+      .banner[data-index="2"] {
+        background-image: url("assets/bannerimg3.jpeg");
+      }
+
+      .banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: clamp(15px, 4vw, 20px);
+        z-index: 1;
+      }
+
+      .banner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .banner-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: clamp(8px, 2vw, 12px);
+        padding: 0 clamp(5px, 1.5vw, 10px);
+      }
+
+      .banner-prev,
+      .banner-next {
+        width: clamp(30px, 8vw, 40px);
+        height: clamp(30px, 8vw, 40px);
+        background-color: rgba(255, 191, 0, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--primary, #ffbf00);
+        font-weight: bold;
+        font-size: clamp(16px, 4vw, 20px);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 191, 0, 0.3);
+      }
+
+      .banner-prev:hover,
+      .banner-next:hover {
+        background-color: rgba(255, 191, 0, 0.2);
+        transform: scale(1.1);
+      }
+
+      .limited-badge {
+        position: absolute;
+        top: clamp(12px, 3vw, 15px);
+        left: clamp(15px, 4vw, 20px);
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #1a1a1a;
+        padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+        border-radius: clamp(12px, 3vw, 15px);
+        font-size: clamp(10px, 2.5vw, 12px);
+        font-weight: 600;
+        z-index: 4;
+      }
+
+      .banner-content {
+        flex: 1;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: clamp(10px, 3vw, 15px);
+        position: relative;
+      }
+
+      .banner-title {
+        font-size: clamp(18px, 4.5vw, 24px);
+        font-weight: 700;
+        margin-bottom: clamp(5px, 1vw, 8px);
+        color: #ffffff;
+        margin-top: clamp(15px, 4vw, 20px);
+      }
+
+      .banner-subtitle {
+        font-size: clamp(14px, 3.5vw, 18px);
+        margin-bottom: clamp(8px, 2vw, 12px);
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      .discount {
+        font-size: clamp(24px, 6vw, 32px);
+        font-weight: 800;
+        color: #ffffff;
+      }
+
+      .banner-description {
+        font-size: clamp(10px, 2.5vw, 12px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 400;
+      }
+
+      .banner-button {
+        background-color: #ff4444;
+        color: #ffffff;
+        padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+        border-radius: clamp(20px, 5vw, 25px);
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 600;
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        max-width: 80px;
+        text-align: center;
+        align-self: flex-start;
+      }
+
+      .banner-button:hover {
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+      }
+
+      .banner-image {
+        display: none;
+      }
+
+      .pagination-dots {
+        display: flex;
+        justify-content: center;
+        gap: clamp(6px, 1.5vw, 8px);
+        margin-top: clamp(10px, 2.5vw, 15px);
+      }
+
+      .dot {
+        width: clamp(6px, 1.5vw, 8px);
+        height: clamp(6px, 1.5vw, 8px);
+        border-radius: 50%;
+        background-color: #d1d5db;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .dot.active {
+        background-color: #8b5cf6;
+        transform: scale(1.2);
+      }
+
+      .dot:hover {
+        background-color: #8b5cf6;
+      }
+
+      .pagination-dots {
+        display: flex;
+        justify-content: center;
+        gap: clamp(6px, 1.5vw, 8px);
+        margin-top: clamp(10px, 2.5vw, 15px);
+      }
+
+      .dot {
+        width: clamp(6px, 1.5vw, 8px);
+        height: clamp(6px, 1.5vw, 8px);
+        border-radius: 50%;
+        background-color: #d1d5db;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .dot.active {
+        background-color: #8b5cf6;
+        transform: scale(1.2);
+      }
+
+      .dot:hover {
+        background-color: #8b5cf6;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin: clamp(25px, 6vw, 30px) 0 clamp(12px, 3vw, 15px);
+      }
+
+      .section-title {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .view-all {
+        color: #666;
+        font-size: clamp(14px, 3.5vw, 16px);
+        cursor: pointer;
+      }
+
+      .category-scroll {
+        display: flex;
+        padding: 0 clamp(12px, 3vw, 15px);
+        overflow-x: auto;
+        scrollbar-width: none;
+        margin-bottom: clamp(15px, 4vw, 20px);
+        gap: clamp(10px, 3vw, 15px);
+      }
+
+      .category-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-item {
+        min-width: clamp(60px, 18vw, 80px);
+        padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
+        background-color: #f0f0f0;
+        border-radius: clamp(15px, 4vw, 20px);
+        text-align: center;
+        font-size: clamp(12px, 3vw, 14px);
+        color: #000000;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .category-item.active {
+        background-color: #ffbf00;
+        color: #000;
+      }
+
+      /* Enhanced Service Section Styles */
+      .services-title {
+        font-size: clamp(22px, 6vw, 28px);
+        font-weight: 800;
+        text-align: center;
+        margin: clamp(25px, 6vw, 35px) 0 clamp(20px, 5vw, 25px);
+        color: #000;
+        position: relative;
+      }
+
+      .services-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(80px, 20vw, 120px);
+        height: 4px;
+        background: linear-gradient(to right, #ffbf00, #ff8a00);
+        border-radius: 2px;
+      }
+
+      .services-container {
+        margin: clamp(25px, 6vw, 35px) clamp(15px, 4vw, 20px);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(15px, 4vw, 20px);
+      }
+
+      .service-card {
+        position: relative;
+        background: #fff;
+        border-radius: clamp(20px, 5vw, 25px);
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        height: clamp(120px, 30vw, 150px);
+        display: flex;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* .service-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         } */
-        
-        .service-card.rental {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('assets/car.png');
-            background-size: contain;
-            background-position: right center;
-        }
-        
-        .service-card.lease {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('assets/car-2.png');
-            background-size: contain;
-            background-position: right center;
-        }
-        
-        .service-card.selling {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url('assets/car-6.png');
-            background-size: contain;
-            background-position: right center;
-        }
-        
-        .service-content {
-            width: 65%;
-            padding: clamp(15px, 4vw, 20px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .service-icon {
-            font-size: clamp(24px, 6vw, 32px);
-            margin-bottom: clamp(8px, 2vw, 12px);
-            background: -webkit-linear-gradient(#FFBF00, #FF8A00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-        
-        .service-name {
-            font-weight: 700;
-            font-size: clamp(16px, 4vw, 20px);
-            margin-bottom: clamp(5px, 1.2vw, 8px);
-            color: #000;
-        }
-        
-        .service-desc {
-            font-size: clamp(12px, 3vw, 14px);
-            color: #666;
-            line-height: 1.4;
-        }
-        
-        .service-action {
-            position: absolute;
-            bottom: clamp(12px, 3vw, 15px);
-            right: clamp(12px, 3vw, 15px);
-            width: clamp(32px, 8vw, 40px);
-            height: clamp(32px, 8vw, 40px);
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FFBF00 0%, #FF8A00 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: clamp(14px, 3.5vw, 18px);
-            box-shadow: 0 4px 10px rgba(255, 191, 0, 0.3);
-            transition: all 0.3s ease;
-            z-index: 3;
-        }
-        
-        .service-card:hover .service-action {
-            transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(255, 191, 0, 0.4);
-        }
-        
-        .service-badge {
-            position: absolute;
-            top: clamp(12px, 3vw, 15px);
-            right: clamp(12px, 3vw, 15px);
-            background: rgba(255, 191, 0, 0.1);
-            color: #FF8A00;
-            padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 10px);
-            font-size: clamp(10px, 2.5vw, 12px);
-            font-weight: 600;
-            border-radius: clamp(15px, 4vw, 20px);
-            z-index: 3;
-            border: 1px solid rgba(255, 191, 0, 0.2);
-        }
-        
-        .brands-scroll {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 clamp(12px, 3vw, 15px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            gap: clamp(8px, 2vw, 12px);
-        }
-        
-        .brands-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .brand-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: clamp(60px, 18vw, 80px);
-        }
-        
-        .brand-logo {
-            width: clamp(60px, 18vw, 80px);
-            height: clamp(60px, 18vw, 80px);
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #e0e0e0;
-            margin-bottom: clamp(6px, 1.5vw, 8px);
-            padding: clamp(8px, 2vw, 10px);
-        }
-        
-        .brand-logo svg {
-            width: clamp(24px, 7vw, 40px);
-            height: clamp(24px, 7vw, 40px);
-        }
-        
-        .brand-name {
-            font-size: clamp(11px, 3vw, 14px);
-            font-weight: 500;
-            color: #000000;
-            text-align: center;
-        }
-        
-        .cars-scroll {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 clamp(12px, 3vw, 15px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            gap: clamp(12px, 3vw, 15px);
-        }
-        
-        .cars-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .car-card {
-            min-width: clamp(250px, 70vw, 290px);
-            width: clamp(250px, 70vw, 290px);
-            background-color: #ffffff;
-            border-radius: clamp(15px, 4vw, 20px);
-            overflow: hidden;
-            margin-bottom: 10px;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        
-        /* .car-card:hover {
+
+      .service-card.rental {
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.8)
+          ),
+          url("assets/car.png");
+        background-size: contain;
+        background-position: right center;
+      }
+
+      .service-card.lease {
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.8)
+          ),
+          url("assets/car-2.png");
+        background-size: contain;
+        background-position: right center;
+      }
+
+      .service-card.selling {
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.8)
+          ),
+          url("assets/car-6.png");
+        background-size: contain;
+        background-position: right center;
+      }
+
+      .service-content {
+        width: 65%;
+        padding: clamp(15px, 4vw, 20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .service-icon {
+        font-size: clamp(24px, 6vw, 32px);
+        margin-bottom: clamp(8px, 2vw, 12px);
+        background: -webkit-linear-gradient(#ffbf00, #ff8a00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+
+      .service-name {
+        font-weight: 700;
+        font-size: clamp(16px, 4vw, 20px);
+        margin-bottom: clamp(5px, 1.2vw, 8px);
+        color: #000;
+      }
+
+      .service-desc {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+        line-height: 1.4;
+      }
+
+      .service-action {
+        position: absolute;
+        bottom: clamp(12px, 3vw, 15px);
+        right: clamp(12px, 3vw, 15px);
+        width: clamp(32px, 8vw, 40px);
+        height: clamp(32px, 8vw, 40px);
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffbf00 0%, #ff8a00 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: clamp(14px, 3.5vw, 18px);
+        box-shadow: 0 4px 10px rgba(255, 191, 0, 0.3);
+        transition: all 0.3s ease;
+        z-index: 3;
+      }
+
+      .service-card:hover .service-action {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(255, 191, 0, 0.4);
+      }
+
+      .service-badge {
+        position: absolute;
+        top: clamp(12px, 3vw, 15px);
+        right: clamp(12px, 3vw, 15px);
+        background: rgba(255, 191, 0, 0.1);
+        color: #ff8a00;
+        padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 10px);
+        font-size: clamp(10px, 2.5vw, 12px);
+        font-weight: 600;
+        border-radius: clamp(15px, 4vw, 20px);
+        z-index: 3;
+        border: 1px solid rgba(255, 191, 0, 0.2);
+      }
+
+      /* .brands-scroll {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 clamp(12px, 3vw, 15px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: clamp(8px, 2vw, 12px);
+      } */
+
+      .brands-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .brand-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: clamp(60px, 18vw, 80px);
+      }
+
+      .brand-logo {
+        width: clamp(60px, 18vw, 80px);
+        height: clamp(60px, 18vw, 80px);
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e0e0e0;
+        margin-bottom: clamp(6px, 1.5vw, 8px);
+        padding: clamp(8px, 2vw, 10px);
+      }
+
+      .brand-logo svg {
+        width: clamp(24px, 7vw, 40px);
+        height: clamp(24px, 7vw, 40px);
+      }
+
+      .brand-name {
+        font-size: clamp(11px, 3vw, 14px);
+        font-weight: 500;
+        color: #000000;
+        text-align: center;
+      }
+
+      .cars-scroll {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 clamp(12px, 3vw, 15px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: clamp(12px, 3vw, 15px);
+      }
+
+      .cars-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .car-card {
+        min-width: clamp(250px, 70vw, 290px);
+        width: clamp(250px, 70vw, 290px);
+        background-color: #ffffff;
+        border-radius: clamp(15px, 4vw, 20px);
+        overflow: hidden;
+        margin-bottom: 10px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      /* .car-card:hover {
             transform: translateY(-2px);
         } */
-        
-        .car-image {
-            height: clamp(140px, 40vw, 200px);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .car-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .car-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0) 100%);
-            z-index: 1;
-        }
-        
-        .favorite-button {
-            position: absolute;
-            top: clamp(10px, 3vw, 15px);
-            right: clamp(10px, 3vw, 15px);
-            width: clamp(32px, 8vw, 40px);
-            height: clamp(32px, 8vw, 40px);
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            font-size: clamp(16px, 4vw, 20px);
-            color: #000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease;
-        }
-        
-        .favorite-button:hover {
-            transform: scale(1.1);
-        }
-        
-        .car-details {
-            padding: clamp(12px, 3vw, 15px);
-        }
-        
-        .car-name {
-            font-size: clamp(16px, 4.5vw, 22px);
-            font-weight: 600;
-            margin-bottom: clamp(6px, 1.5vw, 8px);
-            color: #000000;
-            line-height: 1.2;
-        }
-        
-        .car-availability {
-            color: #666;
-            font-size: clamp(12px, 3.5vw, 16px);
-            margin-bottom: clamp(8px, 2vw, 10px);
-            line-height: 1.3;
-        }
-        
-        .car-description {
-            color: #444;
-            font-size: clamp(11px, 3vw, 14px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
+
+      .car-image {
+        height: clamp(140px, 40vw, 200px);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .car-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.5) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        right: clamp(10px, 3vw, 15px);
+        width: clamp(32px, 8vw, 40px);
+        height: clamp(32px, 8vw, 40px);
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: clamp(16px, 4vw, 20px);
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease;
+      }
+
+      .favorite-button:hover {
+        transform: scale(1.1);
+      }
+
+      .car-details {
+        padding: clamp(12px, 3vw, 15px);
+      }
+
+      .car-name {
+        font-size: clamp(16px, 4.5vw, 22px);
+        font-weight: 600;
+        margin-bottom: clamp(6px, 1.5vw, 8px);
+        color: #000000;
+        line-height: 1.2;
+      }
+
+      .car-availability {
+        color: #666;
+        font-size: clamp(12px, 3.5vw, 16px);
+        margin-bottom: clamp(8px, 2vw, 10px);
+        line-height: 1.3;
+      }
+
+      .car-description {
+        color: #444;
+        font-size: clamp(11px, 3vw, 14px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .car-features {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: clamp(12px, 3vw, 15px);
+        gap: clamp(8px, 2vw, 10px);
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 320px) {
         .car-features {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: clamp(12px, 3vw, 15px);
-            gap: clamp(8px, 2vw, 10px);
-            flex-wrap: wrap;
+          flex-direction: column;
+          gap: clamp(6px, 2vw, 8px);
+          align-items: stretch;
         }
-        
-        @media (max-width: 320px) {
-            .car-features {
-                flex-direction: column;
-                gap: clamp(6px, 2vw, 8px);
-                align-items: stretch;
-            }
+      }
+
+      .seats-info,
+      .price-info {
+        display: flex;
+        align-items: center;
+        font-size: clamp(11px, 3vw, 14px);
+        color: #000000;
+        background-color: #f0f0f0;
+        padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+        border-radius: clamp(20px, 6vw, 25px);
+        white-space: nowrap;
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .seats-icon,
+      .price-icon {
+        color: #69c077;
+        margin-right: clamp(3px, 1vw, 5px);
+        font-size: clamp(12px, 3vw, 16px);
+        flex-shrink: 0;
+      }
+
+      .rating {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        right: clamp(45px, 12vw, 65px);
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: clamp(4px, 1vw, 5px) clamp(8px, 2vw, 10px);
+        border-radius: clamp(15px, 4vw, 20px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .rating-star {
+        color: #ffbf00;
+        margin-right: clamp(3px, 1vw, 5px);
+        font-size: clamp(12px, 3vw, 16px);
+      }
+
+      .rating-value {
+        font-size: clamp(11px, 3vw, 14px);
+        font-weight: 600;
+        color: #000000;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #996600;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #996600;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #664400;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        margin-bottom: 5px;
+        font-size: 20px;
+      }
+
+      /* Ensure text doesn't break in small screens */
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
+
+      /* Price text responsiveness */
+      .price-text {
+        font-size: clamp(10px, 2.5vw, 12px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Additional mobile optimizations */
+      @media (max-width: 360px) {
+        .seats-info,
+        .price-info {
+          font-size: 10px;
+          padding: 5px 8px;
         }
-        
-        .seats-info, .price-info {
-            display: flex;
-            align-items: center;
-            font-size: clamp(11px, 3vw, 14px);
-            color: #000000;
-            background-color: #f0f0f0;
-            padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
-            border-radius: clamp(20px, 6vw, 25px);
-            white-space: nowrap;
-            flex: 1;
-            justify-content: center;
-            min-width: 0;
+
+        .car-name {
+          font-size: 14px;
         }
-        
-        .seats-icon, .price-icon {
-            color: #69c077;
-            margin-right: clamp(3px, 1vw, 5px);
-            font-size: clamp(12px, 3vw, 16px);
-            flex-shrink: 0;
+
+        .car-availability {
+          font-size: 11px;
         }
-        
-        .rating {
-            position: absolute;
-            top: clamp(10px, 3vw, 15px);
-            right: clamp(45px, 12vw, 65px);
-            display: flex;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: clamp(4px, 1vw, 5px) clamp(8px, 2vw, 10px);
-            border-radius: clamp(15px, 4vw, 20px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .rating-star {
-            color: #FFBF00;
-            margin-right: clamp(3px, 1vw, 5px);
-            font-size: clamp(12px, 3vw, 16px);
-        }
-        
-        .rating-value {
-            font-size: clamp(11px, 3vw, 14px);
-            font-weight: 600;
-            color: #000000;
-        }
-        
-        .bottom-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color:rgba(255,191, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        
-        .bottom-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color:rgba(255,191, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 12px;
-            color: #996600;
-            font-weight: 500;
-            padding: 0 10px;
-            text-decoration: none;
-        }
-        
-        .nav-item.active {
-            color: #996600;
-            position: relative;
-        }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #664400;
-            border-radius: 50%;
-        }
-        
-        .nav-icon {
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-        
-        /* Ensure text doesn't break in small screens */
-        .nav-item span {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 60px;
-        }
-        
-        /* Price text responsiveness */
-        .price-text {
-            font-size: clamp(10px, 2.5vw, 12px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        /* Additional mobile optimizations */
-        @media (max-width: 360px) {
-            .seats-info, .price-info {
-                font-size: 10px;
-                padding: 5px 8px;
-            }
-            
-            .car-name {
-                font-size: 14px;
-            }
-            
-            .car-availability {
-                font-size: 11px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="status-bar">
-            <div class="time">9:41</div>
-            <div class="indicators">
-                <span>●●●●</span>
-                <span>●●●</span>
-                <span>85%</span>
-            </div>
+      <!-- <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
         </div>
-        
+      </div> -->
+
+      <!-- <div class="app-bar">
         <div class="header">
-            <div class="location">
-                <div class="location-icon">📍</div>
-                Dubai
+          <div class="location">
+            <p class="location-text">Location</p>
+            <div>
+              <div class="location-icon">📍 Dubai, UAE</div>
+              
             </div>
-            <div class="profile-icon">🔔</div>
+          </div>
+          <div class="profile-icon">🔔</div>
         </div>
-        
+
         <div class="welcome-section">
-            <div class="welcome-title">Hi Jenifer!</div>
-            <div class="welcome-subtitle">Search your favourite car here.</div>
+          <div class="welcome-title">Hi Jenifer!</div>
+          <div class="welcome-subtitle">Search your favourite car here.</div>
         </div>
-        
+
         <div class="search-container">
-            <div class="search-box">
-                <div class="search-icon">🔍</div>
-                <input type="text" class="search-input" placeholder="Search your car">
-            </div>
+          <div class="search-box">
+            <div class="search-icon">🔍</div>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search your car"
+            />
+          </div>
         </div>
-        
-        <div class="banner" onclick="window.location.href='latest-cars.html'">
-            <div class="banner-content">
-                <div class="banner-title">Explore Latest</div>
-                <div class="banner-subtitle">Premium Cars Just For You</div>
-                <button class="banner-button">Book Now</button>
+      </div> -->
+
+      <div class="app-bar">
+        <div class="header">
+          <div class="location">
+            <div class="location-icon">📍</div>
+            New York, USA
+          </div>
+          <div class="user-profile">
+            <div class="notification-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M6.31317 12.463C6.20006 9.29213 8.60976 6.6252 11.701 6.5C14.7923 6.6252 17.202 9.29213 17.0889 12.463C17.0889 13.78 18.4841 15.063 18.525 16.383C18.525 16.4017 18.525 16.4203 18.525 16.439C18.5552 17.2847 17.9124 17.9959 17.0879 18.029H13.9757C13.9786 18.677 13.7404 19.3018 13.3098 19.776C12.8957 20.2372 12.3123 20.4996 11.701 20.4996C11.0897 20.4996 10.5064 20.2372 10.0923 19.776C9.66161 19.3018 9.42346 18.677 9.42635 18.029H6.31317C5.48869 17.9959 4.84583 17.2847 4.87602 16.439C4.87602 16.4203 4.87602 16.4017 4.87602 16.383C4.91795 15.067 6.31317 13.781 6.31317 12.463Z"
+                    stroke="#ffffff"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M9.42633 17.279C9.01212 17.279 8.67633 17.6148 8.67633 18.029C8.67633 18.4432 9.01212 18.779 9.42633 18.779V17.279ZM13.9757 18.779C14.3899 18.779 14.7257 18.4432 14.7257 18.029C14.7257 17.6148 14.3899 17.279 13.9757 17.279V18.779ZM12.676 5.25C13.0902 5.25 13.426 4.91421 13.426 4.5C13.426 4.08579 13.0902 3.75 12.676 3.75V5.25ZM10.726 3.75C10.3118 3.75 9.97601 4.08579 9.97601 4.5C9.97601 4.91421 10.3118 5.25 10.726 5.25V3.75ZM9.42633 18.779H13.9757V17.279H9.42633V18.779ZM12.676 3.75H10.726V5.25H12.676V3.75Z"
+                    fill="#ffffff"
+                  ></path>
+                </g>
+              </svg>
+              <span class="notification-badge">2</span>
             </div>
-            <img src="assets/car-3.png" alt="Premium Car" class="banner-image">
+            <div class="profile-section" onclick="window.location.href='profile.html'">
+              <div class="profile-pic">
+                <img src="https://ui-avatars.com/api/?name=Alex+Wilson&background=f97316&color=fff" alt="Profile Picture">
+              </div>
+              <!-- <div class="username">Alex Wilson</div> -->
+            </div>
+          </div>
         </div>
-        
-        <div class="services-title">Our Services</div>
-        
-        <div class="services-container">
-            <div class="service-card rental" onclick="window.location.href='rental-cars.html'">
-                <div class="service-content">
-                    <div class="service-icon">🚗</div>
-                    <div class="service-name">Rent a Car</div>
-                    <div class="service-desc">Short-term rentals for daily or hourly use</div>
-                </div>
-                <div class="service-badge">From $25/day</div>
-                <div class="service-action">→</div>
-            </div>
-            
-            <div class="service-card lease" onclick="window.location.href='lease-cars.html'">
-                <div class="service-content">
-                    <div class="service-icon">📝</div>
-                    <div class="service-name">Lease a Car</div>
-                    <div class="service-desc">Long-term leasing with flexible terms</div>
-                </div>
-                <div class="service-badge">Best Value</div>
-                <div class="service-action">→</div>
-            </div>
-            
-            <div class="service-card selling" onclick="window.location.href='buy-cars.html'">
-                <div class="service-content">
-                    <div class="service-icon">💰</div>
-                    <div class="service-name">Buy a Car</div>
-                    <div class="service-desc">Purchase new & pre-owned cars</div>
-                </div>
-                <div class="service-badge">Special Offers</div>
-                <div class="service-action">→</div>
-            </div>
+
+        <div class="welcome-section">
+          <div class="welcome-title">Hi Alex!</div>
+          <div class="welcome-subtitle">Find your perfect ride today</div>
         </div>
-        
+
+        <div class="search-container">
+          <div class="search-box">
+            <div class="search-icon">🔍</div>
+            <input type="text" class="search-input" placeholder="Search for cars, brands, or models" />
+          </div>
+          <div class="filter-button" aria-label="Filter button">
+            <svg
+              viewBox="0 -3.5 21 21"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="#000000"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <title>settings [#1389]</title>
+                <desc>Created with Sketch.</desc>
+                <g
+                  id="Page-1"
+                  stroke="none"
+                  stroke-width="1"
+                  fill="none"
+                  fill-rule="evenodd"
+                >
+                  <g
+                    id="Dribbble-Light-Preview"
+                    transform="translate(-99.000000, -760.000000)"
+                    fill="#000000"
+                  >
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                      <path
+                        d="M53.5,603 C53.5,602.647 53.5756,602 53.6932,602 L43,602 L43,604 L53.6932,604 C53.5756,604 53.5,603.353 53.5,603 L53.5,603 Z M61.7068,602 C61.27315,601 60.1192,600 58.75,600 C57.01015,600 55.6,601.343 55.6,603 C55.6,604.657 57.01015,606 58.75,606 C60.1192,606 61.27315,605 61.7068,604 L64,604 L64,602 L61.7068,602 Z M53.5,611 C53.5,611.353 53.4244,611.686 53.3068,612 L64,612 L64,610 L53.3068,610 C53.4244,610 53.5,610.647 53.5,611 L53.5,611 Z M51.4,611 C51.4,612.657 49.98985,614 48.25,614 C46.8808,614 45.72685,613 45.2932,612 L43,612 L43,610 L45.2932,610 C45.72685,609 46.8808,608 48.25,608 C49.98985,608 51.4,609.343 51.4,611 L51.4,611 Z"
+                        id="settings-[#1389]"
+                      ></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="special-section">
         <div class="section-header">
-            <div class="section-title">Top Cars</div>
-            <div class="view-all">View all</div>
+          <h2 class="section-title">#SpecialForYou</h2>
+          <a
+            href="#"
+            class="see-all"
+            onclick="window.location.href='latest-cars.html'"
+            >See All</a
+          >
         </div>
-        
-        <div class="cars-scroll">
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Hyundai i20">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.5</span>
-                    </div>
-                    <button class="favorite-button">❤️</button>
+
+        <div class="banner-container">
+          <div class="banner-slider">
+            <div class="banner" data-index="0">
+              <div class="limited-badge">Limited time!</div>
+              <div class="banner-content">
+                <div class="banner-title">Get Special Offer</div>
+                <div class="banner-subtitle">
+                  Up to <span class="discount">40%</span>
                 </div>
-                <div class="car-details">
-                    <div class="car-name">Hyundai i20</div>
-                    <div class="car-availability">Available Now</div>
-                    <div class="car-description">Compact hatchback with excellent fuel economy and agile handling for city driving.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">₹7.23L (Buy)</span>
-                        </div>
-                    </div>
+                <div class="banner-description">
+                  All Washing Service Available | T&C Applied
                 </div>
+                <button class="banner-button">Claim</button>
+              </div>
+              <img
+                src="assets/bannerimg1.jpeg"
+                alt="Service Person"
+                class="banner-image"
+              />
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Toyota Fortuner">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.3</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
+
+            <div class="banner" data-index="1" style="display: none">
+              <div class="limited-badge">New Arrival!</div>
+              <div class="banner-content">
+                <div class="banner-title">Premium Vehicles</div>
+                <div class="banner-subtitle">
+                  Save <span class="discount">25%</span>
                 </div>
-                <div class="car-details">
-                    <div class="car-name">Toyota Fortuner</div>
-                    <div class="car-availability">Available from 5 August</div>
-                    <div class="car-description">Robust SUV with powerful performance and premium features for all-terrain adventures.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>7 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">₹3.5L/month (Lease)</span>
-                        </div>
-                    </div>
+                <div class="banner-description">
+                  Luxury Car Collection | Limited Stock
                 </div>
+                <button class="banner-button">View</button>
+              </div>
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Tesla Model 3">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.8</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
+
+            <div class="banner" data-index="2" style="display: none">
+              <div class="limited-badge">Weekend Special!</div>
+              <div class="banner-content">
+                <div class="banner-title">Family SUV Deals</div>
+                <div class="banner-subtitle">
+                  Extra <span class="discount">15%</span> Off
                 </div>
-                <div class="car-details">
-                    <div class="car-name">Tesla Model 3</div>
-                    <div class="car-availability">Available Now</div>
-                    <div class="car-description">Electric sedan with cutting-edge technology, impressive range, and zero emissions.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">$250/day (Rent)</span>
-                        </div>
-                    </div>
+                <div class="banner-description">
+                  Free Child Seat | Extra Miles Included
                 </div>
+                <button class="banner-button">Book</button>
+              </div>
             </div>
+          </div>
+
+          <div class="banner-nav">
+            <div class="pagination-dots">
+              <span class="dot active" data-index="0"></span>
+              <span class="dot" data-index="1"></span>
+              <span class="dot" data-index="2"></span>
+            </div>
+          </div>
         </div>
-        
-        <div class="section-header">
-            <div class="section-title">Recommended Cars For You</div>
-            <div class="view-all">View all</div>
+      </div>
+
+      <div class="services-title">Our Services</div>
+
+      <div class="services-container">
+        <div
+          class="service-card rental"
+          onclick="window.location.href='rental-cars.html'"
+        >
+          <div class="service-content">
+            <div class="service-icon">🚗</div>
+            <div class="service-name">Rent a Car</div>
+            <div class="service-desc">
+              Short-term rentals for daily or hourly use
+            </div>
+          </div>
+          <div class="service-badge">From $25/day</div>
+          <div class="service-action">→</div>
         </div>
-        
-        <div class="cars-scroll">
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Hyundai Creta">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.7</span>
-                    </div>
-                    <button class="favorite-button">❤️</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Hyundai Creta</div>
-                    <div class="car-availability">Available Now</div>
-                    <div class="car-description">Spacious SUV with modern styling and advanced features for comfortable city driving.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">₹10.44L (Buy)</span>
-                        </div>
-                    </div>
-                </div>
+
+        <div
+          class="service-card lease"
+          onclick="window.location.href='lease-cars.html'"
+        >
+          <div class="service-content">
+            <div class="service-icon">📝</div>
+            <div class="service-name">Lease a Car</div>
+            <div class="service-desc">
+              Long-term leasing with flexible terms
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Tata Punch">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.4</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Tata Punch</div>
-                    <div class="car-availability">Available Now</div>
-                    <div class="car-description">Compact SUV with rugged design, high ground clearance and excellent safety features.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">₹2.5K/day (Rent)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="BMW X5">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.9</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">BMW X5</div>
-                    <div class="car-availability">Limited Availability</div>
-                    <div class="car-description">Luxury SUV with powerful engine, premium interior, and cutting-edge technology features.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">$4.5K/month (Lease)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="service-badge">Best Value</div>
+          <div class="service-action">→</div>
         </div>
-        
-        <div class="section-header">
-            <div class="section-title">Most Popular Cars</div>
-            <div class="view-all">View All</div>
+
+        <div
+          class="service-card selling"
+          onclick="window.location.href='buy-cars.html'"
+        >
+          <div class="service-content">
+            <div class="service-icon">💰</div>
+            <div class="service-name">Buy a Car</div>
+            <div class="service-desc">Purchase new & pre-owned cars</div>
+          </div>
+          <div class="service-badge">Special Offers</div>
+          <div class="service-action">→</div>
         </div>
-        
-        <div class="cars-scroll">
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Ferrari Roma">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.90</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Ferrari Roma</div>
-                    <div class="car-availability">Weekend Special</div>
-                    <div class="car-description">Elegant sports car with breathtaking design and exhilarating performance for driving enthusiasts.</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>2 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">$120.00/hr (Rent)</span>
-                        </div>
-                    </div>
-                </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Top Cars</div>
+        <div class="view-all">View all</div>
+      </div>
+
+      <div class="cars-scroll">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Hyundai i20" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.5</span>
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Audi A8">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.75</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Audi A8</div>
-                    <div class="car-availability">Available Now</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>5 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">$35.00/hr</span>
-                        </div>
-                    </div>
-                </div>
+            <button class="favorite-button">❤️</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Hyundai i20</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Compact hatchback with excellent fuel economy and agile handling
+              for city driving.
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Mercedes-Benz S-Class">
-                    <div class="car-overlay"></div>
-                    <div class="rating">
-                        <span class="rating-star">★</span>
-                        <span class="rating-value">4.82</span>
-                    </div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Mercedes-Benz S-Class</div>
-                    <div class="car-availability">Limited Availability</div>
-                    
-                    <div class="car-features">
-                        <div class="seats-info">
-                            <span class="seats-icon">🔒</span> 
-                            <span>4 Seats</span>
-                        </div>
-                        <div class="price-info">
-                            <span class="price-icon">💲</span> 
-                            <span class="price-text">$42.00/hr</span>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹7.23L (Buy)</span>
+              </div>
             </div>
+          </div>
         </div>
-        
-        <div class="bottom-navigation">
-            <a href="dash.html" class="nav-item active">
-                <div class="nav-icon">🏠</div>
-                Home
-            </a>
-            <a href="search.html" class="nav-item ">
-                <div class="nav-icon">🔍</div>
-                Search
-            </a>
-            <a href="wallet.html" class="nav-item">
-                <div class="nav-icon">💰</div>
-                Wallet
-            </a>
-            <a href="profile.html" class="nav-item">
-                <div class="nav-icon">👤</div>
-                Profile
-            </a>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Toyota Fortuner" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.3</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Toyota Fortuner</div>
+            <div class="car-availability">Available from 5 August</div>
+            <div class="car-description">
+              Robust SUV with powerful performance and premium features for
+              all-terrain adventures.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>7 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹3.5L/month (Lease)</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Tesla Model 3" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.8</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Tesla Model 3</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Electric sedan with cutting-edge technology, impressive range, and
+              zero emissions.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$250/day (Rent)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Recommended Cars For You</div>
+        <div class="view-all">View all</div>
+      </div>
+
+      <div class="cars-scroll">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Hyundai Creta" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.7</span>
+            </div>
+            <button class="favorite-button">❤️</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Hyundai Creta</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Spacious SUV with modern styling and advanced features for
+              comfortable city driving.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹10.44L (Buy)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Tata Punch" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.4</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Tata Punch</div>
+            <div class="car-availability">Available Now</div>
+            <div class="car-description">
+              Compact SUV with rugged design, high ground clearance and
+              excellent safety features.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">₹2.5K/day (Rent)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="BMW X5" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.9</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">BMW X5</div>
+            <div class="car-availability">Limited Availability</div>
+            <div class="car-description">
+              Luxury SUV with powerful engine, premium interior, and
+              cutting-edge technology features.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$4.5K/month (Lease)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Most Popular Cars</div>
+        <div class="view-all">View All</div>
+      </div>
+
+      <div class="cars-scroll">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Ferrari Roma" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.90</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Ferrari Roma</div>
+            <div class="car-availability">Weekend Special</div>
+            <div class="car-description">
+              Elegant sports car with breathtaking design and exhilarating
+              performance for driving enthusiasts.
+            </div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>2 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$120.00/hr (Rent)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Audi A8" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.75</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Audi A8</div>
+            <div class="car-availability">Available Now</div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>5 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$35.00/hr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Mercedes-Benz S-Class" />
+            <div class="car-overlay"></div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span class="rating-value">4.82</span>
+            </div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Mercedes-Benz S-Class</div>
+            <div class="car-availability">Limited Availability</div>
+
+            <div class="car-features">
+              <div class="seats-info">
+                <span class="seats-icon">🔒</span>
+                <span>4 Seats</span>
+              </div>
+              <div class="price-info">
+                <span class="price-icon">💲</span>
+                <span class="price-text">$42.00/hr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item active">
+          <div class="nav-icon">🏠</div>
+          Home
+        </a>
+        <a href="search.html" class="nav-item">
+          <div class="nav-icon">🔍</div>
+          Search
+        </a>
+        <a href="wallet.html" class="nav-item">
+          <div class="nav-icon">💰</div>
+          Wallet
+        </a>
+        <a href="profile.html" class="nav-item">
+          <div class="nav-icon">👤</div>
+          Profile
+        </a>
+      </div>
     </div>
-    
+
     <script>
-        // Function to filter cars based on service type
-        function filterCars(serviceType) {
-            console.log('Filtering cars by service type:', serviceType);
-            
-            // Highlight the selected service card by adding active class
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                if (card.classList.contains(serviceType)) {
-                    card.style.transform = 'translateY(-8px)';
-                    card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-                } else {
-                    card.style.transform = 'none';
-                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.08)';
-                }
-            });
-            
-            // In a real implementation, you would filter the car cards based on service type
-            // For this demo, we'll just highlight one card in each section to simulate filtering
-            
-            const carCards = document.querySelectorAll('.car-card');
-            
-            // Reset all cards
-            carCards.forEach(card => {
-                card.style.transform = 'none';
-                card.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-            });
-            
-            // Highlight specific cards based on service type
-            setTimeout(() => {
-                switch(serviceType) {
-                    case 'rental':
-                        // Highlight rental cars
-                        carCards[2].style.transform = 'translateY(-5px)';
-                        carCards[2].style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.15)';
-                        break;
-                    case 'lease':
-                        // Highlight lease cars
-                        carCards[1].style.transform = 'translateY(-5px)';
-                        carCards[1].style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.15)';
-                        break;
-                    case 'sell':
-                        // Highlight cars for sale
-                        carCards[0].style.transform = 'translateY(-5px)';
-                        carCards[0].style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.15)';
-                        break;
-                }
-            }, 300);
+      // Banner carousel functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize banner carousel
+        const banners = document.querySelectorAll(".banner");
+        const dots = document.querySelectorAll(".pagination-dots .dot");
+        const prevBtn = document.querySelector(".banner-prev");
+        const nextBtn = document.querySelector(".banner-next");
+        let currentIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let autoSlideInterval;
+
+        // Function to show a specific banner
+        function showBanner(index) {
+          // Hide all banners first
+          banners.forEach((banner) => {
+            banner.style.display = "none";
+          });
+
+          // Remove active class from all dots
+          dots.forEach((dot) => {
+            dot.classList.remove("active");
+          });
+
+          // Show the selected banner and activate its dot
+          banners[index].style.display = "flex";
+          dots[index].classList.add("active");
+
+          // Update current index
+          currentIndex = index;
         }
+
+        // Function to move to the next banner
+        function nextBanner() {
+          let nextIndex = currentIndex + 1;
+          if (nextIndex >= banners.length) {
+            nextIndex = 0;
+          }
+          showBanner(nextIndex);
+        }
+
+        // Function to move to the previous banner
+        function prevBanner() {
+          let prevIndex = currentIndex - 1;
+          if (prevIndex < 0) {
+            prevIndex = banners.length - 1;
+          }
+          showBanner(prevIndex);
+        }
+
+        // Auto slide functionality
+        function startAutoSlide() {
+          autoSlideInterval = setInterval(nextBanner, 5000); // Change slide every 5 seconds
+        }
+
+        function stopAutoSlide() {
+          clearInterval(autoSlideInterval);
+        }
+
+        // Set up click event for next button
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function () {
+            stopAutoSlide();
+            nextBanner();
+            startAutoSlide();
+          });
+        }
+
+        // Set up click event for previous button
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function () {
+            stopAutoSlide();
+            prevBanner();
+            startAutoSlide();
+          });
+        }
+
+        // Set up click events for dots
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", function () {
+            stopAutoSlide();
+            showBanner(index);
+            startAutoSlide();
+          });
+        });
+
+        // Set up touch events for swipe
+        const bannerSlider = document.querySelector(".banner-slider");
+        if (bannerSlider) {
+          bannerSlider.addEventListener(
+            "touchstart",
+            function (e) {
+              touchStartX = e.changedTouches[0].screenX;
+            },
+            { passive: true }
+          );
+
+          bannerSlider.addEventListener(
+            "touchend",
+            function (e) {
+              touchEndX = e.changedTouches[0].screenX;
+              handleSwipe();
+            },
+            { passive: true }
+          );
+        }
+
+        function handleSwipe() {
+          const minSwipeDistance = 50;
+          const swipeDistance = touchEndX - touchStartX;
+
+          if (swipeDistance > minSwipeDistance) {
+            // Swiped right, go to previous
+            stopAutoSlide();
+            prevBanner();
+            startAutoSlide();
+          } else if (swipeDistance < -minSwipeDistance) {
+            // Swiped left, go to next
+            stopAutoSlide();
+            nextBanner();
+            startAutoSlide();
+          }
+        }
+
+        // Show first banner and start auto sliding
+        showBanner(0);
+        startAutoSlide();
+
+        // Make banners clickable to go to latest-cars.html
+        banners.forEach((banner) => {
+          banner.addEventListener("click", function () {
+            window.location.href = "latest-cars.html";
+          });
+        });
+      });
+
+      // Function to filter cars based on service type
+      function filterCars(serviceType) {
+        console.log("Filtering cars by service type:", serviceType);
+
+        // Highlight the selected service card by adding active class
+        const serviceCards = document.querySelectorAll(".service-card");
+        serviceCards.forEach((card) => {
+          if (card.classList.contains(serviceType)) {
+            card.style.transform = "translateY(-8px)";
+            card.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.15)";
+          } else {
+            card.style.transform = "none";
+            card.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.08)";
+          }
+        });
+
+        // In a real implementation, you would filter the car cards based on service type
+        // For this demo, we'll just highlight one card in each section to simulate filtering
+
+        const carCards = document.querySelectorAll(".car-card");
+
+        // Reset all cards
+        carCards.forEach((card) => {
+          card.style.transform = "none";
+          card.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
+        });
+
+        // Highlight specific cards based on service type
+        setTimeout(() => {
+          switch (serviceType) {
+            case "rental":
+              // Highlight rental cars
+              carCards[2].style.transform = "translateY(-5px)";
+              carCards[2].style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.15)";
+              break;
+            case "lease":
+              // Highlight lease cars
+              carCards[1].style.transform = "translateY(-5px)";
+              carCards[1].style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.15)";
+              break;
+            case "sell":
+              // Highlight cars for sale
+              carCards[0].style.transform = "translateY(-5px)";
+              carCards[0].style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.15)";
+              break;
+          }
+        }, 300);
+      }
     </script>
-</body>
+  </body>
 </html>
