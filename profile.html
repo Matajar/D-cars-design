@@ -532,14 +532,19 @@
         transform: translateX(-50%);
         width: 90%;
         max-width: 400px;
-        background-color: rgba(255, 191, 0, 0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: linear-gradient(
+          135deg,
+          rgba(253, 186, 116, 0.4),
+          rgba(254, 240, 138, 0.4)
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         display: flex;
         justify-content: space-around;
         padding: 10px 0;
         margin-bottom: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         z-index: 100;
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.18);
@@ -863,21 +868,21 @@
       </div>
 
       <div class="bottom-navigation">
-        <a href="dash.html" class="nav-item">
+        <a href="dash.html" class="nav-item ">
           <div class="nav-icon">🏠</div>
-          <span>Home</span>
+          Home
         </a>
-        <a href="search.html" class="nav-item">
-          <div class="nav-icon">🔍</div>
-          <span>Search</span>
+        <a href="sell-your-car.html" class="nav-item">
+          <div class="nav-icon">➕</div>
+          Sell
         </a>
         <a href="wallet.html" class="nav-item">
           <div class="nav-icon">💰</div>
-          <span>Wallet</span>
+          Wallet
         </a>
         <a href="profile.html" class="nav-item active">
           <div class="nav-icon">👤</div>
-          <span>Profile</span>
+          Profile
         </a>
       </div>
     </div>

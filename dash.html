@@ -76,14 +76,14 @@
 
       .top-sheet {
         position: fixed;
-        top: -350px; /* Start off-screen */
+        top: -400px; /* Start off-screen */
         left: 0;
         width: 100%;
         background-color: white;
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        z-index: 999;
+        z-index: 99999;
         transition: top 0.3s ease-in;
         max-width: 430px;
         left: 50%;
@@ -139,8 +139,9 @@
       .menu-items {
         padding: 10px 0;
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        gap: 5px;
+        gap: 10px;
         align-items: center;
       }
 
@@ -367,6 +368,11 @@
         margin-right: clamp(8px, 2vw, 12px);
         color: #9ca3af;
         font-size: clamp(16px, 4vw, 18px);
+      }
+      .search-icon {
+        height: 20px;
+        width: 20px;
+        object-fit: contain;
       }
 
       .search-input {
@@ -1105,34 +1111,19 @@
         transform: translateX(-50%);
         width: 90%;
         max-width: 400px;
-        background-color: rgba(255, 191, 0, 0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: linear-gradient(
+          135deg,
+          rgba(253, 186, 116, 0.4),
+          rgba(254, 240, 138, 0.4)
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         display: flex;
         justify-content: space-around;
         padding: 10px 0;
         margin-bottom: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        z-index: 100;
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .bottom-navigation {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        background-color: rgba(255, 191, 0, 0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        display: flex;
-        justify-content: space-around;
-        padding: 10px 0;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         z-index: 100;
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1235,7 +1226,13 @@
       <div class="fixed-nav-content">
         <div class="fixed-search-container">
           <div class="search-box" id="fixedSearchBox" style="flex: 1">
-            <div class="search-icon">🔍</div>
+            <div class="search-icon">
+              <img
+                src="assets/icons/search.svg"
+                alt="Search Icon"
+                class="search-icon"
+              />
+            </div>
             <input
               type="text"
               class="search-input"
@@ -1931,21 +1928,25 @@
         });
 
         // Top Sheet Menu Functionality
-        const filterButton = document.getElementById("filterButton");
-        const fixedFilterButton = document.getElementById("fixedFilterButton");
+        // const filterButton = document.getElementById("filterButton");
+        // const fixedFilterButton = document.getElementById("fixedFilterButton");
         const topSheet = document.getElementById("topSheet");
         const topSheetOverlay = document.getElementById("topSheetOverlay");
         const closeTopSheet = document.getElementById("closeTopSheet");
 
-        // Filter buttons now open the search page with filters
+        // Filter buttons now open the top sheet menu
         filterButton.addEventListener("click", function (e) {
           e.stopPropagation(); // Prevent triggering search box click
-          window.location.href = "search.html#filters";
+          topSheet.classList.add("active");
+          topSheetOverlay.classList.add("active");
+          document.body.style.overflow = "hidden"; // Prevent scrolling behind overlay
         });
 
         fixedFilterButton.addEventListener("click", function (e) {
           e.stopPropagation(); // Prevent triggering search box click
-          window.location.href = "search.html#filters";
+          topSheet.classList.add("active");
+          topSheetOverlay.classList.add("active");
+          document.body.style.overflow = "hidden"; // Prevent scrolling behind overlay
         });
 
         // Hide top sheet when close button is clicked
@@ -1962,31 +1963,25 @@
           document.body.style.overflow = ""; // Restore scrolling
         });
 
-        // Add click events for menu items
+        // Add click events for menu items - now handled with onclick attributes
+        // Close the top sheet after clicking any menu item
         const menuItems = document.querySelectorAll(".menu-item");
         menuItems.forEach((item) => {
-          item.addEventListener("click", function () {
-            const itemText = this.querySelector(".menu-item-text").textContent;
-            console.log(`Menu item clicked: ${itemText}`);
-
-            // Handle menu item clicks
-            switch (itemText) {
-              case "Help":
-                window.location.href = "help.html";
-                break;
-              case "Activities":
-                window.location.href = "activity.html";
-                break;
-              case "Favorites":
-                window.location.href = "favorites.html";
-                break;
-            }
-
-            // Close the top sheet after clicking a menu item
+          const originalClick = item.onclick;
+          item.onclick = function (e) {
+            // First close the top sheet
             topSheet.classList.remove("active");
             topSheetOverlay.classList.remove("active");
             document.body.style.overflow = "";
-          });
+
+            // Then perform the original click action (navigate to the page)
+            if (originalClick) {
+              // Don't immediately return so we have time to close the sheet
+              setTimeout(() => originalClick.call(this, e), 50);
+            }
+
+            return false; // Prevent default to ensure our close happens first
+          };
         });
 
         // Initialize banner carousel
