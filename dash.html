@@ -98,8 +98,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 10px;
         position: relative;
       }
 
@@ -110,7 +109,7 @@
       }
       .dcars-logo {
         width: auto;
-        height: 40px;
+        height: 30px;
         object-fit: contain;
       }
 
@@ -1161,6 +1160,16 @@
         margin-bottom: 5px;
         font-size: 20px;
       }
+      .profile-icon {
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
 
       /* Ensure text doesn't break in small screens */
       .nav-item span {
@@ -1876,7 +1885,13 @@
           Wallet
         </a>
         <a href="profile.html" class="nav-item">
-          <div class="nav-icon">👤</div>
+          <div class="nav-icon">
+            <img
+              src="assets/icons/profile.jpg"
+              alt="Profile Icon"
+              class="profile-icon"
+            />
+          </div>
           Profile
         </a>
       </div>
@@ -1967,21 +1982,28 @@
         // Close the top sheet after clicking any menu item
         const menuItems = document.querySelectorAll(".menu-item");
         menuItems.forEach((item) => {
-          const originalClick = item.onclick;
-          item.onclick = function (e) {
-            // First close the top sheet
+          item.addEventListener("click", function () {
+            const itemText = this.querySelector(".menu-item-text").textContent;
+            console.log(`Menu item clicked: ${itemText}`);
+
+            // Handle menu item clicks
+            switch (itemText) {
+              case "Help":
+                window.location.href = "help.html";
+                break;
+              case "Activities":
+                window.location.href = "activity.html";
+                break;
+              case "Favorites":
+                window.location.href = "favorites.html";
+                break;
+            }
+
+            // Close the top sheet after clicking a menu item
             topSheet.classList.remove("active");
             topSheetOverlay.classList.remove("active");
             document.body.style.overflow = "";
-
-            // Then perform the original click action (navigate to the page)
-            if (originalClick) {
-              // Don't immediately return so we have time to close the sheet
-              setTimeout(() => originalClick.call(this, e), 50);
-            }
-
-            return false; // Prevent default to ensure our close happens first
-          };
+          });
         });
 
         // Initialize banner carousel

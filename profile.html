@@ -582,6 +582,16 @@
         margin-bottom: 5px;
         font-size: 20px;
       }
+      .profile-icon {
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
 
       .nav-item span {
         white-space: nowrap;
@@ -868,7 +878,7 @@
       </div>
 
       <div class="bottom-navigation">
-        <a href="dash.html" class="nav-item ">
+        <a href="dash.html" class="nav-item">
           <div class="nav-icon">🏠</div>
           Home
         </a>
@@ -881,7 +891,11 @@
           Wallet
         </a>
         <a href="profile.html" class="nav-item active">
-          <div class="nav-icon">👤</div>
+          <img
+            src="assets/icons/profile.jpg"
+            alt="Profile Icon"
+            class="profile-icon"
+          />
           Profile
         </a>
       </div>
