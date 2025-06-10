@@ -190,6 +190,9 @@
         justify-content: center;
         margin-bottom: 8px;
       }
+      .brand-icon img {
+        object-fit: contain;
+      }
 
       .brand-name {
         font-size: 12px;
@@ -484,68 +487,78 @@
         <div class="brand-grid">
           <div class="brand-item" data-brand="All">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#000">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                />
-                <path d="M12 6v12" />
-                <path d="M6 12h12" />
-              </svg>
+              <img
+                src="assets/svg/all.png"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">All</div>
           </div>
           <div class="brand-item" data-brand="Tesla">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#E82127">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                />
-                <path d="M12 7V17M7 12H17" />
-              </svg>
+              <img
+                src="assets/svg/tesla.svg"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">Tesla</div>
           </div>
           <div class="brand-item" data-brand="BMW">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#1C69D4">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M6 12H18M12 6V18" stroke="white" stroke-width="2" />
-              </svg>
+              <img
+                src="assets/svg/bmw.svg"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">BMW</div>
           </div>
           <div class="brand-item" data-brand="Audi">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#000">
-                <circle cx="12" cy="12" r="10" />
-                <circle cx="12" cy="12" r="6" fill="#fff" />
-                <circle cx="12" cy="12" r="3" fill="#000" />
-              </svg>
+              <img
+                src="assets/svg/audi.png"
+                width="25"
+                height="25"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">Audi</div>
           </div>
           <div class="brand-item" data-brand="Porsche">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#000">
-                <path d="M12 2L2 12l10 10 10-10z" />
-              </svg>
+              <img
+                src="assets/svg/porsche.svg"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">Porsche</div>
           </div>
           <div class="brand-item" data-brand="Rivian">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#5499C7">
-                <rect x="4" y="4" width="16" height="16" rx="2" />
-              </svg>
+              <img
+                src="assets/svg/rivian.svg"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">Rivian</div>
           </div>
           <div class="brand-item" data-brand="Lucid">
             <div class="brand-icon">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="#555">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M8 12L16 12" stroke="white" stroke-width="2" />
-              </svg>
+              <img
+                src="assets/svg/lucid.svg"
+                width="30"
+                height="30"
+                alt="BMW Logo"
+              />
             </div>
             <div class="brand-name">Lucid</div>
           </div>
@@ -565,7 +578,15 @@
 
       <div class="section-title">Available Cars</div>
       <div class="cars-grid">
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="Sedan" data-brand="Tesla" data-fuel="Electric" data-seats="5" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="Sedan"
+          data-brand="Tesla"
+          data-fuel="Electric"
+          data-seats="5"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg6.jpg" alt="Tesla Model 3" />
             <button class="favorite-button">🤍</button>
@@ -579,7 +600,15 @@
           </div>
         </div>
 
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="Sedan" data-brand="BMW" data-fuel="Electric" data-seats="5" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="Sedan"
+          data-brand="BMW"
+          data-fuel="Electric"
+          data-seats="5"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg7.png" alt="BMW i4" />
             <button class="favorite-button">🤍</button>
@@ -593,7 +622,15 @@
           </div>
         </div>
 
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="Coupe" data-brand="Audi" data-fuel="Petrol" data-seats="4" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="Coupe"
+          data-brand="Audi"
+          data-fuel="Petrol"
+          data-seats="4"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg8.png" alt="Audi e-tron GT" />
             <button class="favorite-button">🤍</button>
@@ -607,7 +644,15 @@
           </div>
         </div>
 
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="Coupe" data-brand="Porsche" data-fuel="Petrol" data-seats="4" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="Coupe"
+          data-brand="Porsche"
+          data-fuel="Petrol"
+          data-seats="4"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg9.png" alt="Porsche Taycan" />
             <button class="favorite-button">🤍</button>
@@ -621,7 +666,15 @@
           </div>
         </div>
 
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="Sedan" data-brand="Lucid" data-fuel="Hybrid" data-seats="5" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="Sedan"
+          data-brand="Lucid"
+          data-fuel="Hybrid"
+          data-seats="5"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg10.jpg" alt="Lucid Air" />
             <button class="favorite-button">🤍</button>
@@ -635,7 +688,15 @@
           </div>
         </div>
 
-        <div class="car-card" onclick="window.location.href='details.html'" data-category="SUV" data-brand="Rivian" data-fuel="Diesel" data-seats="7" data-transmission="Automatic">
+        <div
+          class="car-card"
+          onclick="window.location.href='details.html'"
+          data-category="SUV"
+          data-brand="Rivian"
+          data-fuel="Diesel"
+          data-seats="7"
+          data-transmission="Automatic"
+        >
           <div class="car-image">
             <img src="assets/carbg1.png" alt="Rivian R1T" />
             <button class="favorite-button">🤍</button>
@@ -690,220 +751,263 @@
         <div class="filter-section">
           <div class="filter-section-title">Transmission</div>
           <div class="transmission-options">
-            <div class="transmission-option active" data-transmission="Automatic">Automatic</div>
-            <div class="transmission-option" data-transmission="Manual">Manual</div>
+            <div
+              class="transmission-option active"
+              data-transmission="Automatic"
+            >
+              Automatic
+            </div>
+            <div class="transmission-option" data-transmission="Manual">
+              Manual
+            </div>
           </div>
         </div>
 
-        <button id="apply-filters" style="background-color: var(--primary); border: none; color: var(--dark); padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; margin-top: 20px; cursor: pointer;">Apply Filters</button>
+        <button
+          id="apply-filters"
+          style="
+            background-color: var(--primary);
+            border: none;
+            color: var(--dark);
+            padding: 12px;
+            border-radius: 30px;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+          "
+        >
+          Apply Filters
+        </button>
       </div>
     </div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Get all filter elements
-        const categoryItems = document.querySelectorAll('.category-grid .category-item');
-        const brandItems = document.querySelectorAll('.brand-grid .brand-item');
-        const fuelItems = document.querySelectorAll('.fuel-grid .fuel-item');
-        const seatsOptions = document.querySelectorAll('.seats-options .seats-option');
-        const transmissionOptions = document.querySelectorAll('.transmission-options .transmission-option');
-        
+        const categoryItems = document.querySelectorAll(
+          ".category-grid .category-item"
+        );
+        const brandItems = document.querySelectorAll(".brand-grid .brand-item");
+        const fuelItems = document.querySelectorAll(".fuel-grid .fuel-item");
+        const seatsOptions = document.querySelectorAll(
+          ".seats-options .seats-option"
+        );
+        const transmissionOptions = document.querySelectorAll(
+          ".transmission-options .transmission-option"
+        );
+
         // Get all car cards
-        const carCards = document.querySelectorAll('.car-card');
-        
+        const carCards = document.querySelectorAll(".car-card");
+
         // Filters modal toggle
-        const filtersToggle = document.getElementById('filters-toggle');
-        const filtersModal = document.getElementById('filters-modal');
-        const applyFiltersBtn = document.getElementById('apply-filters');
-        const resetFiltersBtn = document.getElementById('reset-filters');
-        
+        const filtersToggle = document.getElementById("filters-toggle");
+        const filtersModal = document.getElementById("filters-modal");
+        const applyFiltersBtn = document.getElementById("apply-filters");
+        const resetFiltersBtn = document.getElementById("reset-filters");
+
         // Current filters state
         let activeFilters = {
-          category: 'All',
-          brand: 'All',
-          fuel: 'All',
-          seats: '5',
-          transmission: 'Automatic'
+          category: "All",
+          brand: "All",
+          fuel: "All",
+          seats: "5",
+          transmission: "Automatic",
         };
-        
+
         // Toggle filters modal
-        filtersToggle.addEventListener('click', function() {
-          filtersModal.style.display = filtersModal.style.display === 'none' ? 'block' : 'none';
+        filtersToggle.addEventListener("click", function () {
+          filtersModal.style.display =
+            filtersModal.style.display === "none" ? "block" : "none";
         });
-        
+
         // Category filter click handlers
-        categoryItems.forEach(item => {
-          item.addEventListener('click', function() {
+        categoryItems.forEach((item) => {
+          item.addEventListener("click", function () {
             // Remove active class from all category items
-            categoryItems.forEach(cat => cat.classList.remove('active'));
+            categoryItems.forEach((cat) => cat.classList.remove("active"));
             // Add active class to clicked item
-            this.classList.add('active');
+            this.classList.add("active");
             // Update active filter
-            activeFilters.category = this.getAttribute('data-category');
+            activeFilters.category = this.getAttribute("data-category");
             // Apply filters
             applyFilters();
           });
         });
-        
+
         // Brand filter click handlers
-        brandItems.forEach(item => {
-          item.addEventListener('click', function() {
+        brandItems.forEach((item) => {
+          item.addEventListener("click", function () {
             // Add/remove active class (no visual implementation in original CSS)
-            brandItems.forEach(brand => brand.querySelector('.brand-icon').style.border = 'none');
-            this.querySelector('.brand-icon').style.border = '2px solid var(--primary)';
+            brandItems.forEach(
+              (brand) =>
+                (brand.querySelector(".brand-icon").style.border = "none")
+            );
+            this.querySelector(".brand-icon").style.border =
+              "2px solid var(--primary)";
             // Update active filter
-            activeFilters.brand = this.getAttribute('data-brand');
+            activeFilters.brand = this.getAttribute("data-brand");
             // Apply filters
             applyFilters();
           });
         });
-        
+
         // Fuel type filter click handlers
-        fuelItems.forEach(item => {
-          item.addEventListener('click', function() {
+        fuelItems.forEach((item) => {
+          item.addEventListener("click", function () {
             // Remove active class from all fuel items
-            fuelItems.forEach(fuel => fuel.classList.remove('active'));
+            fuelItems.forEach((fuel) => fuel.classList.remove("active"));
             // Add active class to clicked item
-            this.classList.add('active');
+            this.classList.add("active");
             // Update active filter
-            activeFilters.fuel = this.getAttribute('data-fuel');
+            activeFilters.fuel = this.getAttribute("data-fuel");
             // Apply filters
             applyFilters();
           });
         });
-        
+
         // Seats options click handlers
-        seatsOptions.forEach(option => {
-          option.addEventListener('click', function() {
+        seatsOptions.forEach((option) => {
+          option.addEventListener("click", function () {
             // Remove active class from all seats options
-            seatsOptions.forEach(opt => opt.classList.remove('active'));
+            seatsOptions.forEach((opt) => opt.classList.remove("active"));
             // Add active class to clicked option
-            this.classList.add('active');
+            this.classList.add("active");
             // Update active filter
-            activeFilters.seats = this.getAttribute('data-seats');
+            activeFilters.seats = this.getAttribute("data-seats");
           });
         });
-        
+
         // Transmission options click handlers
-        transmissionOptions.forEach(option => {
-          option.addEventListener('click', function() {
+        transmissionOptions.forEach((option) => {
+          option.addEventListener("click", function () {
             // Remove active class from all transmission options
-            transmissionOptions.forEach(opt => opt.classList.remove('active'));
+            transmissionOptions.forEach((opt) =>
+              opt.classList.remove("active")
+            );
             // Add active class to clicked option
-            this.classList.add('active');
+            this.classList.add("active");
             // Update active filter
-            activeFilters.transmission = this.getAttribute('data-transmission');
+            activeFilters.transmission = this.getAttribute("data-transmission");
           });
         });
-        
+
         // Apply filters button click handler
-        applyFiltersBtn.addEventListener('click', function() {
+        applyFiltersBtn.addEventListener("click", function () {
           // Apply filters
           applyFilters();
           // Hide modal
-          filtersModal.style.display = 'none';
+          filtersModal.style.display = "none";
         });
-        
+
         // Reset filters button click handler
-        resetFiltersBtn.addEventListener('click', function() {
+        resetFiltersBtn.addEventListener("click", function () {
           // Reset active filters
           activeFilters = {
-            category: 'All',
-            brand: 'All',
-            fuel: 'All',
-            seats: '5',
-            transmission: 'Automatic'
+            category: "All",
+            brand: "All",
+            fuel: "All",
+            seats: "5",
+            transmission: "Automatic",
           };
-          
+
           // Reset UI
-          categoryItems.forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('data-category') === 'All') {
-              item.classList.add('active');
+          categoryItems.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("data-category") === "All") {
+              item.classList.add("active");
             }
           });
-          
-          brandItems.forEach(item => {
-            item.querySelector('.brand-icon').style.border = 'none';
+
+          brandItems.forEach((item) => {
+            item.querySelector(".brand-icon").style.border = "none";
           });
-          
-          fuelItems.forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('data-fuel') === 'All') {
-              item.classList.add('active');
+
+          fuelItems.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("data-fuel") === "All") {
+              item.classList.add("active");
             }
           });
-          
-          seatsOptions.forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('data-seats') === '5') {
-              item.classList.add('active');
+
+          seatsOptions.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("data-seats") === "5") {
+              item.classList.add("active");
             }
           });
-          
-          transmissionOptions.forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('data-transmission') === 'Automatic') {
-              item.classList.add('active');
+
+          transmissionOptions.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("data-transmission") === "Automatic") {
+              item.classList.add("active");
             }
           });
-          
+
           // Show all cars
           applyFilters();
         });
-        
+
         // Function to apply all filters
         function applyFilters() {
           // Hide all cars first
           let visibleCount = 0;
-          
-          carCards.forEach(card => {
-            const cardCategory = card.getAttribute('data-category');
-            const cardBrand = card.getAttribute('data-brand');
-            const cardFuel = card.getAttribute('data-fuel');
-            const cardSeats = card.getAttribute('data-seats');
-            const cardTransmission = card.getAttribute('data-transmission');
-            
+
+          carCards.forEach((card) => {
+            const cardCategory = card.getAttribute("data-category");
+            const cardBrand = card.getAttribute("data-brand");
+            const cardFuel = card.getAttribute("data-fuel");
+            const cardSeats = card.getAttribute("data-seats");
+            const cardTransmission = card.getAttribute("data-transmission");
+
             // Check if card matches all active filters
-            const categoryMatch = activeFilters.category === 'All' || cardCategory === activeFilters.category;
-            const brandMatch = activeFilters.brand === 'All' || cardBrand === activeFilters.brand;
-            const fuelMatch = activeFilters.fuel === 'All' || cardFuel === activeFilters.fuel;
+            const categoryMatch =
+              activeFilters.category === "All" ||
+              cardCategory === activeFilters.category;
+            const brandMatch =
+              activeFilters.brand === "All" ||
+              cardBrand === activeFilters.brand;
+            const fuelMatch =
+              activeFilters.fuel === "All" || cardFuel === activeFilters.fuel;
             const seatsMatch = cardSeats === activeFilters.seats;
-            const transmissionMatch = cardTransmission === activeFilters.transmission;
-            
+            const transmissionMatch =
+              cardTransmission === activeFilters.transmission;
+
             // For modal filters, only apply if the modal is being used
-            const modalFiltersApplied = filtersModal.style.display === 'block';
-            const modalMatch = !modalFiltersApplied || (seatsMatch && transmissionMatch);
-            
+            const modalFiltersApplied = filtersModal.style.display === "block";
+            const modalMatch =
+              !modalFiltersApplied || (seatsMatch && transmissionMatch);
+
             // If card matches all filters, show it
-            if(categoryMatch && brandMatch && fuelMatch && modalMatch) {
-              card.style.display = 'block';
+            if (categoryMatch && brandMatch && fuelMatch && modalMatch) {
+              card.style.display = "block";
               visibleCount++;
             } else {
-              card.style.display = 'none';
+              card.style.display = "none";
             }
           });
-          
+
           // Check if we need to show 'no results' message
-          const noResultsMsg = document.getElementById('no-results-msg');
-          
-          if(visibleCount === 0) {
-            if(!noResultsMsg) {
-              const msg = document.createElement('div');
-              msg.id = 'no-results-msg';
-              msg.style.textAlign = 'center';
-              msg.style.padding = '30px';
-              msg.style.color = '#666';
-              msg.style.gridColumn = '1 / -1';
-              msg.innerHTML = 'No cars match your filters.<br>Try different filter options.';
-              
-              document.querySelector('.cars-grid').appendChild(msg);
+          const noResultsMsg = document.getElementById("no-results-msg");
+
+          if (visibleCount === 0) {
+            if (!noResultsMsg) {
+              const msg = document.createElement("div");
+              msg.id = "no-results-msg";
+              msg.style.textAlign = "center";
+              msg.style.padding = "30px";
+              msg.style.color = "#666";
+              msg.style.gridColumn = "1 / -1";
+              msg.innerHTML =
+                "No cars match your filters.<br>Try different filter options.";
+
+              document.querySelector(".cars-grid").appendChild(msg);
             }
-          } else if(noResultsMsg) {
+          } else if (noResultsMsg) {
             noResultsMsg.remove();
           }
         }
-        
+
         // Initialize filters (to handle any pre-selected filters)
         applyFilters();
       });
