@@ -531,5 +531,46 @@
         </div>
       </div>
     </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all filter buttons
+      const filterButtons = document.querySelectorAll('.filter-button');
+      const favoriteCards = document.querySelectorAll('.favorite-card');
+      
+      // Add click event listener to each filter button
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          const filterValue = this.textContent.trim().toLowerCase();
+          
+          // Show all cards if 'All' filter is selected
+          if (filterValue === 'all') {
+            favoriteCards.forEach(card => {
+              card.style.display = 'block';
+            });
+            return;
+          }
+          
+          // Filter cards based on selected category
+          favoriteCards.forEach(card => {
+            const carInfo = card.querySelector('.favorite-info').textContent.toLowerCase();
+            const carName = card.querySelector('.favorite-name').textContent.toLowerCase();
+            
+            // Check if car matches the selected filter
+            if (carName.includes(filterValue) || carInfo.includes(filterValue)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
   </body>
 </html>
