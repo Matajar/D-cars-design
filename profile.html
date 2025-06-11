@@ -11,7 +11,7 @@
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
-      
+
       /* Settings Modal Styles */
       .modal {
         display: none;
@@ -27,7 +27,7 @@
         overflow-y: auto;
         padding: 20px;
       }
-      
+
       .modal-content {
         background-color: #fff;
         width: 100%;
@@ -38,7 +38,7 @@
         overflow-y: auto;
         position: relative;
       }
-      
+
       .modal-header {
         display: flex;
         justify-content: space-between;
@@ -51,13 +51,13 @@
         border-radius: clamp(15px, 4vw, 20px) clamp(15px, 4vw, 20px) 0 0;
         z-index: 10;
       }
-      
+
       .modal-title {
         font-size: clamp(18px, 4.5vw, 22px);
         font-weight: 600;
         color: #000;
       }
-      
+
       .modal-close {
         background: none;
         border: none;
@@ -72,20 +72,20 @@
         border-radius: 50%;
         transition: all 0.2s ease;
       }
-      
+
       .modal-close:hover {
         background-color: rgba(0, 0, 0, 0.05);
         color: #000;
       }
-      
+
       .modal-body {
         padding: clamp(15px, 4vw, 20px);
       }
-      
+
       .settings-section {
         margin-bottom: clamp(20px, 5vw, 25px);
       }
-      
+
       .settings-title {
         font-size: clamp(16px, 4vw, 18px);
         font-weight: 600;
@@ -94,7 +94,7 @@
         padding-bottom: clamp(5px, 1.2vw, 8px);
         border-bottom: 1px solid #f0f0f0;
       }
-      
+
       .settings-item {
         display: flex;
         justify-content: space-between;
@@ -102,30 +102,30 @@
         padding: clamp(10px, 2.5vw, 12px) 0;
         border-bottom: 1px solid #f5f5f5;
       }
-      
+
       .settings-label {
         font-size: clamp(14px, 3.5vw, 16px);
         color: #333;
       }
-      
+
       .settings-control {
         display: flex;
         align-items: center;
       }
-      
+
       .toggle-switch {
         position: relative;
         display: inline-block;
         width: clamp(40px, 10vw, 50px);
         height: clamp(22px, 5.5vw, 26px);
       }
-      
+
       .toggle-switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
-      
+
       .toggle-slider {
         position: absolute;
         cursor: pointer;
@@ -134,10 +134,10 @@
         right: 0;
         bottom: 0;
         background-color: #ccc;
-        transition: .4s;
+        transition: 0.4s;
         border-radius: clamp(20px, 5vw, 25px);
       }
-      
+
       .toggle-slider:before {
         position: absolute;
         content: "";
@@ -146,19 +146,19 @@
         left: 2px;
         bottom: 2px;
         background-color: white;
-        transition: .4s;
+        transition: 0.4s;
         border-radius: 50%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       }
-      
+
       input:checked + .toggle-slider {
         background-color: #ffbf00;
       }
-      
+
       input:checked + .toggle-slider:before {
         transform: translateX(clamp(18px, 4.5vw, 24px));
       }
-      
+
       .settings-select {
         padding: clamp(8px, 2vw, 10px) clamp(10px, 2.5vw, 12px);
         border-radius: clamp(8px, 2vw, 10px);
@@ -175,7 +175,7 @@
         background-position: right 12px top 50%;
         background-size: 10px auto;
       }
-      
+
       .settings-save-button {
         display: block;
         width: 100%;
@@ -192,25 +192,25 @@
         transition: all 0.3s ease;
         box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
       }
-      
+
       .settings-save-button:hover {
         background-color: #e6ac00;
         box-shadow: 0 6px 15px rgba(255, 191, 0, 0.3);
       }
-      
+
       .danger-zone {
         margin-top: clamp(25px, 6vw, 30px);
         padding-top: clamp(15px, 3.5vw, 20px);
         border-top: 1px solid #f0f0f0;
       }
-      
+
       .danger-title {
         font-size: clamp(16px, 4vw, 18px);
         font-weight: 600;
         color: #f44336;
         margin-bottom: clamp(10px, 2.5vw, 15px);
       }
-      
+
       .danger-button {
         display: block;
         width: 100%;
@@ -224,11 +224,11 @@
         cursor: pointer;
         transition: all 0.3s ease;
       }
-      
+
       .danger-button:hover {
         background-color: rgba(244, 67, 54, 0.2);
       }
-      
+
       /* Quick Actions */
       .quick-actions {
         display: grid;
@@ -236,7 +236,7 @@
         gap: clamp(10px, 2.5vw, 15px);
         margin-bottom: clamp(20px, 5vw, 25px);
       }
-      
+
       .action-button {
         background-color: #f9f9f9;
         border: 1px solid #f0f0f0;
@@ -248,23 +248,23 @@
         cursor: pointer;
         transition: all 0.3s ease;
       }
-      
+
       .action-button:hover {
         background-color: #f5f5f5;
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
       }
-      
+
       .action-button.settings-action {
         background-color: rgba(255, 191, 0, 0.05);
         border-color: rgba(255, 191, 0, 0.1);
       }
-      
+
       .action-icon {
         font-size: clamp(22px, 5.5vw, 28px);
         margin-bottom: clamp(5px, 1.2vw, 8px);
       }
-      
+
       .action-text {
         font-size: clamp(12px, 3vw, 14px);
         font-weight: 500;
@@ -293,78 +293,79 @@
           max-width: 100%;
           padding-bottom: 90px;
         }
-        
+
         .profile-section {
           flex-direction: column;
           align-items: center;
           text-align: center;
         }
-        
+
         .profile-avatar {
           margin-right: 0;
           margin-bottom: clamp(15px, 4vw, 20px);
         }
-        
+
         .quick-actions {
           grid-template-columns: repeat(2, 1fr);
           gap: clamp(12px, 3vw, 18px);
         }
-        
+
         .favorites-grid {
           gap: clamp(15px, 3.5vw, 20px);
         }
-        
+
         .favorite-image {
           height: clamp(120px, 30vw, 150px);
         }
-        
+
         .detail-item {
           flex-direction: column;
           align-items: flex-start;
         }
-        
-        .detail-label, .detail-value {
+
+        .detail-label,
+        .detail-value {
           width: 100%;
         }
-        
+
         .detail-label {
           margin-bottom: 5px;
           font-weight: 500;
         }
-        
+
         .detail-value {
           padding-left: 10px;
         }
-        
+
         .bottom-navigation {
           width: 95%;
         }
       }
-      
+
       @media (max-width: 360px) {
         .profile-name {
           font-size: clamp(16px, 4.5vw, 20px);
         }
-        
+
         .tab {
           font-size: clamp(12px, 3vw, 14px);
           padding: clamp(8px, 2vw, 12px) 0;
         }
-        
+
         .favorite-card {
           border-radius: clamp(12px, 3vw, 15px);
         }
-        
+
         .activity-details {
           padding: clamp(6px, 1.5vw, 8px);
         }
-        
+
         .activity-row {
           flex-direction: column;
           align-items: flex-start;
           margin-bottom: 8px;
         }
-        
+
         .activity-value {
           text-align: left;
         }
@@ -416,6 +417,11 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
+      .settings-icon{
+        width: auto;
+        height: 20px;
+        object-fit: contain;
+      }
 
       .settings-button:hover {
         background-color: rgba(0, 0, 0, 0.08); /* slightly darker on hover */
@@ -444,7 +450,7 @@
         overflow: hidden;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
       }
-      
+
       .change-photo-icon {
         position: absolute;
         bottom: 0;
@@ -462,7 +468,7 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         border: 2px solid white;
       }
-      
+
       .profile-status {
         font-size: clamp(11px, 2.8vw, 13px);
         color: #4caf50;
@@ -567,17 +573,23 @@
         display: block;
         animation: fadeIn 0.3s ease-in-out;
       }
-      
+
       @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(5px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       /* Profile Details Tab */
       .details-section {
         margin-bottom: clamp(20px, 5vw, 25px);
       }
-      
+
       .section-title {
         font-size: clamp(16px, 4vw, 18px);
         font-weight: 600;
@@ -606,7 +618,7 @@
         color: #000000;
         font-weight: 500;
       }
-      
+
       .status-badge {
         display: inline-block;
         padding: clamp(3px, 0.8vw, 5px) clamp(8px, 2vw, 10px);
@@ -614,7 +626,7 @@
         font-size: clamp(11px, 2.8vw, 13px);
         font-weight: 500;
       }
-      
+
       .status-badge.verified {
         background-color: rgba(76, 175, 80, 0.1);
         color: #4caf50;
@@ -633,7 +645,7 @@
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(255, 191, 0, 0.2);
       }
-      
+
       .upgrade-button {
         padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 15px);
         background-color: rgba(255, 255, 255, 0.2);
@@ -646,11 +658,11 @@
         transition: all 0.2s ease;
         margin-left: auto;
       }
-      
+
       .upgrade-button:hover {
         background-color: rgba(255, 255, 255, 0.3);
       }
-      
+
       .driving-license {
         background-color: #f9f9f9;
         border-radius: clamp(12px, 3vw, 15px);
@@ -659,19 +671,19 @@
         border: 1px solid #f0f0f0;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
       }
-      
+
       .emirates-id .license-icon {
         background-color: rgba(76, 175, 80, 0.1);
         color: #4caf50;
         border-color: rgba(76, 175, 80, 0.2);
       }
-      
+
       .license-header {
         display: flex;
         align-items: center;
         margin-bottom: clamp(10px, 2.5vw, 15px);
       }
-      
+
       .license-icon {
         width: clamp(40px, 10vw, 50px);
         height: clamp(40px, 10vw, 50px);
@@ -685,37 +697,37 @@
         margin-right: clamp(10px, 2.5vw, 15px);
         border: 1px solid rgba(255, 191, 0, 0.2);
       }
-      
+
       .license-info {
         flex: 1;
       }
-      
+
       .license-title {
         font-size: clamp(16px, 4vw, 18px);
         font-weight: 600;
         color: #000000;
         margin-bottom: 5px;
       }
-      
+
       .license-number {
         font-size: clamp(12px, 3vw, 14px);
         color: #666;
       }
-      
+
       .license-details {
         background-color: white;
         border-radius: clamp(8px, 2vw, 10px);
         padding: clamp(10px, 2.5vw, 15px);
         border: 1px solid #eee;
       }
-      
+
       .license-detail {
         display: flex;
         justify-content: space-between;
         padding: clamp(5px, 1.2vw, 8px) 0;
         border-bottom: 1px solid #f0f0f0;
       }
-      
+
       .license-detail:last-child {
         border-bottom: none;
       }
@@ -776,9 +788,9 @@
         transition: all 0.3s ease;
         position: relative;
       }
-      
+
       .favorite-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -794,7 +806,7 @@
         transform: translateY(-5px);
         box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
       }
-      
+
       .favorite-card:hover::before {
         opacity: 1;
       }
@@ -911,7 +923,7 @@
         transition: all 0.3s ease;
         position: relative;
       }
-      
+
       .activity-item:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -1164,22 +1176,42 @@
           ←
         </button>
         <div class="page-title">
-          <div class="page-icon">👤</div>
+          <!-- <div class="page-icon">👤</div> -->
           Profile
         </div>
-        <button class="settings-button" onclick="openSettingsModal()">⚙️</button>
+        <button class="settings-button" onclick="openSettingsModal()">
+          <img
+            src="assets/icons/settings.svg"
+            alt="Profile Picture"
+            class="settings-icon"
+          />
+        </button>
       </div>
 
       <div class="profile-section">
         <div class="profile-avatar">
-          <img src="assets/icons/profile.jpg" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          <img
+            src="assets/icons/profile.jpg"
+            alt="Profile Picture"
+            style="
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 50%;
+            "
+          />
           <div class="change-photo-icon">📷</div>
         </div>
         <div class="profile-info">
           <div class="profile-name">Hi Jenifer!</div>
           <div class="profile-email">jenifer.smith@example.com</div>
           <div class="profile-status">Verified User ✓</div>
-          <button class="edit-profile-button" onclick="window.location.href='edit-profile.html'">Edit Profile</button>
+          <button
+            class="edit-profile-button"
+            onclick="window.location.href='edit-profile.html'"
+          >
+            Edit Profile
+          </button>
         </div>
       </div>
 
@@ -1193,20 +1225,53 @@
         <!-- Profile Details Tab -->
         <div id="details" class="tab-content active">
           <div class="quick-actions">
-            <button class="action-button" onclick="window.location.href='wallet.html'">
-              <div class="action-icon">💰</div>
+            <button
+              class="action-button"
+              onclick="window.location.href='wallet.html'"
+            >
+              <div class="action-icon">
+                <img
+                  src="assets/icons/wallet-cards.svg"
+                  alt="Wallet Icon"
+                  class="nav-icon"
+                />
+              </div>
               <div class="action-text">Wallet</div>
             </button>
-            <button class="action-button" onclick="window.location.href='help.html'">
-              <div class="action-icon">📞</div>
+            <button
+              class="action-button"
+              onclick="window.location.href='help.html'"
+            >
+              <div class="action-icon">
+                <img
+                  src="assets/icons/phone.svg"
+                  alt="Wallet Icon"
+                  class="nav-icon"
+                />
+              </div>
               <div class="action-text">Support</div>
             </button>
-            <button class="action-button settings-action" onclick="openSettingsModal()">
-              <div class="action-icon">⚙️</div>
+            <button
+              class="action-button settings-action"
+              onclick="openSettingsModal()"
+            >
+              <div class="action-icon">
+                <img
+                  src="assets/icons/settings.svg  "
+                  alt="Wallet Icon"
+                  class="nav-icon"
+                />
+              </div>
               <div class="action-text">Settings</div>
             </button>
             <button class="action-button" onclick="logOut()">
-              <div class="action-icon">🚪</div>
+              <div class="action-icon">
+                <img
+                  src="assets/icons/log-out.svg"
+                  alt="Wallet Icon"
+                  class="nav-icon"
+                />
+              </div>
               <div class="action-text">Log Out</div>
             </button>
           </div>
@@ -1232,7 +1297,7 @@
               <div class="detail-label">Address</div>
               <div class="detail-value">Downtown Dubai, UAE</div>
             </div>
-            
+
             <h3 class="section-title">Account Information</h3>
             <div class="detail-item">
               <div class="detail-label">Member ID</div>
@@ -1244,14 +1309,15 @@
             </div>
             <div class="detail-item">
               <div class="detail-label">Status</div>
-              <div class="detail-value"><span class="status-badge verified">Verified ✓</span></div>
+              <div class="detail-value">
+                <span class="status-badge verified">Verified ✓</span>
+              </div>
             </div>
             <div class="detail-item">
               <div class="detail-label">Payment Method</div>
               <div class="detail-value">Visa •••• 4582</div>
             </div>
 
-            
             <div class="driving-license">
               <div class="license-header">
                 <div class="license-icon">🚗</div>
@@ -1310,7 +1376,7 @@
               onclick="window.location.href='details.html'"
             >
               <div class="favorite-image">
-                <img src="assets/car-1.png" alt="Ferrari Roma" />
+                <img src="assets/carbg1.png" alt="Ferrari Roma" />
                 <div class="favorite-overlay"></div>
                 <div class="favorite-rating">
                   <span class="favorite-rating-star">★</span>
@@ -1330,7 +1396,7 @@
               onclick="window.location.href='details.html'"
             >
               <div class="favorite-image">
-                <img src="assets/car-2.png" alt="Hyundai i20" />
+                <img src="assets/carbg2.png" alt="Hyundai i20" />
                 <div class="favorite-overlay"></div>
                 <div class="favorite-rating">
                   <span class="favorite-rating-star">★</span>
@@ -1350,7 +1416,7 @@
               onclick="window.location.href='details.html'"
             >
               <div class="favorite-image">
-                <img src="assets/car-3.png" alt="BMW X5" />
+                <img src="assets/carbg3.png" alt="BMW X5" />
                 <div class="favorite-overlay"></div>
                 <div class="favorite-rating">
                   <span class="favorite-rating-star">★</span>
@@ -1370,7 +1436,7 @@
               onclick="window.location.href='details.html'"
             >
               <div class="favorite-image">
-                <img src="assets/car-4.png" alt="Tesla Model 3" />
+                <img src="assets/carbg4.jpg" alt="Tesla Model 3" />
                 <div class="favorite-overlay"></div>
                 <div class="favorite-rating">
                   <span class="favorite-rating-star">★</span>
@@ -1482,19 +1548,31 @@
       <div class="bottom-navigation">
         <a href="dash.html" class="nav-item">
           <div class="nav-icon">
-            <img src="assets/icons/house.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/house.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Home
         </a>
         <a href="sell-your-car.html" class="nav-item">
           <div class="nav-icon">
-            <img src="assets/icons/plus.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/plus.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Sell
         </a>
         <a href="wallet.html" class="nav-item">
           <div class="nav-icon">
-            <img src="assets/icons/wallet.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/wallet.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Wallet
         </a>
@@ -1516,7 +1594,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title">Settings</h2>
-          <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+          <button class="modal-close" onclick="closeSettingsModal()">
+            &times;
+          </button>
         </div>
         <div class="modal-body">
           <div class="settings-section">
@@ -1525,7 +1605,7 @@
               <div class="settings-label">Email Notifications</div>
               <div class="settings-control">
                 <label class="toggle-switch">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked />
                   <span class="toggle-slider"></span>
                 </label>
               </div>
@@ -1543,13 +1623,13 @@
               <div class="settings-label">Two-Factor Authentication</div>
               <div class="settings-control">
                 <label class="toggle-switch">
-                  <input type="checkbox">
+                  <input type="checkbox" />
                   <span class="toggle-slider"></span>
                 </label>
               </div>
             </div>
           </div>
-          
+
           <!-- <div class="settings-section">
             <h3 class="settings-title">App Preferences</h3>
             <div class="settings-item">
@@ -1584,7 +1664,7 @@
               </div>
             </div>
           </div> -->
-          
+
           <!-- <div class="settings-section">
             <h3 class="settings-title">Privacy & Security</h3>
             <div class="settings-item">
@@ -1615,9 +1695,9 @@
               </div>
             </div>
           </div> -->
-          
+
           <button class="settings-save-button">Save Changes</button>
-          
+
           <div class="danger-zone">
             <h3 class="danger-title">Danger Zone</h3>
             <button class="danger-button">Delete Account</button>
@@ -1625,7 +1705,7 @@
         </div>
       </div>
     </div>
-    
+
     <script>
       function openTab(tabName) {
         // Hide all tab content
@@ -1646,27 +1726,27 @@
         // Add active class to the clicked tab
         event.currentTarget.classList.add("active");
       }
-      
+
       function openSettingsModal() {
         document.getElementById("settingsModal").style.display = "flex";
       }
-      
+
       function closeSettingsModal() {
         document.getElementById("settingsModal").style.display = "none";
       }
-      
+
       function logOut() {
         // In a real app, this would handle logout logic
         window.location.href = "login.html";
       }
-      
+
       // Close modal when clicking outside of it
-      window.onclick = function(event) {
+      window.onclick = function (event) {
         const modal = document.getElementById("settingsModal");
         if (event.target == modal) {
           closeSettingsModal();
         }
-      }
+      };
     </script>
   </body>
 </html>
