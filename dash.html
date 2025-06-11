@@ -112,6 +112,11 @@
         height: 30px;
         object-fit: contain;
       }
+      .nav-logo {
+        width: auto;
+        height: 30px;
+        object-fit: contain;
+      }
 
       .close-button {
         position: absolute;
@@ -140,7 +145,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        gap: 20px;
         align-items: center;
       }
 
@@ -151,32 +156,53 @@
         padding: 15px 20px;
         cursor: pointer;
         transition: background-color 0.2s ease;
-      }
-
-      .menu-item:hover {
-        border-radius: 10px;
-        background-color: rgba(255, 191, 0, 0.1);
+        position: relative;
       }
 
       .menu-item-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: rgba(255, 191, 0, 0.15);
+        width: 50px;
+        height: 50px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* margin-right: 15px; */
-        color: #ffbf00;
-        font-size: 20px;
+        background-color: #ffffff;
+        margin-bottom: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .menu-item-icon img {
+        width: 24px;
+        height: 24px;
+        /* Remove the old filter */
+        /* filter: none; */
+        /* opacity: 0.4; */
+      }
+      .menu-item-icon:hover {
+        background-color: rgba(254, 240, 138, 0.4);
+        opacity: 0.8;
       }
 
       .menu-item-text {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 500;
         color: #333;
+        text-align: center;
       }
 
+      .menu-item-badge {
+        position: absolute;
+        top: 8px;
+        right: 15px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 8px;
+        text-transform: uppercase;
+      }
       body {
         background-color: #ffffff;
         color: #000000;
@@ -1159,7 +1185,6 @@
       .nav-icon {
         /* margin-bottom: 5px; */
         font-size: 20px;
-        
       }
       .profile-icon {
         object-fit: cover;
@@ -1217,15 +1242,25 @@
       </div>
       <div class="menu-items">
         <div class="menu-item">
-          <div class="menu-item-icon">❓</div>
+          <div class="menu-item-icon">
+            <img
+              src="assets/icons/circle-help.svg"
+              alt="Logo"
+              class="nav-logo"
+            />
+          </div>
           <div class="menu-item-text">Help</div>
         </div>
         <div class="menu-item">
-          <div class="menu-item-icon">📊</div>
+          <div class="menu-item-icon">
+            <img src="assets/icons/activity.svg" alt="Logo" class="nav-logo" />
+          </div>
           <div class="menu-item-text">Activities</div>
         </div>
         <div class="menu-item">
-          <div class="menu-item-icon">❤️</div>
+          <div class="menu-item-icon">
+            <img src="assets/icons/heart.svg" alt="Logo" class="nav-logo" />
+          </div>
           <div class="menu-item-text">Favorites</div>
         </div>
       </div>
@@ -1373,18 +1408,6 @@
                 </g>
               </svg>
               <span class="notification-badge">2</span>
-            </div>
-            <div
-              class="profile-section"
-              onclick="window.location.href='profile.html'"
-            >
-              <div class="profile-pic">
-                <img
-                  src="https://ui-avatars.com/api/?name=Alex+Wilson&background=f97316&color=fff"
-                  alt="Profile Picture"
-                />
-              </div>
-              <!-- <div class="username">Alex Wilson</div> -->
             </div>
           </div>
         </div>
@@ -1875,19 +1898,31 @@
       <div class="bottom-navigation">
         <a href="dash.html" class="nav-item active">
           <div class="nav-icon">
-            <img src="assets/icons/house.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/house.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Home
         </a>
         <a href="sell-your-car.html" class="nav-item">
           <div class="nav-icon">
-            <img src="assets/icons/plus.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/plus.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Sell
         </a>
         <a href="wallet.html" class="nav-item">
           <div class="nav-icon">
-            <img src="assets/icons/wallet.svg" alt="Wallet Icon" class="nav-icon" />
+            <img
+              src="assets/icons/wallet.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
           </div>
           Wallet
         </a>
