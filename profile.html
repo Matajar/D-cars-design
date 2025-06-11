@@ -11,6 +11,265 @@
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
+      
+      /* Settings Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      
+      .modal-content {
+        background-color: #fff;
+        width: 100%;
+        max-width: 400px;
+        border-radius: clamp(15px, 4vw, 20px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+      }
+      
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: clamp(15px, 4vw, 20px);
+        border-bottom: 1px solid #f0f0f0;
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        border-radius: clamp(15px, 4vw, 20px) clamp(15px, 4vw, 20px) 0 0;
+        z-index: 10;
+      }
+      
+      .modal-title {
+        font-size: clamp(18px, 4.5vw, 22px);
+        font-weight: 600;
+        color: #000;
+      }
+      
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: clamp(22px, 5.5vw, 28px);
+        cursor: pointer;
+        color: #666;
+        width: clamp(30px, 7.5vw, 36px);
+        height: clamp(30px, 7.5vw, 36px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+      
+      .modal-close:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: #000;
+      }
+      
+      .modal-body {
+        padding: clamp(15px, 4vw, 20px);
+      }
+      
+      .settings-section {
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+      
+      .settings-title {
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+        padding-bottom: clamp(5px, 1.2vw, 8px);
+        border-bottom: 1px solid #f0f0f0;
+      }
+      
+      .settings-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: clamp(10px, 2.5vw, 12px) 0;
+        border-bottom: 1px solid #f5f5f5;
+      }
+      
+      .settings-label {
+        font-size: clamp(14px, 3.5vw, 16px);
+        color: #333;
+      }
+      
+      .settings-control {
+        display: flex;
+        align-items: center;
+      }
+      
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: clamp(40px, 10vw, 50px);
+        height: clamp(22px, 5.5vw, 26px);
+      }
+      
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: clamp(20px, 5vw, 25px);
+      }
+      
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: clamp(18px, 4.5vw, 22px);
+        width: clamp(18px, 4.5vw, 22px);
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      
+      input:checked + .toggle-slider {
+        background-color: #ffbf00;
+      }
+      
+      input:checked + .toggle-slider:before {
+        transform: translateX(clamp(18px, 4.5vw, 24px));
+      }
+      
+      .settings-select {
+        padding: clamp(8px, 2vw, 10px) clamp(10px, 2.5vw, 12px);
+        border-radius: clamp(8px, 2vw, 10px);
+        border: 1px solid #e0e0e0;
+        background-color: #f9f9f9;
+        font-size: clamp(14px, 3.5vw, 16px);
+        color: #333;
+        width: 100%;
+        max-width: clamp(120px, 30vw, 150px);
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px top 50%;
+        background-size: 10px auto;
+      }
+      
+      .settings-save-button {
+        display: block;
+        width: 100%;
+        padding: clamp(12px, 3vw, 15px);
+        background-color: #ffbf00;
+        color: #fff;
+        border: none;
+        border-radius: clamp(12px, 3vw, 15px);
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: clamp(20px, 5vw, 25px);
+        margin-bottom: clamp(15px, 3.5vw, 20px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(255, 191, 0, 0.2);
+      }
+      
+      .settings-save-button:hover {
+        background-color: #e6ac00;
+        box-shadow: 0 6px 15px rgba(255, 191, 0, 0.3);
+      }
+      
+      .danger-zone {
+        margin-top: clamp(25px, 6vw, 30px);
+        padding-top: clamp(15px, 3.5vw, 20px);
+        border-top: 1px solid #f0f0f0;
+      }
+      
+      .danger-title {
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        color: #f44336;
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+      }
+      
+      .danger-button {
+        display: block;
+        width: 100%;
+        padding: clamp(12px, 3vw, 15px);
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        border: 1px solid rgba(244, 67, 54, 0.2);
+        border-radius: clamp(12px, 3vw, 15px);
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .danger-button:hover {
+        background-color: rgba(244, 67, 54, 0.2);
+      }
+      
+      /* Quick Actions */
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(10px, 2.5vw, 15px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+      
+      .action-button {
+        background-color: #f9f9f9;
+        border: 1px solid #f0f0f0;
+        border-radius: clamp(12px, 3vw, 15px);
+        padding: clamp(10px, 2.5vw, 15px) clamp(5px, 1.2vw, 8px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .action-button:hover {
+        background-color: #f5f5f5;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      
+      .action-button.settings-action {
+        background-color: rgba(255, 191, 0, 0.05);
+        border-color: rgba(255, 191, 0, 0.1);
+      }
+      
+      .action-icon {
+        font-size: clamp(22px, 5.5vw, 28px);
+        margin-bottom: clamp(5px, 1.2vw, 8px);
+      }
+      
+      .action-text {
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 500;
+        color: #333;
+      }
 
       body {
         background-color: #ffffff;
@@ -33,6 +292,81 @@
         .container {
           max-width: 100%;
           padding-bottom: 90px;
+        }
+        
+        .profile-section {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        
+        .profile-avatar {
+          margin-right: 0;
+          margin-bottom: clamp(15px, 4vw, 20px);
+        }
+        
+        .quick-actions {
+          grid-template-columns: repeat(2, 1fr);
+          gap: clamp(12px, 3vw, 18px);
+        }
+        
+        .favorites-grid {
+          gap: clamp(15px, 3.5vw, 20px);
+        }
+        
+        .favorite-image {
+          height: clamp(120px, 30vw, 150px);
+        }
+        
+        .detail-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .detail-label, .detail-value {
+          width: 100%;
+        }
+        
+        .detail-label {
+          margin-bottom: 5px;
+          font-weight: 500;
+        }
+        
+        .detail-value {
+          padding-left: 10px;
+        }
+        
+        .bottom-navigation {
+          width: 95%;
+        }
+      }
+      
+      @media (max-width: 360px) {
+        .profile-name {
+          font-size: clamp(16px, 4.5vw, 20px);
+        }
+        
+        .tab {
+          font-size: clamp(12px, 3vw, 14px);
+          padding: clamp(8px, 2vw, 12px) 0;
+        }
+        
+        .favorite-card {
+          border-radius: clamp(12px, 3vw, 15px);
+        }
+        
+        .activity-details {
+          padding: clamp(6px, 1.5vw, 8px);
+        }
+        
+        .activity-row {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 8px;
+        }
+        
+        .activity-value {
+          text-align: left;
         }
       }
 
@@ -95,12 +429,12 @@
       }
 
       .profile-avatar {
-        width: clamp(70px, 18vw, 90px);
-        height: clamp(70px, 18vw, 90px);
+        width: clamp(80px, 20vw, 100px);
+        height: clamp(80px, 20vw, 100px);
         border-radius: 50%;
         background-color: #f0f0f0;
         margin-right: clamp(15px, 4vw, 20px);
-        border: 1px solid #e0e0e0;
+        border: 3px solid #ffbf00;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -108,7 +442,34 @@
         color: #ffbf00;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+      
+      .change-photo-icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: clamp(25px, 6vw, 30px);
+        height: clamp(25px, 6vw, 30px);
+        border-radius: 50%;
+        background-color: #ffbf00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(12px, 3vw, 14px);
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border: 2px solid white;
+      }
+      
+      .profile-status {
+        font-size: clamp(11px, 2.8vw, 13px);
+        color: #4caf50;
+        margin-bottom: clamp(8px, 2vw, 10px);
+        display: flex;
+        align-items: center;
+        font-weight: 500;
       }
 
       .profile-info {
@@ -147,11 +508,18 @@
 
       .tabs-container {
         margin: 0 clamp(15px, 4vw, 20px) clamp(15px, 4vw, 20px);
+        background: #fff;
+        border-radius: clamp(15px, 4vw, 20px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: clamp(5px, 1.2vw, 8px);
+        border: 1px solid #f0f0f0;
       }
 
       .tabs {
         display: flex;
-        border-bottom: 1px solid #f0f0f0;
+        background-color: #f9f9f9;
+        border-radius: clamp(12px, 3vw, 15px);
+        padding: clamp(3px, 0.8vw, 5px);
       }
 
       .tab {
@@ -164,36 +532,60 @@
         cursor: pointer;
         position: relative;
         transition: all 0.3s ease;
+        border-radius: clamp(10px, 2.5vw, 12px);
       }
 
       .tab.active {
         color: #000000;
         font-weight: 600;
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       }
 
       .tab.active::after {
         content: "";
         position: absolute;
-        bottom: -1px;
-        left: 25%;
-        width: 50%;
+        bottom: 8px;
+        left: 40%;
+        width: 20%;
         height: 3px;
         background-color: #ffbf00;
-        border-radius: 3px 3px 0 0;
+        border-radius: 3px;
       }
 
       .tab-content {
         display: none;
-        padding: clamp(15px, 4vw, 20px) 0;
+        padding: clamp(20px, 5vw, 25px) clamp(15px, 4vw, 20px);
+        background-color: #ffffff;
+        border-radius: clamp(12px, 3vw, 15px);
+        margin-top: clamp(15px, 4vw, 20px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+        border: 1px solid #f5f5f5;
       }
 
       .tab-content.active {
         display: block;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       /* Profile Details Tab */
       .details-section {
         margin-bottom: clamp(20px, 5vw, 25px);
+      }
+      
+      .section-title {
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        color: #000000;
+        margin: clamp(15px, 3.5vw, 20px) 0 clamp(8px, 2vw, 10px) 0;
+        padding-bottom: clamp(5px, 1.2vw, 8px);
+        border-bottom: 2px solid #ffbf00;
+        display: inline-block;
       }
 
       .detail-item {
@@ -214,6 +606,20 @@
         color: #000000;
         font-weight: 500;
       }
+      
+      .status-badge {
+        display: inline-block;
+        padding: clamp(3px, 0.8vw, 5px) clamp(8px, 2vw, 10px);
+        border-radius: clamp(10px, 2.5vw, 15px);
+        font-size: clamp(11px, 2.8vw, 13px);
+        font-weight: 500;
+      }
+      
+      .status-badge.verified {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: #4caf50;
+        border: 1px solid rgba(76, 175, 80, 0.2);
+      }
 
       .membership {
         display: flex;
@@ -226,6 +632,92 @@
         position: relative;
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(255, 191, 0, 0.2);
+      }
+      
+      .upgrade-button {
+        padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 15px);
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: clamp(20px, 5vw, 25px);
+        color: white;
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-left: auto;
+      }
+      
+      .upgrade-button:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      
+      .driving-license {
+        background-color: #f9f9f9;
+        border-radius: clamp(12px, 3vw, 15px);
+        padding: clamp(15px, 3.5vw, 18px);
+        margin-top: clamp(20px, 5vw, 25px);
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+      
+      .emirates-id .license-icon {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: #4caf50;
+        border-color: rgba(76, 175, 80, 0.2);
+      }
+      
+      .license-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+      }
+      
+      .license-icon {
+        width: clamp(40px, 10vw, 50px);
+        height: clamp(40px, 10vw, 50px);
+        border-radius: 50%;
+        background-color: rgba(255, 191, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(20px, 5vw, 24px);
+        color: #ffbf00;
+        margin-right: clamp(10px, 2.5vw, 15px);
+        border: 1px solid rgba(255, 191, 0, 0.2);
+      }
+      
+      .license-info {
+        flex: 1;
+      }
+      
+      .license-title {
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 5px;
+      }
+      
+      .license-number {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+      }
+      
+      .license-details {
+        background-color: white;
+        border-radius: clamp(8px, 2vw, 10px);
+        padding: clamp(10px, 2.5vw, 15px);
+        border: 1px solid #eee;
+      }
+      
+      .license-detail {
+        display: flex;
+        justify-content: space-between;
+        padding: clamp(5px, 1.2vw, 8px) 0;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      
+      .license-detail:last-child {
+        border-bottom: none;
       }
 
       .membership::before {
@@ -277,15 +769,34 @@
 
       .favorite-card {
         background-color: #ffffff;
-        border-radius: clamp(12px, 3vw, 15px);
+        border-radius: clamp(15px, 3.5vw, 18px);
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         border: 1px solid #f0f0f0;
-        transition: transform 0.2s ease;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .favorite-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ffbf00, #ff8a00);
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.3s ease;
       }
 
       .favorite-card:hover {
-        transform: translateY(-3px);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+      }
+      
+      .favorite-card:hover::before {
+        opacity: 1;
       }
 
       .favorite-image {
@@ -392,11 +903,18 @@
 
       .activity-item {
         background-color: #ffffff;
-        border-radius: clamp(12px, 3vw, 15px);
-        padding: clamp(12px, 3vw, 15px);
-        margin-bottom: clamp(12px, 3vw, 15px);
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-radius: clamp(15px, 3.5vw, 18px);
+        padding: clamp(15px, 3.5vw, 18px);
+        margin-bottom: clamp(15px, 3.5vw, 18px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
         border: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .activity-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       }
 
       .activity-header {
@@ -525,6 +1043,7 @@
       .view-more-button:hover {
         background-color: #f0f0f0;
       }
+
       .bottom-navigation {
         position: fixed;
         bottom: 0;
@@ -548,6 +1067,7 @@
         z-index: 100;
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: all 0.3s ease;
       }
 
       .nav-item {
@@ -555,7 +1075,7 @@
         flex-direction: column;
         align-items: center;
         font-size: 12px;
-        color: #000000;
+        color: #996600;
         font-weight: 500;
         padding: 0 10px;
         text-decoration: none;
@@ -579,7 +1099,7 @@
       }
 
       .nav-icon {
-        margin-bottom: 5px;
+        /* margin-bottom: 5px; */
         font-size: 20px;
       }
       .profile-icon {
@@ -647,15 +1167,19 @@
           <div class="page-icon">👤</div>
           Profile
         </div>
-        <button class="settings-button">⚙️</button>
+        <button class="settings-button" onclick="openSettingsModal()">⚙️</button>
       </div>
 
       <div class="profile-section">
-        <div class="profile-avatar">👩</div>
+        <div class="profile-avatar">
+          <img src="assets/icons/profile.jpg" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          <div class="change-photo-icon">📷</div>
+        </div>
         <div class="profile-info">
           <div class="profile-name">Hi Jenifer!</div>
           <div class="profile-email">jenifer.smith@example.com</div>
-          <button class="edit-profile-button">Edit Profile</button>
+          <div class="profile-status">Verified User ✓</div>
+          <button class="edit-profile-button" onclick="window.location.href='edit-profile.html'">Edit Profile</button>
         </div>
       </div>
 
@@ -668,7 +1192,26 @@
 
         <!-- Profile Details Tab -->
         <div id="details" class="tab-content active">
+          <div class="quick-actions">
+            <button class="action-button" onclick="window.location.href='wallet.html'">
+              <div class="action-icon">💰</div>
+              <div class="action-text">Wallet</div>
+            </button>
+            <button class="action-button" onclick="window.location.href='help.html'">
+              <div class="action-icon">📞</div>
+              <div class="action-text">Support</div>
+            </button>
+            <button class="action-button settings-action" onclick="openSettingsModal()">
+              <div class="action-icon">⚙️</div>
+              <div class="action-text">Settings</div>
+            </button>
+            <button class="action-button" onclick="logOut()">
+              <div class="action-icon">🚪</div>
+              <div class="action-text">Log Out</div>
+            </button>
+          </div>
           <div class="details-section">
+            <h3 class="section-title">Personal Information</h3>
             <div class="detail-item">
               <div class="detail-label">Full Name</div>
               <div class="detail-value">Jenifer Smith</div>
@@ -682,19 +1225,78 @@
               <div class="detail-value">jenifer.smith@example.com</div>
             </div>
             <div class="detail-item">
+              <div class="detail-label">Date of Birth</div>
+              <div class="detail-value">May 12, 1990</div>
+            </div>
+            <div class="detail-item">
               <div class="detail-label">Address</div>
               <div class="detail-value">Downtown Dubai, UAE</div>
+            </div>
+            
+            <h3 class="section-title">Account Information</h3>
+            <div class="detail-item">
+              <div class="detail-label">Member ID</div>
+              <div class="detail-value">#DCR5678912</div>
             </div>
             <div class="detail-item">
               <div class="detail-label">Joined</div>
               <div class="detail-value">January 15, 2025</div>
             </div>
+            <div class="detail-item">
+              <div class="detail-label">Status</div>
+              <div class="detail-value"><span class="status-badge verified">Verified ✓</span></div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Payment Method</div>
+              <div class="detail-value">Visa •••• 4582</div>
+            </div>
 
-            <div class="membership">
-              <div class="membership-icon">👑</div>
-              <div class="membership-info">
-                <div class="membership-title">Premium Member</div>
-                <div class="membership-status">Valid until June 15, 2026</div>
+            
+            <div class="driving-license">
+              <div class="license-header">
+                <div class="license-icon">🚗</div>
+                <div class="license-info">
+                  <div class="license-title">Driving License</div>
+                  <div class="license-number">DL-123456789</div>
+                </div>
+              </div>
+              <div class="license-details">
+                <div class="license-detail">
+                  <div class="detail-label">Issued</div>
+                  <div class="detail-value">April 18, 2020</div>
+                </div>
+                <div class="license-detail">
+                  <div class="detail-label">Expires</div>
+                  <div class="detail-value">April 17, 2030</div>
+                </div>
+                <div class="license-detail">
+                  <div class="detail-label">Class</div>
+                  <div class="detail-value">B - Passenger Vehicles</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="driving-license emirates-id">
+              <div class="license-header">
+                <div class="license-icon">🪪</div>
+                <div class="license-info">
+                  <div class="license-title">Emirates ID</div>
+                  <div class="license-number">784-1234-5678901-2</div>
+                </div>
+              </div>
+              <div class="license-details">
+                <div class="license-detail">
+                  <div class="detail-label">Issued</div>
+                  <div class="detail-value">January 10, 2022</div>
+                </div>
+                <div class="license-detail">
+                  <div class="detail-label">Expires</div>
+                  <div class="detail-value">January 09, 2032</div>
+                </div>
+                <div class="license-detail">
+                  <div class="detail-label">Nationality</div>
+                  <div class="detail-value">United Arab Emirates</div>
+                </div>
               </div>
             </div>
           </div>
@@ -879,28 +1481,151 @@
 
       <div class="bottom-navigation">
         <a href="dash.html" class="nav-item">
-          <div class="nav-icon">🏠</div>
+          <div class="nav-icon">
+            <img src="assets/icons/house.svg" alt="Wallet Icon" class="nav-icon" />
+          </div>
           Home
         </a>
         <a href="sell-your-car.html" class="nav-item">
-          <div class="nav-icon">➕</div>
+          <div class="nav-icon">
+            <img src="assets/icons/plus.svg" alt="Wallet Icon" class="nav-icon" />
+          </div>
           Sell
         </a>
         <a href="wallet.html" class="nav-item">
-          <div class="nav-icon">💰</div>
+          <div class="nav-icon">
+            <img src="assets/icons/wallet.svg" alt="Wallet Icon" class="nav-icon" />
+          </div>
           Wallet
         </a>
         <a href="profile.html" class="nav-item active">
-          <img
-            src="assets/icons/profile.jpg"
-            alt="Profile Icon"
-            class="profile-icon"
-          />
+          <div class="nav-icon">
+            <img
+              src="assets/icons/profile.jpg"
+              alt="Profile Icon"
+              class="profile-icon"
+            />
+          </div>
           Profile
         </a>
       </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Settings</h2>
+          <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h3 class="settings-title">Account Settings</h3>
+            <div class="settings-item">
+              <div class="settings-label">Email Notifications</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <!-- <div class="settings-item">
+              <div class="settings-label">SMS Notifications</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div> -->
+            <div class="settings-item">
+              <div class="settings-label">Two-Factor Authentication</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- <div class="settings-section">
+            <h3 class="settings-title">App Preferences</h3>
+            <div class="settings-item">
+              <div class="settings-label">Dark Mode</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-label">Language</div>
+              <div class="settings-control">
+                <select class="settings-select">
+                  <option value="en">English</option>
+                  <option value="fr">French</option>
+                  <option value="es">Spanish</option>
+                  <option value="ar">Arabic</option>
+                </select>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-label">Currency</div>
+              <div class="settings-control">
+                <select class="settings-select">
+                  <option value="usd">USD ($)</option>
+                  <option value="eur">EUR (€)</option>
+                  <option value="gbp">GBP (£)</option>
+                  <option value="aed">AED (د.إ)</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+          
+          <!-- <div class="settings-section">
+            <h3 class="settings-title">Privacy & Security</h3>
+            <div class="settings-item">
+              <div class="settings-label">Show Online Status</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-label">Location Services</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-label">Data Sharing</div>
+              <div class="settings-control">
+                <label class="toggle-switch">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div> -->
+          
+          <button class="settings-save-button">Save Changes</button>
+          
+          <div class="danger-zone">
+            <h3 class="danger-title">Danger Zone</h3>
+            <button class="danger-button">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <script>
       function openTab(tabName) {
         // Hide all tab content
@@ -920,6 +1645,27 @@
 
         // Add active class to the clicked tab
         event.currentTarget.classList.add("active");
+      }
+      
+      function openSettingsModal() {
+        document.getElementById("settingsModal").style.display = "flex";
+      }
+      
+      function closeSettingsModal() {
+        document.getElementById("settingsModal").style.display = "none";
+      }
+      
+      function logOut() {
+        // In a real app, this would handle logout logic
+        window.location.href = "login.html";
+      }
+      
+      // Close modal when clicking outside of it
+      window.onclick = function(event) {
+        const modal = document.getElementById("settingsModal");
+        if (event.target == modal) {
+          closeSettingsModal();
+        }
       }
     </script>
   </body>
