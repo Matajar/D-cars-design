@@ -99,6 +99,7 @@
         justify-content: center;
         align-items: center;
         padding: 10px;
+        margin-top: 5px;
         position: relative;
       }
 
@@ -110,6 +111,11 @@
       .dcars-logo {
         width: auto;
         height: 30px;
+        object-fit: contain;
+      }
+      .d-cars-logo {
+        width: auto;
+        height: 10px;
         object-fit: contain;
       }
       .nav-logo {
@@ -1270,6 +1276,11 @@
     <div class="fixed-nav" id="fixedNav">
       <div class="fixed-nav-content">
         <div class="fixed-search-container">
+          <div
+            class="filter-button"
+          >
+          <img src="assets/Dcars.png" alt="Filter Icon" class="d-cars-logo" />
+          </div>
           <div class="search-box" id="fixedSearchBox" style="flex: 1">
             <div class="search-icon">
               <img
