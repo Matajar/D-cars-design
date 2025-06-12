@@ -453,10 +453,10 @@
 
       .change-photo-icon {
         position: absolute;
-        bottom: 0;
-        right: 0;
-        width: clamp(25px, 6vw, 30px);
-        height: clamp(25px, 6vw, 30px);
+        bottom: -3px;
+        right: -3px;
+        width: clamp(30px, 7.5vw, 35px);
+        height: clamp(30px, 7.5vw, 35px);
         border-radius: 50%;
         background-color: #ffbf00;
         display: flex;
@@ -467,6 +467,13 @@
         cursor: pointer;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         border: 2px solid white;
+        z-index: 9999;
+      }
+      
+      .plus-icon {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
       }
 
       .profile-status {
@@ -1200,7 +1207,9 @@
               border-radius: 50%;
             "
           />
-          <div class="change-photo-icon">📷</div>
+          <!-- <div class="change-photo-icon">
+            <img src="assets/icons/plus (1).svg" alt="plus-icons" class="plus-icon">
+          </div> -->
         </div>
         <div class="profile-info">
           <div class="profile-name">Hi Jenifer!</div>
@@ -1208,7 +1217,7 @@
           <div class="profile-status">Verified User ✓</div>
           <button
             class="edit-profile-button"
-            onclick="window.location.href='edit-profile.html'"
+            onclick="openEditProfileSheet()"
           >
             Edit Profile
           </button>
@@ -1738,6 +1747,11 @@
       function logOut() {
         // In a real app, this would handle logout logic
         window.location.href = "login.html";
+      }
+      
+      function openEditProfileSheet() {
+        // Redirect to edit profile page since bottom sheet is not implemented yet
+        window.location.href = "edit-profile.html";
       }
 
       // Close modal when clicking outside of it

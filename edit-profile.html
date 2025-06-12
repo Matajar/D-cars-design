@@ -79,6 +79,7 @@
       }
 
       .profile-photo-section {
+        position: relative;
         padding: clamp(15px, 4vw, 20px);
         display: flex;
         flex-direction: column;
@@ -95,7 +96,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
         overflow: hidden;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         margin-bottom: clamp(15px, 4vw, 20px);
@@ -106,11 +106,17 @@
         height: 100%;
         object-fit: cover;
       }
+      .plus-icon {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+      }
 
       .change-photo-icon {
         position: absolute;
-        bottom: 5px;
-        right: 5px;
+        top: 100px;
+        right: 165px;
+        translate: 50% -50%;
         width: clamp(30px, 7.5vw, 35px);
         height: clamp(30px, 7.5vw, 35px);
         border-radius: 50%;
@@ -121,6 +127,7 @@
         font-size: clamp(14px, 3.5vw, 16px);
         color: white;
         cursor: pointer;
+        z-index: 9999;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         border: 2px solid white;
       }
@@ -317,12 +324,12 @@
           max-width: 100%;
           padding-bottom: 90px;
         }
-        
+
         .input-group {
           flex-direction: column;
           gap: 0;
         }
-        
+
         .id-card-placeholder {
           height: clamp(120px, 30vw, 150px);
         }
@@ -343,7 +350,7 @@
       .verified-icon {
         margin-right: 4px;
       }
-      
+
       .tab-content {
         background-color: #ffffff;
         border-radius: clamp(12px, 3vw, 15px);
@@ -382,26 +389,41 @@
       </div>
 
       <div class="header">
-        <button
-          class="button"
-          onclick="window.location.href='profile.html'"
-        >
+        <button class="button" onclick="window.location.href='profile.html'">
           ←
         </button>
-        <div class="page-title">
-          <div class="page-icon">✏️</div>
-          Edit Profile
-        </div>
-        <div style="width: 38px;"></div> <!-- Placeholder for balance -->
+        <div class="page-title">Edit Profile</div>
+        <div style="width: 38px"></div>
+        <!-- Placeholder for balance -->
       </div>
 
       <div class="profile-photo-section">
         <div class="profile-avatar">
-          <img src="assets/icons/profile.jpg" alt="Profile Picture" class="profile-image">
-          <div class="change-photo-icon" onclick="document.getElementById('profile-photo-input').click()">📷</div>
-          <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
+          <img
+            src="assets/icons/profile.jpg"
+            alt="Profile Picture"
+            class="profile-image"
+          />
+          <div
+            class="change-photo-icon"
+            onclick="document.getElementById('profile-photo-input').click()"
+          >
+            <img
+              src="assets/icons/plus (1).svg"
+              alt="plus-icons"
+              class="plus-icon"
+            />
+          </div>
+          <input
+            type="file"
+            id="profile-photo-input"
+            accept="image/*"
+            style="display: none"
+          />
         </div>
-        <div class="photo-instruction">Tap on the camera icon to change your profile photo</div>
+        <div class="photo-instruction">
+          Tap on the plus icon to change your profile photo
+        </div>
       </div>
 
       <div class="tab-content">
@@ -410,20 +432,45 @@
             <h3 class="section-title">Personal Information</h3>
             <div class="form-group">
               <label for="fullname" class="form-label">Full Name</label>
-              <input type="text" id="fullname" class="form-input" value="Jenifer Smith">
+              <input
+                type="text"
+                id="fullname"
+                class="form-input"
+                value="Jenifer Smith"
+              />
             </div>
             <div class="form-group">
-              <label for="email" class="form-label">Email Address <span class="verified-tag"><span class="verified-icon">✓</span> Verified</span></label>
-              <input type="email" id="email" class="form-input" value="jenifer.smith@example.com">
+              <label for="email" class="form-label"
+                >Email Address
+                <span class="verified-tag"
+                  ><span class="verified-icon">✓</span> Verified</span
+                ></label
+              >
+              <input
+                type="email"
+                id="email"
+                class="form-input"
+                value="jenifer.smith@example.com"
+              />
             </div>
             <div class="form-group">
               <label for="phone" class="form-label">Phone Number</label>
-              <input type="tel" id="phone" class="form-input" value="+971 50 123 4567">
+              <input
+                type="tel"
+                id="phone"
+                class="form-input"
+                value="+971 50 123 4567"
+              />
             </div>
             <div class="input-group">
               <div class="form-group">
                 <label for="dob" class="form-label">Date of Birth</label>
-                <input type="date" id="dob" class="form-input" value="1990-05-12">
+                <input
+                  type="date"
+                  id="dob"
+                  class="form-input"
+                  value="1990-05-12"
+                />
               </div>
               <div class="form-group">
                 <label for="gender" class="form-label">Gender</label>
@@ -437,28 +484,54 @@
             </div>
             <div class="form-group">
               <label for="address" class="form-label">Address</label>
-              <input type="text" id="address" class="form-input" value="Downtown Dubai, UAE">
+              <input
+                type="text"
+                id="address"
+                class="form-input"
+                value="Downtown Dubai, UAE"
+              />
             </div>
           </div>
 
           <div class="form-section">
             <h3 class="section-title">Driving License</h3>
             <div class="form-group">
-              <label for="license-number" class="form-label">License Number</label>
-              <input type="text" id="license-number" class="form-input" value="DL-123456789">
+              <label for="license-number" class="form-label"
+                >License Number</label
+              >
+              <input
+                type="text"
+                id="license-number"
+                class="form-input"
+                value="DL-123456789"
+              />
             </div>
             <div class="input-group">
               <div class="form-group">
                 <label for="license-issue" class="form-label">Issue Date</label>
-                <input type="date" id="license-issue" class="form-input" value="2020-04-18">
+                <input
+                  type="date"
+                  id="license-issue"
+                  class="form-input"
+                  value="2020-04-18"
+                />
               </div>
               <div class="form-group">
-                <label for="license-expiry" class="form-label">Expiry Date</label>
-                <input type="date" id="license-expiry" class="form-input" value="2030-04-17">
+                <label for="license-expiry" class="form-label"
+                  >Expiry Date</label
+                >
+                <input
+                  type="date"
+                  id="license-expiry"
+                  class="form-input"
+                  value="2030-04-17"
+                />
               </div>
             </div>
             <div class="form-group">
-              <label for="license-class" class="form-label">License Class</label>
+              <label for="license-class" class="form-label"
+                >License Class</label
+              >
               <select id="license-class" class="form-input">
                 <option value="B" selected>B - Passenger Vehicles</option>
                 <option value="A">A - Motorcycles</option>
@@ -468,58 +541,105 @@
             </div>
             <div class="id-card-container">
               <div class="id-card-placeholder">🪪</div>
-              <button class="upload-button" onclick="document.getElementById('license-photo-input').click()">
+              <button
+                class="upload-button"
+                onclick="document.getElementById('license-photo-input').click()"
+              >
                 <span class="upload-icon">📤</span> Upload License Photo
               </button>
-              <input type="file" id="license-photo-input" accept="image/*" style="display: none;">
+              <input
+                type="file"
+                id="license-photo-input"
+                accept="image/*"
+                style="display: none"
+              />
             </div>
             <div class="section-note">
-              Please upload a clear photo of your driving license. This helps us verify your eligibility to rent or drive vehicles.
+              Please upload a clear photo of your driving license. This helps us
+              verify your eligibility to rent or drive vehicles.
             </div>
           </div>
 
           <div class="form-section">
             <h3 class="section-title">Emirates ID</h3>
             <div class="form-group">
-              <label for="emirates-id" class="form-label">Emirates ID Number</label>
-              <input type="text" id="emirates-id" class="form-input" placeholder="784-XXXX-XXXXXXX-X">
+              <label for="emirates-id" class="form-label"
+                >Emirates ID Number</label
+              >
+              <input
+                type="text"
+                id="emirates-id"
+                class="form-input"
+                placeholder="784-XXXX-XXXXXXX-X"
+              />
             </div>
             <div class="input-group">
               <div class="form-group">
-                <label for="emirates-issue" class="form-label">Issue Date</label>
-                <input type="date" id="emirates-issue" class="form-input">
+                <label for="emirates-issue" class="form-label"
+                  >Issue Date</label
+                >
+                <input type="date" id="emirates-issue" class="form-input" />
               </div>
               <div class="form-group">
-                <label for="emirates-expiry" class="form-label">Expiry Date</label>
-                <input type="date" id="emirates-expiry" class="form-input">
+                <label for="emirates-expiry" class="form-label"
+                  >Expiry Date</label
+                >
+                <input type="date" id="emirates-expiry" class="form-input" />
               </div>
             </div>
             <div class="id-card-container">
               <div class="id-card-placeholder">🪪</div>
-              <button class="upload-button" onclick="document.getElementById('emirates-photo-input').click()">
+              <button
+                class="upload-button"
+                onclick="document.getElementById('emirates-photo-input').click()"
+              >
                 <span class="upload-icon">📤</span> Upload Emirates ID (Front)
               </button>
-              <input type="file" id="emirates-photo-input" accept="image/*" style="display: none;">
+              <input
+                type="file"
+                id="emirates-photo-input"
+                accept="image/*"
+                style="display: none"
+              />
             </div>
-            <div class="id-card-container" style="margin-top: 15px;">
+            <div class="id-card-container" style="margin-top: 15px">
               <div class="id-card-placeholder">🪪</div>
-              <button class="upload-button" onclick="document.getElementById('emirates-photo-back-input').click()">
+              <button
+                class="upload-button"
+                onclick="document.getElementById('emirates-photo-back-input').click()"
+              >
                 <span class="upload-icon">📤</span> Upload Emirates ID (Back)
               </button>
-              <input type="file" id="emirates-photo-back-input" accept="image/*" style="display: none;">
+              <input
+                type="file"
+                id="emirates-photo-back-input"
+                accept="image/*"
+                style="display: none"
+              />
             </div>
             <div class="section-note">
-              Your Emirates ID is required for identity verification. Please ensure both sides are clearly visible in the uploaded photos.
+              Your Emirates ID is required for identity verification. Please
+              ensure both sides are clearly visible in the uploaded photos.
             </div>
             <div class="checkbox-group">
-              <input type="checkbox" id="terms" class="checkbox-input">
-              <label for="terms" class="checkbox-label">I confirm that all provided information is accurate and documents are authentic.</label>
+              <input type="checkbox" id="terms" class="checkbox-input" />
+              <label for="terms" class="checkbox-label"
+                >I confirm that all provided information is accurate and
+                documents are authentic.</label
+              >
             </div>
           </div>
 
           <div class="action-buttons">
-            <button class="cancel-button" onclick="window.location.href='profile.html'">Cancel</button>
-            <button class="save-button" onclick="saveProfile()">Save Changes</button>
+            <button
+              class="cancel-button"
+              onclick="window.location.href='profile.html'"
+            >
+              Cancel
+            </button>
+            <button class="save-button" onclick="saveProfile()">
+              Save Changes
+            </button>
           </div>
         </div>
       </div>
@@ -531,54 +651,68 @@
       function saveProfile() {
         // In a real app, this would save the profile information
         // For demo purposes, just show an alert
-        const alertMessage = document.getElementById('alert-message');
-        alertMessage.textContent = 'Profile updated successfully!';
-        alertMessage.style.display = 'block';
-        
+        const alertMessage = document.getElementById("alert-message");
+        alertMessage.textContent = "Profile updated successfully!";
+        alertMessage.style.display = "block";
+
         // Hide the message after 3 seconds
         setTimeout(() => {
-          alertMessage.style.display = 'none';
-          window.location.href = 'profile.html';
+          alertMessage.style.display = "none";
+          window.location.href = "profile.html";
         }, 1000);
       }
-      
+
       // Handle file uploads for profile photo
-      document.getElementById('profile-photo-input').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            document.querySelector('.profile-image').src = e.target.result;
-          };
-          reader.readAsDataURL(event.target.files[0]);
-        }
-      });
-      
+      document
+        .getElementById("profile-photo-input")
+        .addEventListener("change", function (event) {
+          if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.querySelector(".profile-image").src = e.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        });
+
       // Handle file uploads for license photo
-      document.getElementById('license-photo-input').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-          const placeholder = document.querySelectorAll('.id-card-placeholder')[0];
-          placeholder.innerHTML = '✓';
-          placeholder.style.color = '#4caf50';
-        }
-      });
-      
+      document
+        .getElementById("license-photo-input")
+        .addEventListener("change", function (event) {
+          if (event.target.files && event.target.files[0]) {
+            const placeholder = document.querySelectorAll(
+              ".id-card-placeholder"
+            )[0];
+            placeholder.innerHTML = "✓";
+            placeholder.style.color = "#4caf50";
+          }
+        });
+
       // Handle file uploads for Emirates ID (front)
-      document.getElementById('emirates-photo-input').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-          const placeholder = document.querySelectorAll('.id-card-placeholder')[1];
-          placeholder.innerHTML = '✓';
-          placeholder.style.color = '#4caf50';
-        }
-      });
-      
+      document
+        .getElementById("emirates-photo-input")
+        .addEventListener("change", function (event) {
+          if (event.target.files && event.target.files[0]) {
+            const placeholder = document.querySelectorAll(
+              ".id-card-placeholder"
+            )[1];
+            placeholder.innerHTML = "✓";
+            placeholder.style.color = "#4caf50";
+          }
+        });
+
       // Handle file uploads for Emirates ID (back)
-      document.getElementById('emirates-photo-back-input').addEventListener('change', function(event) {
-        if (event.target.files && event.target.files[0]) {
-          const placeholder = document.querySelectorAll('.id-card-placeholder')[2];
-          placeholder.innerHTML = '✓';
-          placeholder.style.color = '#4caf50';
-        }
-      });
+      document
+        .getElementById("emirates-photo-back-input")
+        .addEventListener("change", function (event) {
+          if (event.target.files && event.target.files[0]) {
+            const placeholder = document.querySelectorAll(
+              ".id-card-placeholder"
+            )[2];
+            placeholder.innerHTML = "✓";
+            placeholder.style.color = "#4caf50";
+          }
+        });
     </script>
   </body>
 </html>

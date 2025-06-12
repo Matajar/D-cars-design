@@ -112,16 +112,14 @@
       }
 
       .profile-icon {
-        object-fit: contain;
+        object-fit: cover;
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #f5f5f5;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        padding: 5px;
       }
 
       .search-container {
@@ -477,7 +475,7 @@
         font-weight: 600;
         margin-bottom: 15px;
       }
-      .reset-text{
+      .reset-text {
         display: flex;
         justify-content: space-between;
       }
@@ -541,9 +539,9 @@
         <div class="logo">
           <img src="assets/Dcars.png" alt="Logo" class="dcars-logo" />
         </div>
-        <div class="profile-icon">
+        <div class="profile-icon" onclick="window.location.href='profile.html'">
           <img
-            src="assets/icons/profile.svg"
+            src="assets/icons/profile.jpg"
             alt="Profile Icon"
             class="profile-icon"
           />
