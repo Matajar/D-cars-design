@@ -1,652 +1,695 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>D Cars - Rental Cars</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #ffffff;
-            color: #000000;
-            line-height: 1.6;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        /* padding-bottom: 80px; */
+      }
+
+      /* Responsive breakpoints */
+      @media (max-width: 480px) {
         .container {
-            max-width: 430px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            /* padding-bottom: 80px; */
+          max-width: 100%;
+          /* padding-bottom: 90px; */
         }
-        
-        /* Responsive breakpoints */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 100%;
-                /* padding-bottom: 90px; */
-            }
-        }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            color: #000000;
-            font-size: clamp(12px, 2.5vw, 14px);
-            background-color: #ffffff;
-        }
-        
-        .header {
-            padding: clamp(15px, 4vw, 20px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .back-button {
-            width: clamp(36px, 10vw, 44px);
-            height: clamp(36px, 10vw, 44px);
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000000;
-            font-size: clamp(18px, 5vw, 24px);
-            text-decoration: none;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-        
-        .back-button:hover {
-            background-color: #FFBF00;
-        }
-        
-        .page-title {
-            font-size: clamp(20px, 5.5vw, 24px);
-            font-weight: 700;
-            flex: 1;
-            text-align: center;
-        }
-        
-        .filter-icon {
-            width: clamp(36px, 10vw, 44px);
-            height: clamp(36px, 10vw, 44px);
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000000;
-            font-size: clamp(18px, 5vw, 24px);
-            border: 1px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-icon:hover {
-            background-color: #FFBF00;
-        }
-        
-        .search-container {
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #f0f0f0;
-            border-radius: clamp(20px, 6vw, 30px);
-            padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .search-icon {
-            margin-right: clamp(6px, 2vw, 10px);
-            color: #666;
-            font-size: clamp(14px, 3.5vw, 16px);
-        }
-        
-        .search-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #000000;
-            font-size: clamp(14px, 3.5vw, 16px);
-            width: 100%;
-        }
-        
-        .search-input::placeholder {
-            color: #666;
-        }
-        
-        .filter-tags {
-            display: flex;
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(20px, 5vw, 25px);
-            gap: clamp(10px, 2.5vw, 15px);
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        
-        .filter-tags::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .filter-tag {
-            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 15px);
-            background-color: #f0f0f0;
-            border-radius: clamp(15px, 4vw, 20px);
-            white-space: nowrap;
-            color: #666;
-            font-size: clamp(12px, 3vw, 14px);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-tag.active {
-            background-color: #FFBF00;
-            color: #000000;
-        }
-        
-        .section-title {
-            font-size: clamp(18px, 5vw, 22px);
-            font-weight: 700;
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-        }
-        
-        .rental-banner {
-            margin: 0 clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
-            background: linear-gradient(135deg, #FF9500, #FFBF00);
-            border-radius: clamp(15px, 4vw, 20px);
-            padding: clamp(20px, 5vw, 25px);
-            color: #ffffff;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(255, 191, 0, 0.2);
-        }
-        
-        .rental-banner-title {
-            font-size: clamp(20px, 5.5vw, 24px);
-            font-weight: 700;
-            margin-bottom: clamp(10px, 2.5vw, 15px);
-        }
-        
-        .rental-banner-text {
-            font-size: clamp(14px, 3.5vw, 16px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-            opacity: 0.9;
-        }
-        
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: clamp(15px, 4vw, 20px);
-            padding: 0 clamp(15px, 4vw, 20px);
-            margin-bottom: clamp(20px, 5vw, 25px);
-        }
-        
-        .car-card {
-            background-color: #ffffff;
-            border-radius: clamp(15px, 4vw, 20px);
-            overflow: hidden;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        /* .car-card:hover {
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: #000000;
+        font-size: clamp(12px, 2.5vw, 14px);
+        background-color: #ffffff;
+      }
+
+      .header {
+        padding: clamp(15px, 4vw, 20px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .back-button {
+        width: clamp(36px, 10vw, 44px);
+        height: clamp(36px, 10vw, 44px);
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-size: clamp(18px, 5vw, 24px);
+        text-decoration: none;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #ffbf00;
+      }
+
+      .page-title {
+        font-size: clamp(20px, 5.5vw, 24px);
+        font-weight: 700;
+        flex: 1;
+        text-align: center;
+      }
+
+      .filter-icon {
+        width: clamp(36px, 10vw, 44px);
+        height: clamp(36px, 10vw, 44px);
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-size: clamp(18px, 5vw, 24px);
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-icon:hover {
+        background-color: #ffbf00;
+      }
+
+      .search-container {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #f0f0f0;
+        border-radius: clamp(20px, 6vw, 30px);
+        padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-icon {
+        margin-right: clamp(6px, 2vw, 10px);
+        color: #666;
+        font-size: clamp(14px, 3.5vw, 16px);
+      }
+
+      .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #000000;
+        font-size: clamp(14px, 3.5vw, 16px);
+        width: 100%;
+      }
+
+      .search-input::placeholder {
+        color: #666;
+      }
+
+      .filter-tags {
+        display: flex;
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+        gap: clamp(10px, 2.5vw, 15px);
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .filter-tags::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-tag {
+        padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 15px);
+        background-color: #f0f0f0;
+        border-radius: clamp(15px, 4vw, 20px);
+        white-space: nowrap;
+        color: #666;
+        font-size: clamp(12px, 3vw, 14px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-tag.active {
+        background-color: #ffbf00;
+        color: #000000;
+      }
+
+      .section-title {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+      }
+
+      .rental-banner {
+        margin: 0 clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
+        background: linear-gradient(135deg, #ff9500, #ffbf00);
+        border-radius: clamp(15px, 4vw, 20px);
+        padding: clamp(20px, 5vw, 25px);
+        color: #ffffff;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(255, 191, 0, 0.2);
+      }
+
+      .rental-banner-title {
+        font-size: clamp(20px, 5.5vw, 24px);
+        font-weight: 700;
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+      }
+
+      .rental-banner-text {
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        opacity: 0.9;
+      }
+
+      .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: clamp(15px, 4vw, 20px);
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .car-card {
+        background-color: #ffffff;
+        border-radius: clamp(15px, 4vw, 20px);
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      /* .car-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         } */
-        
-        .car-image {
-            height: clamp(180px, 50vw, 220px);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .car-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .car-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0) 100%);
-            z-index: 1;
-        }
-        
-        .car-release {
-            position: absolute;
-            top: clamp(10px, 3vw, 15px);
-            left: clamp(10px, 3vw, 15px);
-            background-color: #FFBF00;
-            color: #000000;
-            font-weight: 600;
-            padding: clamp(5px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
-            border-radius: clamp(10px, 3vw, 15px);
-            font-size: clamp(10px, 2.5vw, 12px);
-            z-index: 2;
-        }
-        
-        .favorite-button {
-            position: absolute;
-            top: clamp(10px, 3vw, 15px);
-            right: clamp(10px, 3vw, 15px);
-            width: clamp(32px, 8vw, 40px);
-            height: clamp(32px, 8vw, 40px);
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            font-size: clamp(16px, 4vw, 20px);
-            color: #000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease;
-            z-index: 2;
-        }
-        
-        .favorite-button:hover {
-            transform: scale(1.1);
-        }
-        
-        .car-details {
-            padding: clamp(15px, 4vw, 20px);
-        }
-        
-        .car-name {
-            font-size: clamp(18px, 5vw, 22px);
-            font-weight: 700;
-            margin-bottom: clamp(5px, 1.5vw, 8px);
-            color: #000000;
-        }
-        
-        .car-type {
-            color: #666;
-            font-size: clamp(14px, 3.5vw, 16px);
-            margin-bottom: clamp(10px, 2.5vw, 12px);
-        }
-        
-        .car-description {
-            color: #444;
-            font-size: clamp(12px, 3vw, 14px);
-            margin-bottom: clamp(15px, 4vw, 20px);
-            line-height: 1.5;
-        }
-        
-        .car-features {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: clamp(10px, 2.5vw, 15px);
-        }
-        
-        .car-feature {
-            display: flex;
-            align-items: center;
-            font-size: clamp(12px, 3vw, 14px);
-            color: #666;
-        }
-        
-        .feature-icon {
-            margin-right: clamp(5px, 1.5vw, 8px);
-            color: #FFBF00;
-        }
-        
-        .price-tag {
-            margin-top: clamp(15px, 4vw, 20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .price {
-            font-size: clamp(18px, 5vw, 22px);
-            font-weight: 700;
-            color: #000000;
-        }
-        
-        .price-type {
-            font-size: clamp(12px, 3vw, 14px);
-            color: #666;
-            font-weight: normal;
-            margin-left: 5px;
-        }
-        
-        .view-button {
-            background-color: #FFBF00;
-            color: #000000;
-            border: none;
-            border-radius: clamp(20px, 5vw, 25px);
-            padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
-            font-size: clamp(12px, 3vw, 14px);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .view-button:hover {
-            background-color: #E6AC00;
-        }
-        
-        .rent-options {
-            display: flex;
-            margin-bottom: clamp(10px, 2.5vw, 15px);
-            background-color: #f0f0f0;
-            border-radius: clamp(10px, 3vw, 15px);
-            overflow: hidden;
-        }
-        
-        .rent-option {
-            flex: 1;
-            padding: clamp(8px, 2vw, 10px);
-            text-align: center;
-            font-size: clamp(12px, 3vw, 14px);
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            color: #666;
-        }
-        
-        .rent-option.active {
-            background-color: #FFBF00;
-            color: #000000;
-        }
-        
-        .load-more {
-            display: block;
-            width: calc(100% - clamp(30px, 8vw, 40px));
-            margin: 0 auto clamp(20px, 5vw, 25px);
-            background-color: #f0f0f0;
-            color: #000000;
-            border: 1px solid #e0e0e0;
-            border-radius: clamp(20px, 5vw, 25px);
-            padding: clamp(12px, 3vw, 15px);
-            font-size: clamp(14px, 3.5vw, 16px);
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .load-more:hover {
-            background-color: #e0e0e0;
-        }
-        
+
+      .car-image {
+        height: clamp(180px, 50vw, 220px);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .car-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.5) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+      }
+
+      .car-release {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        left: clamp(10px, 3vw, 15px);
+        background-color: #ffbf00;
+        color: #000000;
+        font-weight: 600;
+        padding: clamp(5px, 1.5vw, 8px) clamp(10px, 2.5vw, 15px);
+        border-radius: clamp(10px, 3vw, 15px);
+        font-size: clamp(10px, 2.5vw, 12px);
+        z-index: 2;
+      }
+
+      .favorite-button {
+        position: absolute;
+        top: clamp(10px, 3vw, 15px);
+        right: clamp(10px, 3vw, 15px);
+        width: clamp(32px, 8vw, 40px);
+        height: clamp(32px, 8vw, 40px);
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        font-size: clamp(16px, 4vw, 20px);
+        color: #000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease;
+        z-index: 2;
+      }
+
+      .favorite-button:hover {
+        transform: scale(1.1);
+      }
+
+      .car-details {
+        padding: clamp(15px, 4vw, 20px);
+      }
+
+      .car-name {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        margin-bottom: clamp(5px, 1.5vw, 8px);
+        color: #000000;
+      }
+
+      .car-type {
+        color: #666;
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: clamp(10px, 2.5vw, 12px);
+      }
+
+      .car-description {
+        color: #444;
+        font-size: clamp(12px, 3vw, 14px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        line-height: 1.5;
+      }
+
+      .car-features {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: clamp(10px, 2.5vw, 15px);
+      }
+
+      .car-feature {
+        display: flex;
+        align-items: center;
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+      }
+
+      .feature-icon {
+        margin-right: clamp(5px, 1.5vw, 8px);
+        color: #ffbf00;
+      }
+
+      .price-tag {
+        margin-top: clamp(15px, 4vw, 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .price {
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 700;
+        color: #000000;
+      }
+
+      .price-type {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+        font-weight: normal;
+        margin-left: 5px;
+      }
+
+      .view-button {
+        background-color: #ffbf00;
+        color: #000000;
+        border: none;
+        border-radius: clamp(20px, 5vw, 25px);
+        padding: clamp(8px, 2vw, 10px) clamp(15px, 4vw, 20px);
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .view-button:hover {
+        background-color: #e6ac00;
+      }
+
+      .rent-options {
+        display: flex;
+        margin: 0 clamp(15px, 4vw, 20px) clamp(20px, 5vw, 25px);
+        background-color: #f0f0f0;
+        border-radius: clamp(10px, 3vw, 15px);
+        overflow: hidden;
+      }
+
+      .rent-option {
+        flex: 1;
+        padding: clamp(8px, 2vw, 10px);
+        text-align: center;
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #666;
+      }
+
+      .rent-option.active {
+        background-color: #ffbf00;
+        color: #000000;
+      }
+
+      .load-more {
+        display: block;
+        width: calc(100% - clamp(30px, 8vw, 40px));
+        margin: 0 auto clamp(20px, 5vw, 25px);
+        background-color: #f0f0f0;
+        color: #000000;
+        border: 1px solid #e0e0e0;
+        border-radius: clamp(20px, 5vw, 25px);
+        padding: clamp(12px, 3vw, 15px);
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .load-more:hover {
+        background-color: #e0e0e0;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: rgba(255, 191, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-around;
+        padding: clamp(8px, 2vw, 10px) 0;
+        margin-bottom: clamp(15px, 4vw, 20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        border-radius: clamp(30px, 8vw, 50px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      @media (max-width: 480px) {
         .bottom-navigation {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color:rgba(255,191, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: clamp(8px, 2vw, 10px) 0;
-            margin-bottom: clamp(15px, 4vw, 20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            border-radius: clamp(30px, 8vw, 50px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+          width: 95%;
+          margin-bottom: 10px;
         }
-        
-        @media (max-width: 480px) {
-            .bottom-navigation {
-                width: 95%;
-                margin-bottom: 10px;
-            }
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: clamp(10px, 2.5vw, 12px);
-            color: #000000;
-            font-weight: 500;
-            padding: 0 clamp(8px, 2vw, 10px);
-            text-decoration: none;
-            min-width: 0;
-            text-align: center;
-        }
-        
-        .nav-item.active {
-            color: #ffffff;
-            position: relative;
-        }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            background-color: #ffffff;
-            border-radius: 50%;
-        }
-        
-        .nav-icon {
-            margin-bottom: clamp(3px, 1vw, 5px);
-            font-size: clamp(16px, 4vw, 20px);
-        }
-        
-        .nav-item span {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 60px;
-        }
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: clamp(10px, 2.5vw, 12px);
+        color: #000000;
+        font-weight: 500;
+        padding: 0 clamp(8px, 2vw, 10px);
+        text-decoration: none;
+        min-width: 0;
+        text-align: center;
+      }
+
+      .nav-item.active {
+        color: #ffffff;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #ffffff;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        margin-bottom: clamp(3px, 1vw, 5px);
+        font-size: clamp(16px, 4vw, 20px);
+      }
+
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="status-bar">
-            <div class="time">9:41</div>
-            <div class="indicators">
-                <span>●●●●</span>
-                <span>●●●</span>
-                <span>85%</span>
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <a href="dash.html" class="back-button">←</a>
+        <div class="page-title">Rental Cars</div>
+        <div class="filter-icon">≡</div>
+      </div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-icon">🔍</div>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search rental cars"
+          />
+        </div>
+      </div>
+
+      <div class="rental-banner">
+        <div class="rental-banner-title">Premium Rentals</div>
+        <div class="rental-banner-text">
+          Flexible rental options starting from $25/day with no hidden fees.
+        </div>
+      </div>
+
+      <div class="rent-options">
+        <div class="rent-option active">Hourly</div>
+        <div class="rent-option">Daily</div>
+        <div class="rent-option">Weekly</div>
+        <div class="rent-option">Monthly</div>
+      </div>
+
+      <div class="filter-tags">
+        <div class="filter-tag active">All</div>
+        <div class="filter-tag">Sedan</div>
+        <div class="filter-tag">SUV</div>
+        <div class="filter-tag">Luxury</div>
+        <div class="filter-tag">Economy</div>
+        <div class="filter-tag">Electric</div>
+      </div>
+
+      <div class="section-title">Available Rental Cars</div>
+
+      <div class="cars-grid">
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg1.png" alt="Tesla Model 3" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Available</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Tesla Model 3</div>
+            <div class="car-type">Electric Sedan</div>
+            <div class="car-description">
+              The most affordable Tesla with great range, impressive
+              performance, and minimalist interior. Perfect for city driving.
             </div>
-        </div>
-        
-        <div class="header">
-            <a href="dash.html" class="back-button">←</a>
-            <div class="page-title">Rental Cars</div>
-            <div class="filter-icon">≡</div>
-        </div>
-        
-        <div class="search-container">
-            <div class="search-box">
-                <div class="search-icon">🔍</div>
-                <input type="text" class="search-input" placeholder="Search rental cars">
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⚡</span>
+                358 mi range
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">🔑</span>
+                Self check-in
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
             </div>
-        </div>
-        
-        <div class="rental-banner">
-            <div class="rental-banner-title">Premium Rentals</div>
-            <div class="rental-banner-text">Flexible rental options starting from $25/day with no hidden fees.</div>
-        </div>
-        
-        <div class="rent-options">
-            <div class="rent-option active">Hourly</div>
-            <div class="rent-option">Daily</div>
-            <div class="rent-option">Weekly</div>
-            <div class="rent-option">Monthly</div>
-        </div>
-        
-        <div class="filter-tags">
-            <div class="filter-tag active">All</div>
-            <div class="filter-tag">Sedan</div>
-            <div class="filter-tag">SUV</div>
-            <div class="filter-tag">Luxury</div>
-            <div class="filter-tag">Economy</div>
-            <div class="filter-tag">Electric</div>
-        </div>
-        
-        <div class="section-title">Available Rental Cars</div>
-        
-        <div class="cars-grid">
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/carbg1.png" alt="Tesla Model 3">
-                    <div class="car-overlay"></div>
-                    <div class="car-release">Available</div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Tesla Model 3</div>
-                    <div class="car-type">Electric Sedan</div>
-                    <div class="car-description">The most affordable Tesla with great range, impressive performance, and minimalist interior. Perfect for city driving.</div>
-                    <div class="car-features">
-                        <div class="car-feature">
-                            <span class="feature-icon">⚡</span>
-                            358 mi range
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">🔑</span>
-                            Self check-in
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">💺</span>
-                            5 seats
-                        </div>
-                    </div>
-                    <div class="price-tag">
-                        <div class="price">$25<span class="price-type">/hour</span></div>
-                        <button class="view-button" onclick="window.location.href='details.html'">Rent Now</button>
-                    </div>
-                </div>
+            <div class="price-tag">
+              <div class="price">$25<span class="price-type">/hour</span></div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Rent Now
+              </button>
             </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/carbg2.png" alt="BMW 5 Series">
-                    <div class="car-overlay"></div>
-                    <div class="car-release">Available</div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">BMW 5 Series</div>
-                    <div class="car-type">Luxury Sedan</div>
-                    <div class="car-description">Experience premium luxury with the BMW 5 Series. Powerful engine, sophisticated interior, and advanced technology features.</div>
-                    <div class="car-features">
-                        <div class="car-feature">
-                            <span class="feature-icon">⛽</span>
-                            25 mpg
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">🔑</span>
-                            Concierge
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">💺</span>
-                            5 seats
-                        </div>
-                    </div>
-                    <div class="price-tag">
-                        <div class="price">$35<span class="price-type">/hour</span></div>
-                        <button class="view-button" onclick="window.location.href='details.html'">Rent Now</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/carbg3.png" alt="Audi Q7">
-                    <div class="car-overlay"></div>
-                    <div class="car-release">Available</div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Audi Q7</div>
-                    <div class="car-type">Luxury SUV</div>
-                    <div class="car-description">Spacious premium SUV with three rows of seating, perfect for family trips and group outings with plenty of cargo space.</div>
-                    <div class="car-features">
-                        <div class="car-feature">
-                            <span class="feature-icon">⛽</span>
-                            21 mpg
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">🔑</span>
-                            Full insurance
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">💺</span>
-                            7 seats
-                        </div>
-                    </div>
-                    <div class="price-tag">
-                        <div class="price">$45<span class="price-type">/hour</span></div>
-                        <button class="view-button" onclick="window.location.href='details.html'">Rent Now</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="car-card" onclick="window.location.href='details.html'">
-                <div class="car-image">
-                    <img src="assets/car-img1.png" alt="Toyota Corolla">
-                    <div class="car-overlay"></div>
-                    <div class="car-release">Available</div>
-                    <button class="favorite-button">🤍</button>
-                </div>
-                <div class="car-details">
-                    <div class="car-name">Toyota Corolla</div>
-                    <div class="car-type">Economy Sedan</div>
-                    <div class="car-description">Reliable and fuel-efficient compact sedan, perfect for daily commutes and city driving with low rental cost.</div>
-                    <div class="car-features">
-                        <div class="car-feature">
-                            <span class="feature-icon">⛽</span>
-                            35 mpg
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">🔑</span>
-                            Easy pickup
-                        </div>
-                        <div class="car-feature">
-                            <span class="feature-icon">💺</span>
-                            5 seats
-                        </div>
-                    </div>
-                    <div class="price-tag">
-                        <div class="price">$15<span class="price-type">/hour</span></div>
-                        <button class="view-button" onclick="window.location.href='details.html'">Rent Now</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        
-        <button class="load-more">Load More</button>
-        
-        <!-- <div class="bottom-navigation">
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg2.png" alt="BMW 5 Series" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Available</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">BMW 5 Series</div>
+            <div class="car-type">Luxury Sedan</div>
+            <div class="car-description">
+              Experience premium luxury with the BMW 5 Series. Powerful engine,
+              sophisticated interior, and advanced technology features.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                25 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">🔑</span>
+                Concierge
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">$35<span class="price-type">/hour</span></div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Rent Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/carbg3.png" alt="Audi Q7" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Available</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Audi Q7</div>
+            <div class="car-type">Luxury SUV</div>
+            <div class="car-description">
+              Spacious premium SUV with three rows of seating, perfect for
+              family trips and group outings with plenty of cargo space.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                21 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">🔑</span>
+                Full insurance
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                7 seats
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">$45<span class="price-type">/hour</span></div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Rent Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-card" onclick="window.location.href='details.html'">
+          <div class="car-image">
+            <img src="assets/car-img1.png" alt="Toyota Corolla" />
+            <div class="car-overlay"></div>
+            <div class="car-release">Available</div>
+            <button class="favorite-button">🤍</button>
+          </div>
+          <div class="car-details">
+            <div class="car-name">Toyota Corolla</div>
+            <div class="car-type">Economy Sedan</div>
+            <div class="car-description">
+              Reliable and fuel-efficient compact sedan, perfect for daily
+              commutes and city driving with low rental cost.
+            </div>
+            <div class="car-features">
+              <div class="car-feature">
+                <span class="feature-icon">⛽</span>
+                35 mpg
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">🔑</span>
+                Easy pickup
+              </div>
+              <div class="car-feature">
+                <span class="feature-icon">💺</span>
+                5 seats
+              </div>
+            </div>
+            <div class="price-tag">
+              <div class="price">$15<span class="price-type">/hour</span></div>
+              <button
+                class="view-button"
+                onclick="window.location.href='details.html'"
+              >
+                Rent Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="load-more">Load More</button>
+
+      <!-- <div class="bottom-navigation">
             <a href="dash.html" class="nav-item">
                 <div class="nav-icon">🏠</div>
                 <span>Home</span>
@@ -665,134 +708,141 @@
             </a>
         </div> -->
     </div>
-    
+
     <script>
-        // Rental option selection
-        const rentOptions = document.querySelectorAll('.rent-option');
-        
-        rentOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove active class from all options
-                rentOptions.forEach(o => o.classList.remove('active'));
-                
-                // Add active class to clicked option
-                option.classList.add('active');
-                
-                // Update prices based on selected option
-                updatePrices(option.textContent.toLowerCase());
-            });
+      // Rental option selection
+      const rentOptions = document.querySelectorAll(".rent-option");
+
+      rentOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          // Remove active class from all options
+          rentOptions.forEach((o) => o.classList.remove("active"));
+
+          // Add active class to clicked option
+          option.classList.add("active");
+
+          // Update prices based on selected option
+          updatePrices(option.textContent.toLowerCase());
         });
-        
-        function updatePrices(rentalType) {
-            const prices = document.querySelectorAll('.price');
-            const priceTypes = document.querySelectorAll('.price-type');
-            
-            switch(rentalType) {
-                case 'hourly':
-                    prices[0].innerHTML = '$25<span class="price-type">/hour</span>';
-                    prices[1].innerHTML = '$35<span class="price-type">/hour</span>';
-                    prices[2].innerHTML = '$45<span class="price-type">/hour</span>';
-                    prices[3].innerHTML = '$15<span class="price-type">/hour</span>';
-                    break;
-                case 'daily':
-                    prices[0].innerHTML = '$95<span class="price-type">/day</span>';
-                    prices[1].innerHTML = '$120<span class="price-type">/day</span>';
-                    prices[2].innerHTML = '$150<span class="price-type">/day</span>';
-                    prices[3].innerHTML = '$65<span class="price-type">/day</span>';
-                    break;
-                case 'weekly':
-                    prices[0].innerHTML = '$550<span class="price-type">/week</span>';
-                    prices[1].innerHTML = '$750<span class="price-type">/week</span>';
-                    prices[2].innerHTML = '$950<span class="price-type">/week</span>';
-                    prices[3].innerHTML = '$390<span class="price-type">/week</span>';
-                    break;
-                case 'monthly':
-                    prices[0].innerHTML = '$1,800<span class="price-type">/month</span>';
-                    prices[1].innerHTML = '$2,500<span class="price-type">/month</span>';
-                    prices[2].innerHTML = '$3,200<span class="price-type">/month</span>';
-                    prices[3].innerHTML = '$1,300<span class="price-type">/month</span>';
-                    break;
-            }
+      });
+
+      function updatePrices(rentalType) {
+        const prices = document.querySelectorAll(".price");
+        const priceTypes = document.querySelectorAll(".price-type");
+
+        switch (rentalType) {
+          case "hourly":
+            prices[0].innerHTML = '$25<span class="price-type">/hour</span>';
+            prices[1].innerHTML = '$35<span class="price-type">/hour</span>';
+            prices[2].innerHTML = '$45<span class="price-type">/hour</span>';
+            prices[3].innerHTML = '$15<span class="price-type">/hour</span>';
+            break;
+          case "daily":
+            prices[0].innerHTML = '$95<span class="price-type">/day</span>';
+            prices[1].innerHTML = '$120<span class="price-type">/day</span>';
+            prices[2].innerHTML = '$150<span class="price-type">/day</span>';
+            prices[3].innerHTML = '$65<span class="price-type">/day</span>';
+            break;
+          case "weekly":
+            prices[0].innerHTML = '$550<span class="price-type">/week</span>';
+            prices[1].innerHTML = '$750<span class="price-type">/week</span>';
+            prices[2].innerHTML = '$950<span class="price-type">/week</span>';
+            prices[3].innerHTML = '$390<span class="price-type">/week</span>';
+            break;
+          case "monthly":
+            prices[0].innerHTML =
+              '$1,800<span class="price-type">/month</span>';
+            prices[1].innerHTML =
+              '$2,500<span class="price-type">/month</span>';
+            prices[2].innerHTML =
+              '$3,200<span class="price-type">/month</span>';
+            prices[3].innerHTML =
+              '$1,300<span class="price-type">/month</span>';
+            break;
         }
-        
-        // Filter functionality
-        const filterTags = document.querySelectorAll('.filter-tag');
-        const carCards = document.querySelectorAll('.car-card');
-        
-        filterTags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                // Remove active class from all tags
-                filterTags.forEach(t => t.classList.remove('active'));
-                
-                // Add active class to clicked tag
-                tag.classList.add('active');
-                
-                // Get the selected filter value
-                const filterValue = tag.textContent.trim();
-                
-                // Filter the car cards based on the selected filter
-                filterCars(filterValue);
-            });
+      }
+
+      // Filter functionality
+      const filterTags = document.querySelectorAll(".filter-tag");
+      const carCards = document.querySelectorAll(".car-card");
+
+      filterTags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+          // Remove active class from all tags
+          filterTags.forEach((t) => t.classList.remove("active"));
+
+          // Add active class to clicked tag
+          tag.classList.add("active");
+
+          // Get the selected filter value
+          const filterValue = tag.textContent.trim();
+
+          // Filter the car cards based on the selected filter
+          filterCars(filterValue);
         });
-        
-        function filterCars(filterValue) {
-            // Loop through all car cards
-            carCards.forEach(card => {
-                // Get the car type from the card
-                const carType = card.querySelector('.car-type').textContent;
-                
-                // If filter is 'All' or car type includes the filter value, show the card
-                if (filterValue === 'All' || carType.includes(filterValue)) {
-                    card.style.display = 'block';
-                    // Add a subtle animation when showing the card
-                    card.style.animation = 'fadeIn 0.5s ease forwards';
-                } else {
-                    // Otherwise, hide the card
-                    card.style.display = 'none';
-                }
-            });
-            
-            // Check if no cars are visible after filtering
-            const visibleCars = Array.from(carCards).filter(card => card.style.display !== 'none');
-            const noResultsElement = document.getElementById('noResults');
-            
-            // If no results element doesn't exist and there are no visible cars, create it
-            if (!noResultsElement && visibleCars.length === 0) {
-                const noResults = document.createElement('div');
-                noResults.id = 'noResults';
-                noResults.style.textAlign = 'center';
-                noResults.style.padding = '30px';
-                noResults.style.color = '#666';
-                noResults.style.fontSize = '16px';
-                noResults.innerHTML = 'No cars found matching your filter.<br>Try a different filter or check back later.';
-                
-                // Insert after the cars grid
-                const carsGrid = document.querySelector('.cars-grid');
-                carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
-            } 
-            // If no results element exists but there are visible cars, remove it
-            else if (noResultsElement && visibleCars.length > 0) {
-                noResultsElement.remove();
-            }
+      });
+
+      function filterCars(filterValue) {
+        // Loop through all car cards
+        carCards.forEach((card) => {
+          // Get the car type from the card
+          const carType = card.querySelector(".car-type").textContent;
+
+          // If filter is 'All' or car type includes the filter value, show the card
+          if (filterValue === "All" || carType.includes(filterValue)) {
+            card.style.display = "block";
+            // Add a subtle animation when showing the card
+            card.style.animation = "fadeIn 0.5s ease forwards";
+          } else {
+            // Otherwise, hide the card
+            card.style.display = "none";
+          }
+        });
+
+        // Check if no cars are visible after filtering
+        const visibleCars = Array.from(carCards).filter(
+          (card) => card.style.display !== "none"
+        );
+        const noResultsElement = document.getElementById("noResults");
+
+        // If no results element doesn't exist and there are no visible cars, create it
+        if (!noResultsElement && visibleCars.length === 0) {
+          const noResults = document.createElement("div");
+          noResults.id = "noResults";
+          noResults.style.textAlign = "center";
+          noResults.style.padding = "30px";
+          noResults.style.color = "#666";
+          noResults.style.fontSize = "16px";
+          noResults.innerHTML =
+            "No cars found matching your filter.<br>Try a different filter or check back later.";
+
+          // Insert after the cars grid
+          const carsGrid = document.querySelector(".cars-grid");
+          carsGrid.parentNode.insertBefore(noResults, carsGrid.nextSibling);
         }
-        
-        // Add animation style for filtered cars
-        const filterStyle = document.createElement('style');
-        filterStyle.textContent = `
+        // If no results element exists but there are visible cars, remove it
+        else if (noResultsElement && visibleCars.length > 0) {
+          noResultsElement.remove();
+        }
+      }
+
+      // Add animation style for filtered cars
+      const filterStyle = document.createElement("style");
+      filterStyle.textContent = `
             @keyframes fadeIn {
                 from { opacity: 0; transform: translateY(10px); }
                 to { opacity: 1; transform: translateY(0); }
             }
         `;
-        document.head.appendChild(filterStyle);
-        
-        // Load more functionality
-        const loadMoreButton = document.querySelector('.load-more');
-        
-        loadMoreButton.addEventListener('click', () => {
-            // Here you would implement the logic to load more cars
-            console.log('Load more clicked');
-        });
+      document.head.appendChild(filterStyle);
+
+      // Load more functionality
+      const loadMoreButton = document.querySelector(".load-more");
+
+      loadMoreButton.addEventListener("click", () => {
+        // Here you would implement the logic to load more cars
+        console.log("Load more clicked");
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -417,6 +417,154 @@
             text-overflow: ellipsis;
             max-width: 60px;
         }
+        
+        /* Filter Modal Styles */
+        .filter-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            max-width: 360px;
+            background-color: #ffffff;
+            border-radius: clamp(15px, 4vw, 20px);
+            padding: clamp(20px, 5vw, 25px);
+            z-index: 1001;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .filter-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(20px, 5vw, 25px);
+        }
+        
+        .modal-title {
+            font-size: clamp(18px, 5vw, 22px);
+            font-weight: 700;
+            color: #000000;
+        }
+        
+        .close-modal {
+            font-size: clamp(24px, 6vw, 28px);
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .filter-section {
+            margin-bottom: clamp(20px, 5vw, 25px);
+        }
+        
+        .filter-section-title {
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 600;
+            margin-bottom: clamp(10px, 2.5vw, 15px);
+            color: #000000;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(8px, 2vw, 10px);
+        }
+        
+        .filter-option {
+            padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
+            background-color: #f0f0f0;
+            border-radius: clamp(20px, 5vw, 25px);
+            font-size: clamp(14px, 3.5vw, 16px);
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option.active {
+            background-color: #FFBF00;
+            color: #000000;
+        }
+        
+        .price-slider-container {
+            padding: 0 clamp(10px, 2.5vw, 15px);
+        }
+        
+        .price-slider {
+            width: 100%;
+            height: clamp(20px, 5vw, 25px);
+            -webkit-appearance: none;
+            background: #f0f0f0;
+            border-radius: clamp(10px, 2.5vw, 15px);
+            outline: none;
+            margin-bottom: clamp(10px, 2.5vw, 15px);
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: clamp(20px, 5vw, 25px);
+            height: clamp(20px, 5vw, 25px);
+            border-radius: 50%;
+            background: #FFBF00;
+            cursor: pointer;
+        }
+        
+        .price-slider::-moz-range-thumb {
+            width: clamp(20px, 5vw, 25px);
+            height: clamp(20px, 5vw, 25px);
+            border-radius: 50%;
+            background: #FFBF00;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .price-range-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(14px, 3.5vw, 16px);
+            color: #666;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: clamp(10px, 2.5vw, 15px);
+            margin-top: clamp(25px, 6vw, 30px);
+        }
+        
+        .reset-filters, .apply-filters {
+            padding: clamp(12px, 3vw, 15px);
+            border-radius: clamp(10px, 2.5vw, 15px);
+            font-size: clamp(14px, 3.5vw, 16px);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-filters {
+            background-color: #f0f0f0;
+            color: #666;
+            flex: 1;
+        }
+        
+        .apply-filters {
+            background-color: #FFBF00;
+            color: #000000;
+            flex: 2;
+        }
+        
+        .filter-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -433,7 +581,7 @@
         <div class="header">
             <a href="dash.html" class="back-button">←</a>
             <div class="page-title">Latest Cars</div>
-            <div class="filter-icon">≡</div>
+            <div class="filter-icon" id="filter-modal-toggle">≡</div>
         </div>
         
         <div class="search-container">
@@ -455,7 +603,7 @@
         <div class="section-title">Latest Car Models</div>
         
         <div class="cars-grid">
-            <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-card" data-type="Electric Sedan" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/car-img1.png" alt="Tesla Model S Plaid">
                     <div class="car-overlay"></div>
@@ -487,7 +635,7 @@
                 </div>
             </div>
             
-            <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-card" data-type="Electric SUV" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/carbg1.png" alt="BMW iX">
                     <div class="car-overlay"></div>
@@ -519,7 +667,7 @@
                 </div>
             </div>
             
-            <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-card" data-type="Electric Sedan" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/carbg2.png" alt="Lucid Air Dream Edition">
                     <div class="car-overlay"></div>
@@ -551,7 +699,7 @@
                 </div>
             </div>
             
-            <div class="car-card" onclick="window.location.href='details.html'">
+            <div class="car-card" data-type="Electric Sports Car" onclick="window.location.href='details.html'">
                 <div class="car-image">
                     <img src="assets/carbg3.png" alt="Porsche Taycan">
                     <div class="car-overlay"></div>
@@ -586,6 +734,52 @@
         
         <button class="load-more">Load More</button>
         
+        <!-- Filter Modal -->
+        <div class="filter-modal" id="filter-modal">
+            <div class="filter-modal-header">
+                <div class="modal-title">Filter Cars</div>
+                <div class="close-modal" id="close-modal">×</div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-section-title">Body Type</div>
+                <div class="filter-options body-type-options">
+                    <div class="filter-option" data-filter="Sedan">Sedan</div>
+                    <div class="filter-option" data-filter="SUV">SUV</div>
+                    <div class="filter-option" data-filter="Sports Car">Sports Car</div>
+                    <div class="filter-option" data-filter="Hatchback">Hatchback</div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-section-title">Fuel Type</div>
+                <div class="filter-options fuel-type-options">
+                    <div class="filter-option" data-filter="Electric">Electric</div>
+                    <div class="filter-option" data-filter="Hybrid">Hybrid</div>
+                    <div class="filter-option" data-filter="Gasoline">Gasoline</div>
+                    <div class="filter-option" data-filter="Diesel">Diesel</div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-section-title">Price Range</div>
+                <div class="price-slider-container">
+                    <input type="range" min="0" max="200000" value="200000" class="price-slider" id="price-slider">
+                    <div class="price-range-display">
+                        <span>$0</span>
+                        <span id="price-value">$200,000+</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="reset-filters" id="reset-filters">Reset All</button>
+                <button class="apply-filters" id="apply-filters">Apply Filters</button>
+            </div>
+        </div>
+        
+        <div class="filter-modal-overlay" id="filter-modal-overlay"></div>
+        
         <!-- <div class="bottom-navigation">
             <a href="dash.html" class="nav-item">
                 <div class="nav-icon">🏠</div>
@@ -609,7 +803,9 @@
     <script>
         // Filter functionality
         const filterTags = document.querySelectorAll('.filter-tag');
+        const carCards = document.querySelectorAll('.car-card');
         
+        // Quick filter tags at the top
         filterTags.forEach(tag => {
             tag.addEventListener('click', () => {
                 // Remove active class from all tags
@@ -618,19 +814,291 @@
                 // Add active class to clicked tag
                 tag.classList.add('active');
                 
-                // Here you would implement the actual filtering logic
-                // For now, we'll just log the selected filter
-                console.log('Selected filter:', tag.textContent);
+                // Get the selected filter text
+                const filterText = tag.textContent.trim();
+                
+                // Filter the car cards
+                carCards.forEach(card => {
+                    const cardType = card.getAttribute('data-type');
+                    
+                    if (filterText === 'All') {
+                        // Show all cards if 'All' is selected
+                        card.style.display = 'block';
+                    } else if (filterText === 'Electric') {
+                        // Show all electric cars
+                        if (cardType.includes('Electric')) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else if (filterText === 'Hybrid') {
+                        // Show all hybrid cars
+                        if (cardType.includes('Hybrid')) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else {
+                        // Show cars that match the specific type (Sedan, SUV, etc.)
+                        if (cardType.includes(filterText)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+                
+                updateVisibility();
             });
         });
+        
+        // Filter modal functionality
+        const filterModalToggle = document.getElementById('filter-modal-toggle');
+        const filterModal = document.getElementById('filter-modal');
+        const filterModalOverlay = document.getElementById('filter-modal-overlay');
+        const closeModal = document.getElementById('close-modal');
+        const applyFilters = document.getElementById('apply-filters');
+        const resetFilters = document.getElementById('reset-filters');
+        const filterOptions = document.querySelectorAll('.filter-option');
+        const priceSlider = document.getElementById('price-slider');
+        const priceValue = document.getElementById('price-value');
+        
+        // Open filter modal
+        filterModalToggle.addEventListener('click', () => {
+            filterModal.style.display = 'block';
+            filterModalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        });
+        
+        // Close filter modal
+        closeModal.addEventListener('click', () => {
+            filterModal.style.display = 'none';
+            filterModalOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Close modal when clicking outside
+        filterModalOverlay.addEventListener('click', () => {
+            filterModal.style.display = 'none';
+            filterModalOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Toggle active state for filter options
+        filterOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Toggle active class for the clicked option
+                option.classList.toggle('active');
+            });
+        });
+        
+        // Update price slider value display
+        priceSlider.addEventListener('input', () => {
+            const value = priceSlider.value;
+            priceValue.textContent = `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+        });
+        
+        // Apply filters from modal
+        applyFilters.addEventListener('click', () => {
+            // Get selected body types
+            const selectedBodyTypes = [];
+            document.querySelectorAll('.body-type-options .filter-option.active').forEach(option => {
+                selectedBodyTypes.push(option.getAttribute('data-filter'));
+            });
+            
+            // Get selected fuel types
+            const selectedFuelTypes = [];
+            document.querySelectorAll('.fuel-type-options .filter-option.active').forEach(option => {
+                selectedFuelTypes.push(option.getAttribute('data-filter'));
+            });
+            
+            // Get price range
+            const maxPrice = parseInt(priceSlider.value);
+            
+            // Apply the filters to car cards
+            carCards.forEach(card => {
+                const cardType = card.getAttribute('data-type');
+                const cardPrice = parseInt(card.querySelector('.price-value').textContent.replace(/[^0-9]/g, ''));
+                
+                let matchesBodyType = true;
+                let matchesFuelType = true;
+                let matchesPrice = true;
+                
+                // Check body type filter
+                if (selectedBodyTypes.length > 0) {
+                    matchesBodyType = selectedBodyTypes.some(type => cardType.includes(type));
+                }
+                
+                // Check fuel type filter
+                if (selectedFuelTypes.length > 0) {
+                    matchesFuelType = selectedFuelTypes.some(type => cardType.includes(type));
+                }
+                
+                // Check price filter
+                matchesPrice = cardPrice <= maxPrice;
+                
+                // Show or hide card based on filters
+                if (matchesBodyType && matchesFuelType && matchesPrice) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update visibility of load more button and no results message
+            updateVisibility();
+            
+            // Close the modal
+            filterModal.style.display = 'none';
+            filterModalOverlay.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scrolling
+            
+            // Show filter applied message
+            showToast('Filters applied');
+        });
+        
+        // Reset filters
+        resetFilters.addEventListener('click', () => {
+            // Clear all active filter options
+            filterOptions.forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            // Reset price slider
+            priceSlider.value = 200000;
+            priceValue.textContent = '$200,000+';
+            
+            // Show all cars
+            carCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Reset quick filter tags
+            filterTags.forEach(t => t.classList.remove('active'));
+            filterTags[0].classList.add('active'); // Set 'All' tag as active
+            
+            // Update visibility
+            updateVisibility();
+            
+            // Show reset message
+            showToast('Filters reset');
+        });
+        
+        // Function to update visibility of load more button and no results message
+        function updateVisibility() {
+            // Check if any cars are visible
+            let visibleCars = 0;
+            carCards.forEach(card => {
+                if (card.style.display !== 'none') {
+                    visibleCars++;
+                }
+            });
+            
+            // Show or hide the "Load More" button based on visible cars
+            const loadMoreButton = document.querySelector('.load-more');
+            loadMoreButton.style.display = visibleCars > 0 ? 'block' : 'none';
+            
+            // Show "No results found" message if no cars are visible
+            let noResultsMessage = document.getElementById('no-results');
+            
+            if (visibleCars === 0) {
+                if (!noResultsMessage) {
+                    noResultsMessage = document.createElement('div');
+                    noResultsMessage.id = 'no-results';
+                    noResultsMessage.style.textAlign = 'center';
+                    noResultsMessage.style.padding = '30px';
+                    noResultsMessage.style.color = '#666';
+                    noResultsMessage.innerHTML = 'No cars found matching your filters.<br>Try different filter options.';
+                    
+                    document.querySelector('.cars-grid').appendChild(noResultsMessage);
+                }
+            } else if (noResultsMessage) {
+                noResultsMessage.remove();
+            }
+            
+            // Animate the filtered cards
+            animateFilteredCards();
+        }
+        
+        // Add animation to the filtered cards
+        function animateFilteredCards() {
+            carCards.forEach(card => {
+                if (card.style.display === 'block') {
+                    card.style.animation = 'fadeIn 0.5s ease forwards';
+                }
+            });
+        }
+        
+        // Define fadeIn animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '100px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#FFBF00';
+            toast.style.color = '#000000';
+            toast.style.padding = '12px 20px';
+            toast.style.borderRadius = '20px';
+            toast.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            toast.style.zIndex = '1000';
+            toast.style.fontWeight = '500';
+            toast.innerText = message;
+            
+            document.body.appendChild(toast);
+            
+            // Remove the toast after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
         
         // Load more functionality
         const loadMoreButton = document.querySelector('.load-more');
         
         loadMoreButton.addEventListener('click', () => {
-            // Here you would implement the logic to load more cars
-            // For now, we'll just log the action
-            console.log('Load more clicked');
+            // In a real application, this would load more cars from a server
+            // For this demo, we'll simulate loading more cars by showing a message
+            showToast('Loading more cars...');
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase();
+            
+            carCards.forEach(card => {
+                const carName = card.querySelector('.car-name').textContent.toLowerCase();
+                const carType = card.querySelector('.car-type').textContent.toLowerCase();
+                const carDescription = card.querySelector('.car-description').textContent.toLowerCase();
+                
+                if (carName.includes(searchText) || 
+                    carType.includes(searchText) || 
+                    carDescription.includes(searchText)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update visibility
+            updateVisibility();
         });
     </script>
 </body>
