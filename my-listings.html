@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D Cars - My Listings</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      /* Edit Listing Sheet Styles */
+      .edit-listing-sheet {
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 90vh;
+        background-color: #ffffff;
+        z-index: 1000;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
+        transition: bottom 0.3s ease;
+        overflow-y: auto;
+        padding-bottom: 30px;
+      }
+
+      .edit-listing-sheet.active {
+        bottom: 0;
+      }
+
+      .edit-sheet-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+
+      .edit-sheet-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .sheet-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .sheet-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .close-sheet {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .edit-form-container {
+        padding: 20px;
+      }
+
+      /* Form Styles */
+      .form-section {
+        margin-bottom: 25px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        font-size: 14px;
+      }
+
+      .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .required:after {
+        content: " *";
+        color: #e74c3c;
+      }
+
+      /* Photo Upload Styles */
+      .photo-upload {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .upload-box {
+        width: 90px;
+        height: 90px;
+        border: 2px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .upload-icon {
+        font-size: 24px;
+        color: #888;
+      }
+
+      .upload-text {
+        font-size: 12px;
+        color: #888;
+      }
+
+      .photo-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .remove-photo {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      /* Form Actions */
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .cancel-button,
+      .save-button {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cancel-button {
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .save-button {
+        background-color: #ffbf00;
+        color: #333;
+        box-shadow: 0 2px 5px rgba(255, 191, 0, 0.2);
+      }
+
+      /* Notification */
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ffbf00;
+        color: #333;
+        padding: 12px 20px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 2000;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+
+      .notification.hide {
+        opacity: 0;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: #000000;
+        font-size: clamp(12px, 2.5vw, 14px);
+        background-color: #ffffff;
+      }
+
+      .header {
+        padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: clamp(25px, 8vw, 40px);
+        margin: 10px clamp(10px, 3vw, 20px) clamp(15px, 4vw, 20px);
+      }
+
+      .page-title {
+        display: flex;
+        align-items: center;
+        font-size: clamp(16px, 4vw, 20px);
+        font-weight: 600;
+        color: #000;
+      }
+
+      .page-icon {
+        margin-right: clamp(6px, 1.5vw, 8px);
+        font-size: clamp(18px, 4.5vw, 22px);
+      }
+
+      .back-button {
+        width: clamp(32px, 8vw, 38px);
+        height: clamp(32px, 8vw, 38px);
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: clamp(16px, 4vw, 20px);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .back-button:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .add-button {
+        width: clamp(32px, 8vw, 38px);
+        height: clamp(32px, 8vw, 38px);
+        border-radius: 50%;
+        background-color: #ffbf00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border: none;
+        font-size: clamp(16px, 4vw, 20px);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .add-button:hover {
+        background-color: #e6ac00;
+      }
+
+      .listings-container {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .tab-container {
+        display: flex;
+        background-color: #f5f5f5;
+        border-radius: clamp(25px, 6vw, 30px);
+        padding: 4px;
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: clamp(8px, 2vw, 10px);
+        font-size: clamp(13px, 3.5vw, 15px);
+        border-radius: clamp(20px, 5vw, 25px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .tab.active {
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: #000;
+      }
+
+      .tab:not(.active) {
+        color: #666;
+      }
+
+      .listing-card {
+        background-color: #ffffff;
+        border-radius: clamp(15px, 3.5vw, 18px);
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f0f0;
+        margin-bottom: clamp(15px, 4vw, 20px);
+        transition: all 0.3s ease;
+      }
+
+      .listing-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .listing-image {
+        height: clamp(150px, 40vw, 200px);
+        position: relative;
+      }
+
+      .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .listing-status {
+        position: absolute;
+        top: clamp(10px, 2.5vw, 15px);
+        right: clamp(10px, 2.5vw, 15px);
+        padding: clamp(5px, 1.2vw, 8px) clamp(10px, 2.5vw, 15px);
+        border-radius: clamp(20px, 5vw, 25px);
+        font-size: clamp(11px, 2.8vw, 13px);
+        font-weight: 500;
+        z-index: 1;
+      }
+
+      .listing-status.active {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: #4caf50;
+        border: 1px solid rgba(76, 175, 80, 0.2);
+      }
+
+      .listing-status.pending {
+        background-color: rgba(255, 191, 0, 0.1);
+        color: #ffbf00;
+        border: 1px solid rgba(255, 191, 0, 0.2);
+      }
+
+      .listing-status.expired {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        border: 1px solid rgba(244, 67, 54, 0.2);
+      }
+
+      .listing-controls {
+        position: absolute;
+        bottom: clamp(10px, 2.5vw, 15px);
+        right: clamp(10px, 2.5vw, 15px);
+        display: flex;
+        gap: 8px;
+      }
+      .control-icon {
+        width: 18px !important;
+        height: 18px !important;
+        object-fit: contain;
+      }
+      .listing-control {
+        width: clamp(30px, 7.5vw, 35px);
+        height: clamp(30px, 7.5vw, 35px);
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 0;
+      }
+
+      .listing-control:hover {
+        transform: scale(1.05);
+      }
+      
+      .listing-control[title="Edit"]:hover {
+        background-color: rgba(255, 191, 0, 0.1);
+      }
+      
+      .listing-control[title="Delete"]:hover {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+      
+      .listing-control[title="Renew"]:hover {
+        background-color: rgba(255, 191, 0, 0.1);
+      }
+
+      .listing-details {
+        padding: clamp(15px, 3.5vw, 20px);
+      }
+
+      .listing-title {
+        font-size: clamp(16px, 4vw, 18px);
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #000;
+      }
+
+      .listing-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .listing-category {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+        display: flex;
+        align-items: center;
+      }
+
+      .listing-category-icon {
+        margin-right: 5px;
+      }
+
+      .listing-price {
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 600;
+        color: #ffbf00;
+      }
+
+      .listing-stats {
+        display: flex;
+        font-size: clamp(11px, 2.8vw, 13px);
+        color: #666;
+      }
+
+      .listing-stat {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+      }
+
+      .listing-stat-icon {
+        margin-right: 4px;
+      }
+
+      .no-listings {
+        text-align: center;
+        padding: clamp(40px, 10vw, 60px) 0;
+        color: #888;
+      }
+
+      .no-listings-icon {
+        font-size: clamp(40px, 10vw, 60px);
+        margin-bottom: clamp(15px, 4vw, 20px);
+        opacity: 0.5;
+      }
+
+      .no-listings-text {
+        font-size: clamp(16px, 4vw, 18px);
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+      }
+
+      .no-listings-subtext {
+        font-size: clamp(14px, 3.5vw, 16px);
+        opacity: 0.8;
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .add-listing-button {
+        display: inline-block;
+        padding: clamp(10px, 2.5vw, 12px) clamp(20px, 5vw, 25px);
+        background-color: #ffbf00;
+        color: white;
+        border: none;
+        border-radius: clamp(25px, 6vw, 30px);
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .add-listing-button:hover {
+        background-color: #e6ac00;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 480px) {
+        .container {
+          max-width: 100%;
+          padding-bottom: 90px;
+        }
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background: linear-gradient(
+          135deg,
+          rgba(253, 186, 116, 0.4),
+          rgba(254, 240, 138, 0.4)
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: all 0.3s ease;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #996600;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #996600;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #664400;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+      }
+
+      .profile-icon {
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <button
+          class="back-button"
+          onclick="window.location.href='profile.html'"
+        >
+          ←
+        </button>
+        <div class="page-title">
+          My Listings
+        </div>
+        <button
+          class="add-button"
+          onclick="window.location.href='sell-your-car.html'"
+        >
+          +
+        </button>
+      </div>
+
+      <div class="listings-container">
+        <div class="tab-container">
+          <div class="tab active" onclick="showTab('all')">All</div>
+          <div class="tab" onclick="showTab('active')">Active</div>
+          <div class="tab" onclick="showTab('pending')">Pending</div>
+          <div class="tab" onclick="showTab('expired')">Expired</div>
+        </div>
+
+        <!-- Active listing -->
+        <div class="listing-card" data-status="active">
+          <div class="listing-image">
+            <img src="assets/carbg1.png" alt="BMW X5 2022" />
+            <div class="listing-status active">Active</div>
+            <div class="listing-controls">
+              <button class="listing-control" title="Edit">
+                <img src="assets/icons/pen-yellow.svg" alt="Edit Icon" class="control-icon" />
+              </button>
+              <button class="listing-control" title="Delete">
+                <img src="assets/icons/delete-red.svg" alt="Delete Icon" class="control-icon" />
+              </button>
+            </div>
+          </div>
+          <div class="listing-details">
+            <div class="listing-title">BMW X5 2022</div>
+            <div class="listing-info">
+              <div class="listing-category">
+                <span class="listing-category-icon">🔄</span>
+                Lease
+              </div>
+              <div class="listing-price">$750/month</div>
+            </div>
+            <div class="listing-stats">
+              <div class="listing-stat">
+                <span class="listing-stat-icon">👁️</span>
+                245 views
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">❤️</span>
+                18 saves
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">📱</span>
+                5 inquiries
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending listing -->
+        <div class="listing-card" data-status="pending">
+          <div class="listing-image">
+            <img src="assets/carbg2.png" alt="Audi A6 2023" />
+            <div class="listing-status pending">Pending</div>
+            <div class="listing-controls">
+              <button class="listing-control" title="Edit">
+                <img src="assets/icons/pen-yellow.svg" alt="Edit Icon" class="control-icon" />
+              </button>
+              <button class="listing-control" title="Delete">
+                <img src="assets/icons/delete-red.svg" alt="Delete Icon" class="control-icon" />
+              </button>
+            </div>
+          </div>
+          <div class="listing-details">
+            <div class="listing-title">Audi A6 2023</div>
+            <div class="listing-info">
+              <div class="listing-category">
+                <span class="listing-category-icon">💰</span>
+                For Sale
+              </div>
+              <div class="listing-price">$45,500</div>
+            </div>
+            <div class="listing-stats">
+              <div class="listing-stat">
+                <span class="listing-stat-icon">👁️</span>
+                124 views
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">❤️</span>
+                7 saves
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">📱</span>
+                2 inquiries
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expired listing -->
+        <div class="listing-card" data-status="expired">
+          <div class="listing-image">
+            <img src="assets/carbg4.jpg" alt="Tesla Model 3" />
+            <div class="listing-status expired">Expired</div>
+            <div class="listing-controls">
+              <button class="listing-control" title="Renew">
+                <img src="assets/icons/pen-yellow.svg" alt="Renew Icon" class="control-icon" />
+              </button>
+              <button class="listing-control" title="Delete">
+                <img src="assets/icons/delete-red.svg" alt="Delete Icon" class="control-icon" />
+              </button>
+            </div>
+          </div>
+          <div class="listing-details">
+            <div class="listing-title">Tesla Model 3</div>
+            <div class="listing-info">
+              <div class="listing-category">
+                <span class="listing-category-icon">🚘</span>
+                Rental
+              </div>
+              <div class="listing-price">$120/day</div>
+            </div>
+            <div class="listing-stats">
+              <div class="listing-stat">
+                <span class="listing-stat-icon">👁️</span>
+                502 views
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">❤️</span>
+                35 saves
+              </div>
+              <div class="listing-stat">
+                <span class="listing-stat-icon">📱</span>
+                12 inquiries
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No listings placeholder (hidden by default) -->
+        <div class="no-listings" style="display: none">
+          <div class="no-listings-icon">🚗</div>
+          <div class="no-listings-text">No Listings Yet</div>
+          <div class="no-listings-subtext">
+            Start selling or renting your cars today!
+          </div>
+          <button
+            class="add-listing-button"
+            onclick="window.location.href='sell-your-car.html'"
+          >
+            Add Your First Listing
+          </button>
+        </div>
+      </div>
+
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/house.svg"
+              alt="Home Icon"
+              class="nav-icon"
+            />
+          </div>
+          Home
+        </a>
+        <a href="sell-your-car.html" class="nav-item">
+          <div class="nav-icon">
+            <img src="assets/icons/plus.svg" alt="Sell Icon" class="nav-icon" />
+          </div>
+          Sell
+        </a>
+        <a href="wallet.html" class="nav-item">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/wallet.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
+          </div>
+          Wallet
+        </a>
+        <a href="profile.html" class="nav-item active">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/profile.jpg"
+              alt="Profile Icon"
+              class="profile-icon"
+            />
+          </div>
+          Profile
+        </a>
+      </div>
+    </div>
+
+    <!-- Edit Listing Bottom Sheet -->
+    <div class="edit-listing-sheet" id="editListingSheet">
+      <div class="sheet-header">
+        <div class="sheet-title">Edit Listing</div>
+        <button class="close-sheet" onclick="closeEditSheet()">×</button>
+      </div>
+
+      <div class="edit-form-container">
+        <form id="editListingForm">
+          <!-- Car Photos Section -->
+          <div class="form-section">
+            <h2 class="section-title">Car Photos</h2>
+            <div class="photo-upload" id="editPhotoUploadContainer">
+              <div
+                class="upload-box"
+                id="editUploadBox1"
+                onclick="triggerEditFileInput(1)"
+              >
+                <span class="upload-icon">+</span>
+                <span class="upload-text">Add Photo</span>
+                <input
+                  type="file"
+                  id="editPhotoInput1"
+                  style="display: none"
+                  accept="image/*"
+                  onchange="handleEditPhotoUpload(1, event)"
+                />
+              </div>
+              <div
+                class="upload-box"
+                id="editUploadBox2"
+                onclick="triggerEditFileInput(2)"
+              >
+                <span class="upload-icon">+</span>
+                <span class="upload-text">Add Photo</span>
+                <input
+                  type="file"
+                  id="editPhotoInput2"
+                  style="display: none"
+                  accept="image/*"
+                  onchange="handleEditPhotoUpload(2, event)"
+                />
+              </div>
+              <div
+                class="upload-box"
+                id="editUploadBox3"
+                onclick="triggerEditFileInput(3)"
+              >
+                <span class="upload-icon">+</span>
+                <span class="upload-text">Add Photo</span>
+                <input
+                  type="file"
+                  id="editPhotoInput3"
+                  style="display: none"
+                  accept="image/*"
+                  onchange="handleEditPhotoUpload(3, event)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Details Section -->
+          <div class="form-section">
+            <h2 class="section-title">Car Details</h2>
+
+            <div class="form-group">
+              <label class="form-label required" for="editCarMake">Make</label>
+              <select class="form-select" id="editCarMake" required>
+                <option value="">Select Make</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
+                <option value="Ford">Ford</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedes">Mercedes</option>
+                <option value="Audi">Audi</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required" for="editCarModel"
+                >Model</label
+              >
+              <input
+                type="text"
+                class="form-input"
+                id="editCarModel"
+                placeholder="e.g. Camry, Civic, F-150"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required" for="editCarYear">Year</label>
+              <select class="form-select" id="editCarYear" required>
+                <option value="">Select Year</option>
+                <!-- Options will be populated via JavaScript -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required" for="editCategory"
+                >Category</label
+              >
+              <select class="form-select" id="editCategory" required>
+                <option value="">Select Category</option>
+                <option value="For Sale">For Sale</option>
+                <option value="Lease">Lease</option>
+                <option value="Rental">Rental</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required" for="editPrice">Price</label>
+              <input
+                type="number"
+                class="form-input"
+                id="editPrice"
+                placeholder="e.g. 45000"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="editDescription"
+                >Description</label
+              >
+              <textarea
+                class="form-textarea"
+                id="editDescription"
+                placeholder="Tell potential buyers about your car..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions">
+            <button
+              type="button"
+              class="cancel-button"
+              onclick="closeEditSheet()"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="save-button"
+              onclick="saveListingChanges()"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Sheet Overlay -->
+    <div
+      class="edit-sheet-overlay"
+      id="editSheetOverlay"
+      onclick="closeEditSheet()"
+    ></div>
+
+    <script>
+      // Populate year dropdown for edit form
+      function populateYearOptions() {
+        const yearSelect = document.getElementById("editCarYear");
+        const currentYear = new Date().getFullYear();
+
+        for (let year = currentYear; year >= 1980; year--) {
+          const option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          yearSelect.appendChild(option);
+        }
+      }
+
+      // Initialize the year dropdown when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        populateYearOptions();
+      });
+
+      // Tab functionality
+      function showTab(tabName) {
+        // Update tab styles
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        event.currentTarget.classList.add("active");
+
+        // Show/hide listings based on tab
+        const listings = document.querySelectorAll(".listing-card");
+        const noListings = document.querySelector(".no-listings");
+        let visibleCount = 0;
+
+        listings.forEach((listing) => {
+          const status = listing.getAttribute("data-status");
+
+          if (tabName === "all" || status === tabName) {
+            listing.style.display = "block";
+            visibleCount++;
+          } else {
+            listing.style.display = "none";
+          }
+        });
+
+        // Show placeholder if no listings match the filter
+        if (visibleCount === 0) {
+          noListings.style.display = "block";
+        } else {
+          noListings.style.display = "none";
+        }
+      }
+
+      // Edit listing functionality
+      let currentEditingListing = null;
+
+      function openEditSheet(listingElement) {
+        currentEditingListing = listingElement;
+        const sheet = document.getElementById("editListingSheet");
+        const overlay = document.getElementById("editSheetOverlay");
+
+        // Populate form with listing data
+        populateEditForm(listingElement);
+
+        // Show the edit sheet and overlay
+        sheet.classList.add("active");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeEditSheet() {
+        const sheet = document.getElementById("editListingSheet");
+        const overlay = document.getElementById("editSheetOverlay");
+
+        sheet.classList.remove("active");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      function populateEditForm(listingElement) {
+        // Get data from the listing
+        const title =
+          listingElement.querySelector(".listing-title").textContent;
+        const category = listingElement
+          .querySelector(".listing-category")
+          .textContent.trim();
+        const price =
+          listingElement.querySelector(".listing-price").textContent;
+        const imgSrc = listingElement.querySelector(".listing-image img").src;
+
+        // Extract make and model from title (assuming format like "BMW X5 2022")
+        let make = "";
+        let model = "";
+        let year = "";
+
+        const titleParts = title.split(" ");
+        if (titleParts.length >= 2) {
+          make = titleParts[0];
+          model = titleParts[1];
+          if (titleParts.length >= 3) {
+            year = titleParts[2];
+          }
+        }
+
+        // Set form values
+        document.getElementById("editCarMake").value = make;
+        document.getElementById("editCarModel").value = model;
+        if (year) document.getElementById("editCarYear").value = year;
+
+        // Set category
+        if (category.includes("Sale")) {
+          document.getElementById("editCategory").value = "For Sale";
+        } else if (category.includes("Lease")) {
+          document.getElementById("editCategory").value = "Lease";
+        } else if (category.includes("Rental")) {
+          document.getElementById("editCategory").value = "Rental";
+        }
+
+        // Extract price value (remove currency symbol and /month or /day)
+        let priceValue = price.replace(/[^0-9]/g, "");
+        document.getElementById("editPrice").value = priceValue;
+
+        // Set image if available
+        if (imgSrc) {
+          const uploadBox = document.getElementById("editUploadBox1");
+          uploadBox.innerHTML = `
+            <img src="${imgSrc}" class="photo-preview" alt="Car Photo">
+            <div class="remove-photo" onclick="removeEditPhoto(1, event)">✕</div>
+            <input type="file" id="editPhotoInput1" style="display: none;" accept="image/*" onchange="handleEditPhotoUpload(1, event)">
+          `;
+        }
+      }
+
+      // Photo upload for edit form
+      function triggerEditFileInput(boxNumber) {
+        document.getElementById(`editPhotoInput${boxNumber}`).click();
+      }
+
+      function handleEditPhotoUpload(boxNumber, event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            const uploadBox = document.getElementById(
+              `editUploadBox${boxNumber}`
+            );
+
+            // Create image preview
+            uploadBox.innerHTML = `
+              <img src="${e.target.result}" class="photo-preview" alt="Car Photo ${boxNumber}">
+              <div class="remove-photo" onclick="removeEditPhoto(${boxNumber}, event)">✕</div>
+              <input type="file" id="editPhotoInput${boxNumber}" style="display: none;" accept="image/*" onchange="handleEditPhotoUpload(${boxNumber}, event)">
+            `;
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function removeEditPhoto(boxNumber, event) {
+        event.stopPropagation(); // Prevent triggering the file input
+
+        const uploadBox = document.getElementById(`editUploadBox${boxNumber}`);
+        uploadBox.innerHTML = `
+          <span class="upload-icon">+</span>
+          <span class="upload-text">Add Photo</span>
+          <input type="file" id="editPhotoInput${boxNumber}" style="display: none;" accept="image/*" onchange="handleEditPhotoUpload(${boxNumber}, event)">
+        `;
+      }
+
+      function saveListingChanges() {
+        if (!currentEditingListing) return;
+
+        // Get form values
+        const make = document.getElementById("editCarMake").value;
+        const model = document.getElementById("editCarModel").value;
+        const year = document.getElementById("editCarYear").value;
+        const category = document.getElementById("editCategory").value;
+        const price = document.getElementById("editPrice").value;
+
+        // Update listing title
+        currentEditingListing.querySelector(
+          ".listing-title"
+        ).textContent = `${make} ${model} ${year}`;
+
+        // Update category
+        const categoryElement =
+          currentEditingListing.querySelector(".listing-category");
+        let categoryIcon = "💰"; // Default icon for sale
+
+        if (category === "Lease") {
+          categoryIcon = "🔄";
+        } else if (category === "Rental") {
+          categoryIcon = "🚘";
+        }
+
+        categoryElement.innerHTML = `<span class="listing-category-icon">${categoryIcon}</span> ${category}`;
+
+        // Update price
+        const priceElement =
+          currentEditingListing.querySelector(".listing-price");
+        if (category === "Lease") {
+          priceElement.textContent = `$${price}/month`;
+        } else if (category === "Rental") {
+          priceElement.textContent = `$${price}/day`;
+        } else {
+          priceElement.textContent = `$${price}`;
+        }
+
+        // Update image if a new one was uploaded
+        const newImgElement = document.querySelector(
+          "#editUploadBox1 .photo-preview"
+        );
+        if (newImgElement) {
+          currentEditingListing.querySelector(".listing-image img").src =
+            newImgElement.src;
+        }
+
+        // Close the edit sheet
+        closeEditSheet();
+
+        // Show success notification
+        showNotification("Listing updated successfully");
+      }
+
+      // Simple notification
+      function showNotification(message) {
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          notification.classList.add("hide");
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+
+      // Attach edit button click handlers
+      document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(
+          '.listing-control[title="Edit"]'
+        );
+        editButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const listingCard = this.closest(".listing-card");
+            openEditSheet(listingCard);
+          });
+        });
+
+        // Same for the renew button (which is essentially an edit with status change)
+        const renewButtons = document.querySelectorAll(
+          '.listing-control[title="Renew"]'
+        );
+        renewButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const listingCard = this.closest(".listing-card");
+            openEditSheet(listingCard);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

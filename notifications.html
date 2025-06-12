@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D Cars - Notifications</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 430px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 80px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        color: #000000;
+        font-size: clamp(12px, 2.5vw, 14px);
+        background-color: #ffffff;
+      }
+
+      .header {
+        padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: clamp(25px, 8vw, 40px);
+        margin: 10px clamp(10px, 3vw, 20px) clamp(15px, 4vw, 20px);
+      }
+
+      .page-title {
+        display: flex;
+        align-items: center;
+        font-size: clamp(16px, 4vw, 20px);
+        font-weight: 600;
+        color: #000;
+      }
+
+      .page-icon {
+        margin-right: clamp(6px, 1.5vw, 8px);
+        font-size: clamp(18px, 4.5vw, 22px);
+      }
+
+      .back-button {
+        width: clamp(32px, 8vw, 38px);
+        height: clamp(32px, 8vw, 38px);
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: clamp(16px, 4vw, 20px);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .back-button:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .settings-button {
+        width: clamp(32px, 8vw, 38px);
+        height: clamp(32px, 8vw, 38px);
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: clamp(14px, 3.5vw, 16px);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .settings-button:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .settings-icon {
+        width: 18px;
+        height: 18px;
+      }
+
+      .notifications-container {
+        padding: 0 clamp(15px, 4vw, 20px);
+        margin-bottom: clamp(20px, 5vw, 25px);
+      }
+
+      .section-title {
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 600;
+        margin-bottom: clamp(10px, 2.5vw, 15px);
+        color: #666;
+      }
+
+      .notification-card {
+        background-color: #ffffff;
+        border-radius: clamp(12px, 3vw, 15px);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f0f0;
+        margin-bottom: clamp(12px, 3vw, 15px);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        padding: clamp(12px, 3vw, 15px);
+        position: relative;
+      }
+
+      .notification-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .notification-card.unread {
+        background-color: rgba(255, 191, 0, 0.05);
+      }
+
+      .notification-card.unread:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background-color: #ffbf00;
+        border-radius: 50%;
+      }
+
+      .notification-icon {
+        width: clamp(40px, 10vw, 50px);
+        height: clamp(40px, 10vw, 50px);
+        border-radius: 50%;
+        background-color: rgba(255, 191, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: clamp(12px, 3vw, 15px);
+        flex-shrink: 0;
+      }
+
+      .notification-icon.yellow {
+        background-color: rgba(255, 191, 0, 0.1);
+        color: #ffbf00;
+      }
+
+      .notification-icon.green {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: #4caf50;
+      }
+
+      .notification-icon.red {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+      }
+
+      .notification-icon.blue {
+        background-color: rgba(33, 150, 243, 0.1);
+        color: #2196f3;
+      }
+
+      .notification-content {
+        flex: 1;
+      }
+
+      .notification-title {
+        font-size: clamp(14px, 3.5vw, 16px);
+        font-weight: 600;
+        margin-bottom: 3px;
+        color: #000;
+      }
+
+      .notification-text {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .notification-time {
+        font-size: clamp(10px, 2.5vw, 12px);
+        color: #999;
+      }
+
+      .notification-actions {
+        display: flex;
+        margin-top: 5px;
+      }
+
+      .notification-action {
+        font-size: clamp(12px, 3vw, 14px);
+        color: #ffbf00;
+        margin-right: 15px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .notification-option {
+        color: #666;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .empty-notifications {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(50px, 12.5vw, 80px) 0;
+        text-align: center;
+      }
+
+      .empty-icon {
+        font-size: clamp(50px, 12.5vw, 70px);
+        color: #ddd;
+        margin-bottom: clamp(15px, 3.75vw, 20px);
+      }
+
+      .empty-title {
+        font-size: clamp(16px, 4vw, 20px);
+        font-weight: 600;
+        margin-bottom: clamp(8px, 2vw, 10px);
+        color: #666;
+      }
+
+      .empty-text {
+        font-size: clamp(14px, 3.5vw, 16px);
+        color: #999;
+        max-width: 250px;
+      }
+
+      .clear-all {
+        display: inline-block;
+        padding: clamp(8px, 2vw, 10px) clamp(15px, 3.75vw, 20px);
+        background-color: #f5f5f5;
+        color: #666;
+        border: none;
+        border-radius: clamp(20px, 5vw, 25px);
+        font-size: clamp(12px, 3vw, 14px);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: clamp(10px, 2.5vw, 15px);
+      }
+
+      .clear-all:hover {
+        background-color: #eee;
+      }
+
+      .bottom-navigation {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background: linear-gradient(
+          135deg,
+          rgba(253, 186, 116, 0.4),
+          rgba(254, 240, 138, 0.4)
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        z-index: 100;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: all 0.3s ease;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        color: #996600;
+        font-weight: 500;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: #996600;
+        position: relative;
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        background-color: #664400;
+        border-radius: 50%;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+      }
+
+      .profile-icon {
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+      }
+
+      /* Settings Popup */
+      .settings-popup {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background-color: #fff;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        padding: 10px 0;
+        z-index: 1000;
+        display: none;
+      }
+
+      .settings-popup.active {
+        display: block;
+        animation: fadeIn 0.2s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .settings-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .settings-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      .settings-item-icon {
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .settings-item-text {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .settings-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        z-index: 999;
+        display: none;
+      }
+
+      .settings-overlay.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status-bar">
+        <div class="time">9:41</div>
+        <div class="indicators">
+          <span>●●●●</span>
+          <span>●●●</span>
+          <span>85%</span>
+        </div>
+      </div>
+
+      <div class="header">
+        <button class="back-button" onclick="window.location.href='dash.html'">
+          ←
+        </button>
+        <div class="page-title">
+          <div class="page-icon">🔔</div>
+          Notifications
+        </div>
+        <button class="settings-button" onclick="toggleSettingsPopup()">
+          <img
+            src="assets/icons/settings.svg"
+            alt="Settings"
+            class="settings-icon"
+          />
+        </button>
+      </div>
+
+      <div class="notifications-container">
+        <div class="section-title">Today</div>
+
+        <!-- Notification Cards -->
+        <div class="notification-card unread">
+          <div class="notification-icon yellow">🎉</div>
+          <div class="notification-content">
+            <div class="notification-title">Offer Received</div>
+            <div class="notification-text">
+              You received an offer of $45,000 for your BMW X5 2022.
+            </div>
+            <div class="notification-time">2 hours ago</div>
+            <div class="notification-actions">
+              <div class="notification-action" onclick="viewOffer()">View Offer</div>
+              <div class="notification-action" onclick="declineOffer()">Decline</div>
+            </div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <div class="notification-card unread">
+          <div class="notification-icon green">💰</div>
+          <div class="notification-content">
+            <div class="notification-title">Lease Approved</div>
+            <div class="notification-text">
+              Your lease application for the Audi A6 2023 has been approved.
+            </div>
+            <div class="notification-time">5 hours ago</div>
+            <div class="notification-actions">
+              <div class="notification-action" onclick="viewDetails()">View Details</div>
+            </div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <div class="section-title">Yesterday</div>
+
+        <div class="notification-card">
+          <div class="notification-icon blue">📋</div>
+          <div class="notification-content">
+            <div class="notification-title">Listing Published</div>
+            <div class="notification-text">
+              Your Tesla Model 3 has been successfully listed for rental.
+            </div>
+            <div class="notification-time">Yesterday, 2:30 PM</div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon red">⚠️</div>
+          <div class="notification-content">
+            <div class="notification-title">Listing Expiring Soon</div>
+            <div class="notification-text">
+              Your BMW X5 listing will expire in 3 days. Renew to keep it active.
+            </div>
+            <div class="notification-time">Yesterday, 10:15 AM</div>
+            <div class="notification-actions">
+              <div class="notification-action" onclick="renewListing()">Renew Now</div>
+            </div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <div class="section-title">This Week</div>
+
+        <div class="notification-card">
+          <div class="notification-icon yellow">👁️</div>
+          <div class="notification-content">
+            <div class="notification-title">Popular Listing</div>
+            <div class="notification-text">
+              Your Audi A6 listing is getting a lot of attention! It has 150+ views this week.
+            </div>
+            <div class="notification-time">2 days ago</div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <div class="notification-card">
+          <div class="notification-icon blue">💬</div>
+          <div class="notification-content">
+            <div class="notification-title">New Message</div>
+            <div class="notification-text">
+              John Smith has sent you a message about your Tesla Model 3.
+            </div>
+            <div class="notification-time">3 days ago</div>
+            <div class="notification-actions">
+              <div class="notification-action" onclick="readMessage()">Read Message</div>
+            </div>
+          </div>
+          <div class="notification-option" onclick="toggleNotificationOptions(this)">⋮</div>
+        </div>
+
+        <button class="clear-all" onclick="clearAllNotifications()">
+          Clear All Notifications
+        </button>
+
+        <!-- Empty state (hidden by default) -->
+        <div class="empty-notifications" style="display: none;">
+          <div class="empty-icon">🔔</div>
+          <div class="empty-title">No Notifications</div>
+          <div class="empty-text">
+            You're all caught up! We'll notify you when there's something new.
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Popup -->
+      <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsPopup()"></div>
+      <div class="settings-popup" id="settingsPopup">
+        <div class="settings-item" onclick="markAllAsRead()">
+          <div class="settings-item-icon">✓</div>
+          <div class="settings-item-text">Mark all as read</div>
+        </div>
+        <div class="settings-item" onclick="notificationSettings()">
+          <div class="settings-item-icon">⚙️</div>
+          <div class="settings-item-text">Notification settings</div>
+        </div>
+      </div>
+
+      <div class="bottom-navigation">
+        <a href="dash.html" class="nav-item">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/house.svg"
+              alt="Home Icon"
+              class="nav-icon"
+            />
+          </div>
+          Home
+        </a>
+        <a href="sell-your-car.html" class="nav-item">
+          <div class="nav-icon">
+            <img src="assets/icons/plus.svg" alt="Sell Icon" class="nav-icon" />
+          </div>
+          Sell
+        </a>
+        <a href="wallet.html" class="nav-item">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/wallet.svg"
+              alt="Wallet Icon"
+              class="nav-icon"
+            />
+          </div>
+          Wallet
+        </a>
+        <a href="profile.html" class="nav-item active">
+          <div class="nav-icon">
+            <img
+              src="assets/icons/profile.jpg"
+              alt="Profile Icon"
+              class="profile-icon"
+            />
+          </div>
+          Profile
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Toggle settings popup
+      function toggleSettingsPopup() {
+        const popup = document.getElementById("settingsPopup");
+        const overlay = document.getElementById("settingsOverlay");
+        
+        popup.classList.toggle("active");
+        overlay.classList.toggle("active");
+      }
+
+      // Close settings popup
+      function closeSettingsPopup() {
+        const popup = document.getElementById("settingsPopup");
+        const overlay = document.getElementById("settingsOverlay");
+        
+        popup.classList.remove("active");
+        overlay.classList.remove("active");
+      }
+      
+      // Toggle notification options (ellipsis menu)
+      function toggleNotificationOptions(element) {
+        // Implementation would show a small menu for individual notification options
+        alert("Options: Mark as read, Delete notification");
+      }
+      
+      // Mark all notifications as read
+      function markAllAsRead() {
+        const unreadNotifications = document.querySelectorAll(".notification-card.unread");
+        unreadNotifications.forEach(notification => {
+          notification.classList.remove("unread");
+        });
+        
+        closeSettingsPopup();
+        showToast("All notifications marked as read");
+      }
+      
+      // Clear all notifications
+      function clearAllNotifications() {
+        const notificationsContainer = document.querySelector(".notifications-container");
+        const sectionTitles = document.querySelectorAll(".section-title");
+        const notificationCards = document.querySelectorAll(".notification-card");
+        const clearAllButton = document.querySelector(".clear-all");
+        const emptyState = document.querySelector(".empty-notifications");
+        
+        // Remove all notification cards and section titles
+        notificationCards.forEach(card => card.remove());
+        sectionTitles.forEach(title => title.remove());
+        clearAllButton.remove();
+        
+        // Show empty state
+        emptyState.style.display = "flex";
+        
+        showToast("All notifications cleared");
+      }
+      
+      // Navigation to other screens
+      function viewOffer() {
+        alert("Navigating to offer details...");
+      }
+      
+      function declineOffer() {
+        alert("Offer declined");
+        // Would remove this notification or mark it as handled
+      }
+      
+      function viewDetails() {
+        alert("Navigating to lease details...");
+      }
+      
+      function renewListing() {
+        alert("Navigating to listing renewal...");
+      }
+      
+      function readMessage() {
+        alert("Opening message thread...");
+      }
+      
+      function notificationSettings() {
+        alert("Opening notification settings...");
+        closeSettingsPopup();
+      }
+      
+      // Simple toast notification
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.style.position = "fixed";
+        toast.style.bottom = "70px";
+        toast.style.left = "50%";
+        toast.style.transform = "translateX(-50%)";
+        toast.style.backgroundColor = "#ffbf00";
+        toast.style.color = "#333";
+        toast.style.padding = "10px 20px";
+        toast.style.borderRadius = "20px";
+        toast.style.fontSize = "14px";
+        toast.style.fontWeight = "500";
+        toast.style.zIndex = "2000";
+        toast.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
+        toast.innerText = message;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transition = "opacity 0.3s ease";
+          setTimeout(() => {
+            document.body.removeChild(toast);
+          }, 300);
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

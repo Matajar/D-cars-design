@@ -237,7 +237,7 @@
       /* Quick Actions */
       .quick-actions {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: clamp(10px, 2.5vw, 15px);
         margin-bottom: clamp(20px, 5vw, 25px);
       }
@@ -1110,7 +1110,11 @@
         background-color: #664400;
         border-radius: 50%;
       }
-
+      .car-icon {
+        object-fit: contain;
+        width: 30px;
+        height: 30px;
+      }
       .nav-icon {
         /* margin-bottom: 5px; */
         font-size: 20px;
@@ -1225,7 +1229,7 @@
         <!-- Profile Details Tab -->
         <div id="details" class="tab-content active">
           <div class="quick-actions">
-            <button
+            <!-- <button
               class="action-button"
               onclick="window.location.href='wallet.html'"
             >
@@ -1237,6 +1241,19 @@
                 />
               </div>
               <div class="action-text">Wallet</div>
+            </button> -->
+            <button
+              class="action-button"
+              onclick="window.location.href='my-listings.html'"
+            >
+              <div class="action-icon">
+                <img
+                  src="assets/icons/car.png"
+                  alt="Car Listings Icon"
+                  class="car-icon "
+                />
+              </div>
+              <div class="action-text">My Listings</div>
             </button>
             <button
               class="action-button"
@@ -1275,12 +1292,12 @@
               <div class="detail-value">Downtown Dubai, UAE</div>
             </div>
 
-            <h3 class="section-title">Account Information</h3>
+            <!-- <h3 class="section-title">Account Information</h3>
             <div class="detail-item">
               <div class="detail-label">Member ID</div>
               <div class="detail-value">#DCR5678912</div>
-            </div>
-            <div class="detail-item">
+            </div> -->
+            <!-- <div class="detail-item">
               <div class="detail-label">Joined</div>
               <div class="detail-value">January 15, 2025</div>
             </div>
@@ -1293,11 +1310,17 @@
             <div class="detail-item">
               <div class="detail-label">Payment Method</div>
               <div class="detail-value">Visa •••• 4582</div>
-            </div>
+            </div> -->
 
             <div class="driving-license">
               <div class="license-header">
-                <div class="license-icon">🚖</div>
+                <div class="license-icon">
+                  <img
+                    src="assets/icons/profile.jpg"
+                    alt="Driving License Icon"
+                    class="profile-icon"
+                  />
+                </div>
                 <div class="license-info">
                   <div class="license-title">Driving License</div>
                   <div class="license-number">DL-123456789</div>
@@ -1321,7 +1344,13 @@
 
             <div class="driving-license emirates-id">
               <div class="license-header">
-                <div class="license-icon">🪪</div>
+                <div class="license-icon">
+                  <img
+                    src="assets/icons/profile.jpg"
+                    alt="Driving License Icon"
+                    class="profile-icon"
+                  />
+                </div>
                 <div class="license-info">
                   <div class="license-title">Emirates ID</div>
                   <div class="license-number">784-1234-5678901-2</div>
